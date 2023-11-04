@@ -1,0 +1,1706 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Czech\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-29 09:28-0600\n"
+"PO-Revision-Date: 2023-06-15 14:28+0800\n"
+"Last-Translator: \n"
+"Language-Team: Jan Stanka (stanky@email.cz)\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.1\n"
+
+#, python-format
+msgid "%s will be updated to version"
+msgstr "%s bude aktualizováno na verzi"
+
+msgid "(default)"
+msgstr "(výchozí)"
+
+msgid "24 Hour Time"
+msgstr "24 hod formát"
+
+msgid "A FIRMWARE_RESTART may fix the issue."
+msgstr "FW restart může fixnout chyby."
+
+msgid "ADXL Not Configured"
+msgstr "ADXL není nastaven"
+
+msgid "Abort"
+msgstr "Zrušit"
+
+msgid "Acceleration:"
+msgstr "Zrychlení:"
+
+msgid "Accept"
+msgstr "Přijmout"
+
+msgid "Actions"
+msgstr "Akce"
+
+msgid "Add profile"
+msgstr "Přidat profil"
+
+msgid "Apply"
+msgstr "Použít"
+
+#, python-format
+msgid "Apply %.2f offset to Endstop?"
+msgstr "Použít %.2f přesah k Endstop?"
+
+#, python-format
+msgid "Apply %s%.2f offset to Probe?"
+msgstr "Použít %s%.2f přesah k Sondě?"
+
+msgid "Are you sure do you want to exclude the object?"
+msgstr "Opravdu chceš vyjmout objekt?"
+
+msgid "Are you sure you want to run Emergency Stop?"
+msgstr "Opravdu okamžitě zastavit?"
+
+msgid "Are you sure you wish to cancel this print?"
+msgstr "Opravdu chcete zrušit tisk?"
+
+msgid "Are you sure you wish to disable motors?"
+msgstr "Opravdu chcete uvolnit motory?"
+
+msgid "Are you sure you wish to reboot the system?"
+msgstr "Opravdu chcete rebootovat systém?"
+
+msgid "Are you sure you wish to shutdown the system?"
+msgstr "Opravdu chcete vypnout systém?"
+
+msgid "Auto"
+msgstr "Auto"
+
+msgid "Auto-calibrate"
+msgstr "Auto-kalibrace"
+
+msgid "Auto-close notifications"
+msgstr "Automaticky zavřít upozornění"
+
+msgid "Auto-scroll"
+msgstr "Auto posun"
+
+msgid "Bed Level"
+msgstr "Vyrovnání podložky"
+
+msgid "Bed Mesh"
+msgstr "Mapa podložky"
+
+msgid "Bed screw configuration:"
+msgstr "Vyrovnání šroubů podložky:"
+
+msgid "Calibrate"
+msgstr "Kalibrace"
+
+msgid "Calibrated"
+msgstr "Zkalibrováno"
+
+msgid "Calibrated, save configuration to make it permanent"
+msgstr "Zkalibrováno, uložit změny jako trvalé"
+
+msgid "Calibrating"
+msgstr "Kalibruji"
+
+msgid "Camera"
+msgstr "Fotoaparát"
+
+msgid "Can't set above the maximum:"
+msgstr "Nemohu nastavit víc než max:"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Cancel Print"
+msgstr "Zrušit tisk"
+
+msgid "Cancelled"
+msgstr "Zrušeno"
+
+msgid "Cancelling"
+msgstr "Ruším"
+
+msgid "Cannot connect to Moonraker"
+msgstr "Nelze se připojit k Moonraker"
+
+msgid "Channel"
+msgstr "Kanál"
+
+msgid "Check ADXL Wiring"
+msgstr "Zkontroluj zapojení ADXL"
+
+msgid "Checking for updates, please wait..."
+msgstr "Kontrola aktualizací, čekej ..."
+
+msgid "Clear"
+msgstr "Vymaž"
+
+msgid "Close"
+msgstr "Zavřít"
+
+msgid "Complete"
+msgstr "Hotovo"
+
+msgid "Configuration"
+msgstr "Konfigurace"
+
+msgid "Confirm Emergency Stop"
+msgstr "Potvrzovat Emergency Stop"
+
+msgid "Connected"
+msgstr "Připojeno"
+
+#, python-format
+msgid "Connecting to %s"
+msgstr "Připojování k %s"
+
+msgid "Console"
+msgstr "Konsole"
+
+msgid "Continue"
+msgstr "Pokračuj"
+
+msgid "Cooldown"
+msgstr "Zchladit"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Delete Directory?"
+msgstr "Smazat adresář?"
+
+msgid "Delete File?"
+msgstr "Smazat soubor?"
+
+msgid "Deselect"
+msgstr "Odznačit"
+
+msgid "Disable Motors"
+msgstr "Uvolnit motory"
+
+msgid "Disable XY"
+msgstr "Uvolnit XY"
+
+msgid "Distance (mm)"
+msgstr "Vzdálenost (mm)"
+
+#, python-format
+msgid "Do you want to recover %s?"
+msgstr "Obnovit %s?"
+
+msgid "Elapsed:"
+msgstr "Uplynulo:"
+
+msgid "Error"
+msgstr "Chyba"
+
+msgid "Estimated Time Method"
+msgstr "Výpočet doby tisku"
+
+msgid "Exclude Object"
+msgstr "Vyloučit objekt"
+
+msgid "Extra Large"
+msgstr "Extra velký"
+
+msgid "Extrude"
+msgstr "Extruze"
+
+msgid "Extrusion +"
+msgstr "Extruze +"
+
+msgid "Extrusion -"
+msgstr "Extruze -"
+
+msgid "Failed, adjust position first"
+msgstr "Chyba, nastav nejprve pozici"
+
+msgid "Fan"
+msgstr "Větrák"
+
+msgid "Filament Used"
+msgstr "Typ filamentu"
+
+msgid "Filament total:"
+msgstr "Filament celkem:"
+
+msgid "Filament used:"
+msgstr "Použitý filament:"
+
+msgid "Filament:"
+msgstr "Filament:"
+
+msgid "File"
+msgstr "Soubor"
+
+msgid "File:"
+msgstr "Soubor:"
+
+msgid "Finding ADXL"
+msgstr "Hledání ADXL"
+
+msgid "Fine Tuning"
+msgstr "Ladění"
+
+msgid "Finish"
+msgstr "Konec"
+
+msgid "Firmware Restart"
+msgstr "Firmware Restart"
+
+msgid "Flow:"
+msgstr "Tok:"
+
+msgid "Flowrate:"
+msgstr "Rychlost toku:"
+
+msgid "Font Size"
+msgstr "Velikost fontu"
+
+msgid "Full Update"
+msgstr "Úplný update"
+
+msgid "Fullscreen"
+msgstr "Celá obrazovka"
+
+msgid "Go Back"
+msgstr "Zpět"
+
+msgid "Height:"
+msgstr "Výška:"
+
+msgid "Hidden"
+msgstr "Skrytý"
+
+msgid "Hide"
+msgstr "Skrýt"
+
+msgid "Hide sensors in Temp."
+msgstr "Skrýt senzory v Temp."
+
+msgid "Hide temp."
+msgstr "Skrýt teplotu."
+
+msgid "Home All"
+msgstr "Zaparkovat XYZ"
+
+msgid "Home X"
+msgstr "Zaparkovat X"
+
+msgid "Home XY"
+msgstr "Zaparkovat XY"
+
+msgid "Home Y"
+msgstr "Zaparkovat Y"
+
+msgid "Home Z"
+msgstr "Zaparkovat Z"
+
+msgid "Homing"
+msgstr "Domů"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Hostname"
+msgstr "Hostname"
+
+msgid "Icon Theme"
+msgstr "Sada ikon"
+
+msgid "Initializing printer..."
+msgstr "Startuji tiskárnu ..."
+
+msgid "Input Shaper"
+msgstr "Tvarovač vstupů"
+
+msgid "Interface"
+msgstr "Rozhraní"
+
+msgid "Invalid"
+msgstr "Špatně"
+
+msgid "Invalid password"
+msgstr "Špatné heslo"
+
+msgid "Invert X"
+msgstr "Otočit X"
+
+msgid "Invert Y"
+msgstr "Otočit Y"
+
+msgid "Invert Z"
+msgstr "Otočit Z"
+
+msgid "Klipper Restart"
+msgstr "Klipper Restart"
+
+msgid "Klipper has disconnected"
+msgstr "Klipper odpojen"
+
+msgid "Klipper has encountered an error."
+msgstr "Klipper zaznamenal chybu."
+
+msgid "Klipper has shutdown"
+msgstr "Klipper zastaven"
+
+msgid "Klipper is attempting to start"
+msgstr "Klipper startuje"
+
+msgid "Klipper will reboot"
+msgstr "Klipper se restartuje"
+
+msgid "KlipperScreen will reboot"
+msgstr "KlipperScreen se restartuje"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "Large"
+msgstr "Velký"
+
+msgid "Layer:"
+msgstr "Vrstva:"
+
+msgid "Left:"
+msgstr "Zbývá:"
+
+msgid "Limits"
+msgstr "Limity"
+
+msgid "Load"
+msgstr "Zasuň"
+
+msgid "Lower Nozzle"
+msgstr "Trysku níž"
+
+msgid "Macro shortcut on sidebar"
+msgstr "Macro shortcut on sidebar"
+
+msgid "Macros"
+msgstr "Makra"
+
+msgid "Main Menu"
+msgstr "Hlavní menu"
+
+msgid "Max"
+msgstr "Max"
+
+msgid "Max Acceleration"
+msgstr "Max. zrychlení"
+
+msgid "Max Acceleration to Deceleration"
+msgstr "Z max. zrychlení do zpomalení"
+
+msgid "Max Velocity"
+msgstr "Max. rychlost"
+
+msgid "Maximum"
+msgstr "Maximum"
+
+msgid "Measure Both"
+msgstr "Změřit oboje"
+
+msgid "Measure X"
+msgstr "Změřit X"
+
+msgid "Measure Y"
+msgstr "Změřit Y"
+
+msgid "Medium"
+msgstr "Střední"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Mesh calibrate"
+msgstr "Kalibrace sítě"
+
+msgid "Modified"
+msgstr "Změněno"
+
+msgid "Moonraker: connected"
+msgstr "Moonraker: připojen"
+
+msgid "Move"
+msgstr "Posun"
+
+msgid "Move Distance (mm)"
+msgstr "Vzdálenost posunu (mm)"
+
+msgid "Name"
+msgstr "Jméno"
+
+msgid "Network"
+msgstr "Síť"
+
+msgid "Never"
+msgstr "Nikdy"
+
+msgid "New"
+msgstr "Nový"
+
+msgid "Not supported for auto-detection, it needs to be configured in klipperscreen.conf"
+msgstr "Nepodporováno autodetekcí, nakonfiguruj v klipperscreen.conf"
+
+msgid "Nothing selected"
+msgstr "Nevybráno nic"
+
+#, python-format
+msgid "Outdated by %d"
+msgstr "Zastaralý %d"
+
+msgid "PSK for"
+msgstr "PSK pro"
+
+msgid "Package will be updated"
+msgid_plural "Packages will be updated"
+msgstr[0] "Balíček bude aktualizován"
+msgstr[1] "Balíčky budou aktualizovány"
+msgstr[2] ""
+
+msgid "Part Fan"
+msgstr "Částečný ofuk"
+
+msgid "Password saved"
+msgstr "Heslo uloženo"
+
+msgid "Pause"
+msgstr "Pauza"
+
+msgid "Paused"
+msgstr "Pozastaveno"
+
+msgid "Perform a full upgrade?"
+msgstr "Úplně aktualizovat?"
+
+msgid "Pins"
+msgstr "Piny"
+
+msgid "Please recompile and flash the micro-controller."
+msgstr "Znovu přelož a flashni micro-controller."
+
+msgid "Power"
+msgstr "Zdroj"
+
+msgid "Power On Printer"
+msgstr "Zapni tiskárnu"
+
+msgid "Pressure Advance:"
+msgstr "Pressure Advance:"
+
+msgid "Print"
+msgstr "Tisk"
+
+msgid "Print Control"
+msgstr "Nastavení tisku"
+
+msgid "Print Time"
+msgstr "Čas tisku"
+
+msgid "Printer"
+msgstr "Tiskárna"
+
+msgid "Printer Connections"
+msgstr "Připojení"
+
+msgid "Printer Select"
+msgstr "Výběr tiskárny"
+
+msgid "Printing"
+msgstr "Probíhá tisk"
+
+msgid "Probe Offset"
+msgstr "Offset sondy"
+
+msgid "Profile Name:"
+msgstr "Jméno profilu:"
+
+msgid "Provide KlipperScreen.log when asking for help.\n"
+msgstr "Provide KlipperScreen.log when asking for help.\n"
+
+msgid "Quad Gantry Level"
+msgstr "Quad Gantry Level"
+
+msgid "Raise Nozzle"
+msgstr "Zvedni trysku"
+
+msgid "Recover"
+msgstr "Recover"
+
+msgid "Recover Hard"
+msgstr "Recover Hard"
+
+msgid "Recover Soft"
+msgstr "Recover Soft"
+
+msgid "Reference"
+msgstr "Reference"
+
+msgid "Refresh"
+msgstr "Obnovit"
+
+msgid "Rename/Move:"
+msgstr "Přejmenování/přesun:"
+
+msgid "Restart"
+msgstr "Restart"
+
+msgid "Resume"
+msgstr "Pokračuj"
+
+msgid "Retract"
+msgstr "Retrakce"
+
+msgid "Retraction"
+msgstr "Retrakce"
+
+msgid "Retraction Length"
+msgstr "Délka retrakce"
+
+msgid "Retraction Speed"
+msgstr "Rychlost retrakce"
+
+msgid "Retry"
+msgstr "Znovu"
+
+msgid "Retrying"
+msgstr "Zkouším znovu"
+
+msgid "Save"
+msgstr "Uložit"
+
+msgid "Save Config"
+msgstr "Ulož nastavení"
+
+msgid "Save Z"
+msgstr "Uložit Z"
+
+msgid "Save configuration?"
+msgstr "Uložit nastavení?"
+
+msgid "Saved"
+msgstr "Uloženo"
+
+#, python-format
+msgid "Saved offset: %s"
+msgstr "Uložený offset: %s"
+
+msgid "Screen DPMS"
+msgstr "Screen DPMS"
+
+msgid "Screen Power Off Time"
+msgstr "Čas vypnutí displeje"
+
+msgid "Screws Adjust"
+msgstr "Nastavit šrouby"
+
+msgid "Select"
+msgstr "Vyber"
+
+msgid "Send"
+msgstr "Odeslat"
+
+msgid "Set Temp"
+msgstr "Nastav teplotu"
+
+msgid "Settings"
+msgstr "Nastavení"
+
+msgid "Show"
+msgstr "Ukaž"
+
+msgid "Show Heater Power"
+msgstr "Ukaž odběr topení"
+
+msgid "Shutdown"
+msgstr "Shutdown"
+
+msgid "Size"
+msgstr "Velikost"
+
+msgid "Slicer"
+msgstr "Slicer"
+
+msgid "Slicer Time correction (%)"
+msgstr "Časová korekce Sliceru  (%)"
+
+msgid "Slicer:"
+msgstr "Slicer:"
+
+msgid "Small"
+msgstr "Malý"
+
+msgid "Speed (mm/s)"
+msgstr "Rychlost (mm/s)"
+
+msgid "Speed +"
+msgstr "Rychlost ₊"
+
+msgid "Speed -"
+msgstr "Rychlost -"
+
+msgid "Speed:"
+msgstr "Rychlost:"
+
+msgid "Square Corner Velocity"
+msgstr "Čtvercová rohová rychlost"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Starting WiFi Association"
+msgstr "Připojování k WiFi"
+
+msgid "Starting recovery for"
+msgstr "Obnovuji"
+
+msgid "Starting update for"
+msgstr "Aktualizuji"
+
+msgid "System"
+msgstr "Systém"
+
+msgid "System Restart"
+msgstr "Restart systému"
+
+msgid "System Shutdown"
+msgstr "Vypnutí"
+
+msgid "Temp (°C)"
+msgstr "Teplota (°C)"
+
+msgid "Temperature"
+msgstr "Teplota"
+
+msgid "Total:"
+msgstr "Total:"
+
+msgid "Unknown Heater"
+msgstr "Neznámé topení"
+
+msgid "Unknown screw position"
+msgstr "Neznámé nastavení šroubů"
+
+msgid "Unload"
+msgstr "Vysuň"
+
+msgid "Unretract Extra Length"
+msgstr "Vysuň extra délku"
+
+msgid "Unretract Speed"
+msgstr "Vysunovací rychlost"
+
+msgid "Up To Date"
+msgstr "Aktuální"
+
+msgid "Update"
+msgstr "Aktualizuj"
+
+msgid "Updating"
+msgstr "Aktualizuji"
+
+msgid "Uploaded"
+msgstr "Nahrané"
+
+msgid "XY Move Speed (mm/s)"
+msgstr "Rychlost pohybu XY  (mm/s)"
+
+msgid "XY Speed (mm/s)"
+msgstr "Rychlost XY (mm/s)"
+
+msgid "Z Calibrate"
+msgstr "Kalibrace Z"
+
+msgid "Z Move Speed (mm/s)"
+msgstr "Rychlost pohybu Z (mm/s)"
+
+msgid "Z Speed (mm/s)"
+msgstr "Rychlost pohybu Z  (mm/s)"
+
+msgid "Z Tilt"
+msgstr "Z Tilt"
+
+msgid "Z offset:"
+msgstr "Z offset:"
+
+msgid "commit"
+msgid_plural "commits"
+msgstr[0] "spáchat"
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "dBm"
+msgstr "dBm"
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "hodina"
+msgstr[1] "hodiny"
+msgstr[2] "hodin"
+
+msgid "minutes"
+msgstr "min"
+
+msgid "mm"
+msgstr "mm"
+
+msgid "mm/s"
+msgstr "mm/s"
+
+msgid "mm/s²"
+msgstr "mm/s²"
+
+msgid "mm³/s"
+msgstr "mm³/s"
+
+msgid "After the machine is connected to the network, devices using the same LAN can control the machine by accessing the IP"
+msgstr "Po připojení stroje k síti mohou zařízení používající stejnou síť LAN ovládat stroj přístupem k IP adrese"
+
+msgid "Back"
+msgstr "Zpět"
+
+msgid "Connect"
+msgstr "Připojení"
+
+msgid "Connecting"
+msgstr "Připojení"
+
+msgid "Connect Network"
+msgstr "Připojení k síti"
+
+msgid "Leveling Calibration"
+msgstr "Kalibrace nivelace"
+
+msgid "Please follow the steps below to calibrate the machine, refer to the manual for details"
+msgstr "Při kalibraci přístroje postupujte podle následujících kroků, podrobnosti naleznete v příručce"
+
+msgid "1.Operation Z Calibration Setting Offset"
+msgstr "1.Operace Nastavení posunu kalibrace Z"
+
+msgid "2.Operate Bed Level to adjust the flatness of the bed"
+msgstr "2.Ovládejte vodováhu lůžka, abyste nastavili rovinnost lůžka"
+
+msgid "3.Operate Bed Mesh automatic leveling"
+msgstr "3.Operate Bed Mesh automatické vyrovnávání"
+
+msgid "Your languages"
+msgstr "Vaše jazyky"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Next"
+msgstr "Další"
+
+msgid "Machine Leveling"
+msgstr "Vyrovnávání strojů"
+
+msgid "Led"
+msgstr "LED"
+
+msgid "LED Off"
+msgstr "LED dioda nesvítí"
+
+msgid "LED On"
+msgstr "LED svítí"
+
+msgid "Restore factory"
+msgstr "Obnovit továrnu"
+
+msgid "Reboot"
+msgstr "Restartovat"
+
+msgid "Click Confirm will factory reset and restart, do you want to factory reset?"
+msgstr "Klikněte na Potvrdit obnovení továrního nastavení a restartování, chcete obnovit tovární nastavení?"
+
+msgid "Bed"
+msgstr "Postel"
+
+msgid "Extruder"
+msgstr "Extruder"
+
+msgid "Sure"
+msgstr "Jistý"
+
+msgid "Software Version"
+msgstr "Verze softwaru"
+
+msgid "No update package detected, make sure the KliPAD.deb file exists!!!"
+msgstr "Nebyl zjištěn žádný balíček aktualizace, ujistěte se, že existuje soubor KliPAD.deb!!!"
+
+msgid "Update package version exception, please make sure the update package is the latest version!!!"
+msgstr "Výjimka verze balíčku aktualizace, ujistěte se, že balíček aktualizace je nejnovější verze!!!"
+
+msgid "The update package is ready, do you want to update? The system will reboot after the update is complete..."
+msgstr "Aktualizační balíček je připraven, chcete aktualizovat? Systém se po dokončení aktualizace restartuje..."
+
+msgid "Please wait for a reboot while the update package is installed..."
+msgstr "Počkejte prosím na restart, než je nainstalován balíček aktualizace..."
+
+msgid "Sound"
+msgstr "Zvuk"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Abnormal interruption of printing is detected, whether to resume"
+msgstr "Zjistí se abnormální přerušení tisku, zda se má obnovit."
+
+# 时区
+msgid "UTC"
+msgstr "UTC"
+
+# # Africa
+msgid "Africa"
+msgstr "Afrika"
+
+msgid "Abidjan"
+msgstr "Abidžan"
+
+msgid "Accra"
+msgstr "Akkra"
+
+msgid "Addis_Ababa"
+msgstr "Addis_Abeba"
+
+msgid "Algiers"
+msgstr "Alžír"
+
+msgid "Asmara"
+msgstr "Asmara "
+
+msgid "Bamako"
+msgstr "Bamako"
+
+msgid "Bangui"
+msgstr "Bangui"
+
+msgid "Banjul"
+msgstr "Banjul"
+
+msgid "Bissau"
+msgstr "Bissau"
+
+msgid "Blantyre"
+msgstr "Blantyre"
+
+msgid "Brazzaville"
+msgstr "Brazzaville"
+
+msgid "Bujumbura"
+msgstr "Bujumbura"
+
+msgid "Cairo"
+msgstr "Káhira"
+
+msgid "Casablanca"
+msgstr "Casablanca"
+
+msgid "Ceuta"
+msgstr "Ceuta"
+
+msgid "Conakry"
+msgstr "Conakry"
+
+msgid "Dakar"
+msgstr "Dakar"
+
+msgid "Dar_es_Salaam"
+msgstr "Dar_es_Salaam"
+
+msgid "Djibouti"
+msgstr "Džibutsko"
+
+msgid "Douala"
+msgstr "Douala"
+
+msgid "El_Aaiun"
+msgstr "El_Aaiun"
+
+msgid "Freetown"
+msgstr "Freetown"
+
+msgid "Gaborone"
+msgstr "Gaborone"
+
+msgid "Harare"
+msgstr "Harare"
+
+msgid "Johannesburg"
+msgstr "Johannesburg"
+
+msgid "Juba"
+msgstr "Juba"
+
+msgid "Kampala"
+msgstr "Kampala"
+
+msgid "Khartoum"
+msgstr "Chartúm"
+
+msgid "Kigali"
+msgstr "Kigali"
+
+msgid "Kinshasa"
+msgstr "Kinšasa"
+
+msgid "Lagos"
+msgstr "Lagos"
+
+msgid "Libreville"
+msgstr "Libreville"
+
+msgid "Lome"
+msgstr "Lomé"
+
+msgid "Luanda"
+msgstr "Luanda"
+
+msgid "Lubumbashi"
+msgstr "Lubumbaši"
+
+msgid "Lusaka"
+msgstr "Lusaky"
+
+msgid "Malabo"
+msgstr "Malabo"
+
+msgid "Maputo"
+msgstr "Maputo"
+
+msgid "Maseru"
+msgstr "Maséru"
+
+msgid "Mbabane"
+msgstr "Mbabane"
+
+msgid "Mogadishu"
+msgstr "Mogadišo"
+
+msgid "Monrovia"
+msgstr "Monrovia"
+
+msgid "Nairobi"
+msgstr "Nairobi"
+
+msgid "Ndjamena"
+msgstr "Ndjamena"
+
+msgid "Niamey"
+msgstr "Niamey"
+
+msgid "Nouakchott"
+msgstr "Nuakšott"
+
+msgid "Ouagadougou"
+msgstr "Oagadougou"
+
+msgid "Porto-Novo"
+msgstr "Porto-Novo"
+
+msgid "Sao_Tome"
+msgstr "Svatý Tomáš"
+
+msgid "Tripoli"
+msgstr "Tripoli"
+
+msgid "Tunis"
+msgstr "Tunisko"
+
+msgid "Windhoek"
+msgstr "Windhoek"
+
+# # America
+msgid "America"
+msgstr "America"
+
+msgid "Anchorage"
+msgstr "Kotviště"
+
+msgid "Dawson"
+msgstr "Dawson"
+
+msgid "Los_Angeles"
+msgstr "Los_Angeles"
+
+msgid "Chicago"
+msgstr "Chicago"
+
+msgid "Mexico_City"
+msgstr "Mexiko_město"
+
+msgid "New_York"
+msgstr "Nový_York"
+
+msgid "Toronto"
+msgstr "Torontské"
+
+msgid "Bogota"
+msgstr "Bogota"
+
+msgid "Lima"
+msgstr "Lima"
+
+msgid "Caracas"
+msgstr "Caracas"
+
+msgid "Anguilla"
+msgstr "Anguila"
+
+msgid "Antigua"
+msgstr "Antiqua"
+
+msgid "Araguaina"
+msgstr "Araguaina"
+
+msgid "Argentina/Buenos_Aires"
+msgstr "Argentina/BuenosAires"
+
+msgid "Santiago"
+msgstr "Santiago"
+
+msgid "Sao_Paulo"
+msgstr "Brazílie"
+
+# # Antarctica
+msgid "Antarctica"
+msgstr "Antarktida"
+
+msgid "Casey"
+msgstr "Casey"
+
+msgid "Davis"
+msgstr "Davis"
+
+msgid "DumontDUrville"
+msgstr "DumontDUrville"
+
+msgid "Macquarie"
+msgstr "Macquarie"
+
+msgid "Mawson"
+msgstr "Mawson"
+
+msgid "McMurdo"
+msgstr "McMurdo"
+
+msgid "Palmer"
+msgstr "Palmer"
+
+msgid "Rothera"
+msgstr "Rothera"
+
+msgid "Syowa"
+msgstr "Siowa"
+
+msgid "Troll"
+msgstr "Siowy"
+
+msgid "Vostok"
+msgstr "Vostok"
+
+# # Arctic
+msgid "Arctic"
+msgstr "Arktický"
+
+msgid "Longyearbyen"
+msgstr "Longyearbyen"
+
+# # Asia
+msgid "Asia"
+msgstr "Asia"
+
+msgid "Aden"
+msgstr "Adén"
+
+msgid "Almaty"
+msgstr "Almaty"
+
+msgid "Amman"
+msgstr "Ammán"
+
+msgid "Anadyr"
+msgstr "Anadyr"
+
+msgid "Aqtau"
+msgstr "Aqtau"
+
+msgid "Aqtobe"
+msgstr "Aqtobe"
+
+msgid "Ashgabat"
+msgstr "Ašchabad"
+
+msgid "Atyrau"
+msgstr "Atyrau"
+
+msgid "Baghdad"
+msgstr "Bagdád"
+
+msgid "Bahrain"
+msgstr "Bahrajn"
+
+msgid "Baku"
+msgstr "Baku"
+
+msgid "Bangkok"
+msgstr "Bangkok"
+
+msgid "Barnaul"
+msgstr "Barnaul"
+
+msgid "Beirut"
+msgstr "Bejrút"
+
+msgid "Bishkek"
+msgstr "Biškek"
+
+msgid "Brunei"
+msgstr "Brunej"
+
+msgid "Chita"
+msgstr "Čita"
+
+msgid "Colombo"
+msgstr "Kolombo"
+
+msgid "Damascus"
+msgstr "Damašek"
+
+msgid "Dhaka"
+msgstr "Dháka"
+
+msgid "Dili"
+msgstr "Dili"
+
+msgid "Dubai"
+msgstr "Dubaj"
+
+msgid "Dushanbe"
+msgstr "Dušanbe"
+
+msgid "Gaza"
+msgstr "Gazy"
+
+msgid "Hebron"
+msgstr "Hebron"
+
+msgid "Hong_Kong"
+msgstr "Hong_Kong"
+
+msgid "Hovd"
+msgstr "Hovd"
+
+msgid "Irkutsk"
+msgstr "Irkutsk"
+
+msgid "Jerusalem"
+msgstr "Jeruzalém"
+
+msgid "Kabul"
+msgstr "Kábul"
+
+msgid "Karachi"
+msgstr "Karáčí"
+
+msgid "Kuching"
+msgstr "Kučing"
+
+msgid "Kuwait"
+msgstr "Kuvajt"
+
+msgid "Macau"
+msgstr "Kuvajt"
+
+msgid "Muscat"
+msgstr "Muškát"
+
+msgid "Nicosia"
+msgstr "Nikósie"
+
+msgid "Omsk"
+msgstr "Omsk"
+
+msgid "Oral"
+msgstr "Orální"
+
+msgid "Phnom_Penh"
+msgstr "Phnom_Penh"
+
+msgid "Pontianak"
+msgstr "Pontianak"
+
+msgid "Qatar"
+msgstr "Katar"
+
+msgid "Riyadh"
+msgstr "Rijád"
+
+msgid "Sakhalin"
+msgstr "Sachalin"
+
+msgid "Seoul"
+msgstr "Soul"
+
+msgid "Shanghai"
+msgstr "Šanghaj"
+
+msgid "Singapore"
+msgstr "Singapur"
+
+msgid "Tashkent"
+msgstr "Taškent"
+
+msgid "Tbilisi"
+msgstr "Tbilisi"
+
+msgid "Tehran"
+msgstr "Teherán"
+
+msgid "Thimphu"
+msgstr "Thimphu"
+
+msgid "Tokyo"
+msgstr "Tokio"
+
+msgid "Tomsk"
+msgstr "Tomsk"
+
+msgid "Ust-Nera"
+msgstr "Ust-Nera"
+
+msgid "Yakutsk"
+msgstr "Jakutsk"
+
+msgid "Yangon"
+msgstr "Rangún"
+
+# # Atlantic
+msgid "Atlantic"
+msgstr "Atlantic"
+
+msgid "Azores"
+msgstr "Azory"
+
+msgid "Bermuda"
+msgstr "Bermudy"
+
+msgid "Canary"
+msgstr "Kanárci"
+
+msgid "Cape_Verde"
+msgstr "Cape_Verde"
+
+msgid "Faroe"
+msgstr "Faerské ostrovy"
+
+msgid "Madeira"
+msgstr "Madeira"
+
+msgid "Reykjavik"
+msgstr "Reykjavík"
+
+msgid "South_Georgia"
+msgstr "Jižní_Georgie"
+
+msgid "St_Helena"
+msgstr "St_Helena"
+
+msgid "Stanley"
+msgstr "Stanley"
+
+# # Australia
+msgid "Australia"
+msgstr "Austrálie"
+
+msgid "Adelaide"
+msgstr "Adelaide"
+
+msgid "Brisbane"
+msgstr "Brisbane"
+
+msgid "Broken_Hill"
+msgstr "Broken_Hill"
+
+msgid "Darwin"
+msgstr "Darwin"
+
+msgid "Eucla"
+msgstr "Eukla"
+
+msgid "Hobart"
+msgstr "Hobart"
+
+msgid "Lindeman"
+msgstr "Lindeman"
+
+msgid "Lord_Howe"
+msgstr "Pán_Howe"
+
+msgid "Melbourne"
+msgstr "Melbourne"
+
+msgid "Perth"
+msgstr "Perth"
+
+msgid "Sydney"
+msgstr "Sydney"
+
+# # Europe
+msgid "Europe"
+msgstr "Evropa"
+
+msgid "Amsterdam"
+msgstr "Amsterdam"
+
+msgid "Andorra"
+msgstr "Andorra"
+
+msgid "Astrakhan"
+msgstr "Astrachaň"
+
+msgid "Athens"
+msgstr "Athény"
+
+msgid "Belgrade"
+msgstr "Bělehrad"
+
+msgid "Berlin"
+msgstr "Berlín"
+
+msgid "Bratislava"
+msgstr "Bratislava"
+
+msgid "Brussels"
+msgstr "Bruselská"
+
+msgid "Bucharest"
+msgstr "Bukurešť"
+
+msgid "Budapest"
+msgstr "Budapešť"
+
+msgid "Busingen"
+msgstr "Busingen"
+
+msgid "Chisinau"
+msgstr "Kišiněv"
+
+msgid "Copenhagen"
+msgstr "Kodaňská"
+
+msgid "Dublin"
+msgstr "Dublin"
+
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+msgid "Guernsey"
+msgstr "Guernsey"
+
+msgid "Helsinki"
+msgstr "Helsinki"
+
+msgid "Isle_of_Man"
+msgstr "Isle_of_Man"
+
+msgid "Istanbul"
+msgstr "Istanbul"
+
+msgid "Jersey"
+msgstr "Jersey"
+
+msgid "Kaliningrad"
+msgstr "Kaliningradská"
+
+msgid "Kiev"
+msgstr "Kyjev"
+
+msgid "Kirov"
+msgstr "Kirov"
+
+msgid "Lisbon"
+msgstr "Lisabon"
+
+msgid "Ljubljana"
+msgstr "Lublaň"
+
+msgid "London"
+msgstr "Londýn"
+
+msgid "Luxembourg"
+msgstr "Lucembursko"
+
+msgid "Madrid"
+msgstr "Madrid"
+
+msgid "Malta"
+msgstr "Malta"
+
+msgid "Mariehamn"
+msgstr "Mariehamn"
+
+msgid "Minsk"
+msgstr "Minsk"
+
+msgid "Monaco"
+msgstr "Monako"
+
+msgid "Moscow"
+msgstr "Moskva"
+
+msgid "Oslo"
+msgstr "Oslo"
+
+msgid "Paris"
+msgstr "Paříž"
+
+msgid "Podgorica"
+msgstr "Podgorica"
+
+msgid "Prague"
+msgstr "Praha"
+
+msgid "Riga"
+msgstr "Riga"
+
+msgid "Rome"
+msgstr "Řím"
+
+msgid "Samara"
+msgstr "Samara"
+
+msgid "San_Marino"
+msgstr "San_Marino"
+
+msgid "Sarajevo"
+msgstr "Sarajevo"
+
+msgid "Saratov"
+msgstr "Saratov"
+
+msgid "Simferopol"
+msgstr "Simferopol"
+
+msgid "Skopje"
+msgstr "Skopje"
+
+msgid "Sofia"
+msgstr "Sofia"
+
+msgid "Stockholm"
+msgstr "Stockholm"
+
+msgid "Tallinn"
+msgstr "Tallinn"
+
+msgid "Tirane"
+msgstr "Tirane"
+
+msgid "Ulyanovsk"
+msgstr "Uljanovsk"
+
+msgid "Uzhgorod"
+msgstr "Užhorod"
+
+msgid "Vaduz"
+msgstr "Vaduz"
+
+msgid "Vatican"
+msgstr "Vatikán"
+
+msgid "Vienna"
+msgstr "Vídeň"
+
+msgid "Vilnius"
+msgstr "Vilnius"
+
+msgid "Volgograd"
+msgstr "Volgograd"
+
+msgid "Warsaw"
+msgstr "Varšava"
+
+msgid "Zagreb"
+msgstr "Záhřeb"
+
+msgid "Zaporozhye"
+msgstr "Záporoží"
+
+msgid "Zurich"
+msgstr "Zürich"
+
+# # Indian
+msgid "Indian"
+msgstr "Indický"
+
+msgid "Antananarivo"
+msgstr "Antananarivo"
+
+msgid "Chagos"
+msgstr "Čagos"
+
+msgid "Christmas"
+msgstr "Vánoce"
+
+msgid "Cocos"
+msgstr "Cocos"
+
+msgid "Comoro"
+msgstr "Comoro"
+
+msgid "Kerguelen"
+msgstr "Kerguelen"
+
+msgid "Mahe"
+msgstr "Mahe"
+
+msgid "Maldives"
+msgstr "Maledivy"
+
+msgid "Mauritius"
+msgstr "Mauricius"
+
+msgid "Mayotte"
+msgstr "Mayotte"
+
+msgid "Reunion"
+msgstr "Sraz"
+
+# # Pacific
+msgid "Pacific"
+msgstr "Pacific"
+
+msgid "Apia"
+msgstr "Apia"
+
+msgid "Auckland"
+msgstr "Auckland"
+
+msgid "Bougainville"
+msgstr "Bougainville"
+
+msgid "Chatham"
+msgstr "Chatham"
+
+msgid "Chuuk"
+msgstr "Chuuk"
+
+msgid "Easter"
+msgstr "Velikonoční"
+
+msgid "Efate"
+msgstr "Efate"
+
+msgid "Enderbury"
+msgstr "Enderbury"
+
+msgid "Fakaofo"
+msgstr "Fakaofo"
+
+msgid "Fiji"
+msgstr "Fidži"
+
+msgid "Funafuti"
+msgstr "Funafuti"
+
+msgid "Galapagos"
+msgstr "Galapágy"
+
+msgid "Gambier"
+msgstr "Gambier"
+
+msgid "Guadalcanal"
+msgstr "Guadalcanal"
+
+msgid "Guam"
+msgstr "Guam"
+
+msgid "Honolulu"
+msgstr "Honolulu"
+
+msgid "Kiritimati"
+msgstr "Kiritimati"
+
+msgid "Kosrae"
+msgstr "Kosrae"
+
+msgid "Kwajalein"
+msgstr "Kwajalein"
+
+msgid "Majuro"
+msgstr "Majuro"
+
+msgid "Marquesas"
+msgstr "Markézy"
+
+msgid "Midway"
+msgstr "Midway"
+
+msgid "Nauru"
+msgstr "Nauru"
+
+msgid "Niue"
+msgstr "Niue"
+
+msgid "Norfolk"
+msgstr "Norfolk"
+
+msgid "Noumea"
+msgstr "Noumea"
+
+msgid "Pago_Pago"
+msgstr "Pago_Pago"
+
+msgid "Palau"
+msgstr "Palau"
+
+msgid "Pitcairn"
+msgstr "Pitcairn"
+
+msgid "Pohnpei"
+msgstr "Pohnpei"
+
+msgid "Port_Moresby"
+msgstr "Přístav_Moresby"
+
+msgid "Rarotonga"
+msgstr "Rarotonga"
+
+msgid "Saipan"
+msgstr "Saipan"
+
+msgid "Tahiti"
+msgstr "Tahiti"
+
+msgid "Tarawa"
+msgstr "Tarawa"
+
+msgid "Tongatapu"
+msgstr "Tongatapu"
+
+msgid "Wake"
+msgstr "Probuďte se"
+
+msgid "Wallis"
+msgstr "Wallis"
+
+#~ msgid "Decrease"
+#~ msgstr "Snížit"
+
+#~ msgid "Increase"
+#~ msgstr "Zvětšit"
+
+#, python-format
+#~ msgid "Sending Power ON signal to: %s"
+#~ msgstr "Odeslat ZAP do %s"

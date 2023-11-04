@@ -1,0 +1,1754 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-30 18:17-0300\n"
+"PO-Revision-Date: 2023-05-16 15:55+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#, python-format
+msgid "%s will be updated to version"
+msgstr "%s uppdateras till version"
+
+msgid "(default)"
+msgstr "(standard)"
+
+msgid "24 Hour Time"
+msgstr "24 timmars tid"
+
+msgid "A FIRMWARE_RESTART may fix the issue."
+msgstr "En FIRMWARE_RESTART kan lösa problemet."
+
+msgid "ADXL Not Configured"
+msgstr "ADXL inte konfigurerad"
+
+msgid "Abort"
+msgstr "Avbryt"
+
+msgid "Acceleration:"
+msgstr "Acceleration:"
+
+msgid "Accept"
+msgstr "Godkänn"
+
+msgid "Actions"
+msgstr "Åtgärder"
+
+msgid "Add profile"
+msgstr "Lägg till en profil"
+
+msgid "Apply"
+msgstr "Ansök på"
+
+#, python-format
+msgid "Apply %.2f offset to Endstop?"
+msgstr "Tillämpa %.2f förskjutning till Endstop?"
+
+#, python-format
+msgid "Apply %s%.2f offset to Probe?"
+msgstr "Tillämpa %s%.2f förskjutning på Probe?"
+
+msgid "Are you sure do you want to exclude the object?"
+msgstr "Är du säker på att du vill utesluta objektet?"
+
+msgid "Are you sure you want to run Emergency Stop?"
+msgstr "Är du säker på att du vill köra Nödstopp?"
+
+msgid "Are you sure you wish to cancel this print?"
+msgstr "Är du säker på att du vill avbryta denna utskrift?"
+
+msgid "Are you sure you wish to disable motors?"
+msgstr "Är du säker på att du vill inaktivera motorer?"
+
+msgid "Are you sure you wish to reboot the system?"
+msgstr "Är du säker på att du vill starta om systemet?"
+
+msgid "Are you sure you wish to shutdown the system?"
+msgstr "Är du säker på att du vill stänga av systemet?"
+
+msgid "Auto"
+msgstr "Automatisk"
+
+msgid "Auto-calibrate"
+msgstr "Automatisk kalibrering"
+
+msgid "Auto-close notifications"
+msgstr "Automatisk stängning av meddelanden"
+
+msgid "Auto-scroll"
+msgstr "Auto-scrolla"
+
+msgid "Bed Level"
+msgstr "Sängnivå"
+
+msgid "Bed Mesh"
+msgstr "Säng Mesh"
+
+msgid "Bed screw configuration:"
+msgstr "Konfiguration av bäddskruven:"
+
+msgid "Calibrate"
+msgstr "Kalibrera"
+
+msgid "Calibrated"
+msgstr "Kalibrerad"
+
+msgid "Calibrated, save configuration to make it permanent"
+msgstr "Kalibrerad, spara konfiguration för att göra den permanent"
+
+msgid "Calibrating"
+msgstr "Kalibrering av"
+
+msgid "Can't set above the maximum:"
+msgstr "Kan inte ställa in över maxgränsen:"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "Cancel Print"
+msgstr "Avbryt utskrift"
+
+msgid "Cancelled"
+msgstr "Avbruten"
+
+msgid "Cancelling"
+msgstr "Avbryter"
+
+msgid "Cannot connect to Moonraker"
+msgstr "Kan inte ansluta till Moonraker"
+
+msgid "Channel"
+msgstr "Kanal"
+
+msgid "Check ADXL Wiring"
+msgstr "Kontrollera ADXL-ledningar"
+
+msgid "Checking for updates, please wait..."
+msgstr "Kontrollerar uppdateringar, vänligen vänta..."
+
+msgid "Clear"
+msgstr "Klart"
+
+msgid "Close"
+msgstr "Stäng"
+
+msgid "Complete"
+msgstr "Färdig"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Confirm Emergency Stop"
+msgstr "Bekräfta nödstopp"
+
+msgid "Connected"
+msgstr "Ansluten"
+
+#, python-format
+msgid "Connecting to %s"
+msgstr "Ansluter till %s"
+
+msgid "Console"
+msgstr "Konsol"
+
+msgid "Continue"
+msgstr "Fortsätt"
+
+msgid "Cooldown"
+msgstr "Nedkylning"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Decrease"
+msgstr "Minska"
+
+msgid "Delete File?"
+msgstr "Ta bort en fil?"
+
+msgid "Deselect"
+msgstr "Avmarkera"
+
+msgid "Disable Motors"
+msgstr "Inaktivera motorer"
+
+msgid "Disable XY"
+msgstr "Inaktivera XY"
+
+msgid "Distance (mm)"
+msgstr "Avstånd (mm)"
+
+#, python-format
+msgid "Do you want to recover %s?"
+msgstr "Vill du återställa %s?"
+
+msgid "Elapsed:"
+msgstr "Förfluten:"
+
+msgid "Error"
+msgstr "Fel"
+
+msgid "Estimated Time Method"
+msgstr "Beräknad tid Metod"
+
+msgid "Exclude Object"
+msgstr "Exkludera objekt"
+
+msgid "Extra Large"
+msgstr "Extra stor"
+
+msgid "Extrude"
+msgstr "Extrudera"
+
+msgid "Extrusion +"
+msgstr "Extrudering +"
+
+msgid "Extrusion -"
+msgstr "Extrudering -"
+
+msgid "Failed, adjust position first"
+msgstr "Misslyckades, justera positionen först"
+
+msgid "Fan"
+msgstr "Fläkt"
+
+msgid "Filament Used"
+msgstr "Filament som används"
+
+msgid "Filament total:"
+msgstr "Filament totalt:"
+
+msgid "Filament used:"
+msgstr "Filament som används:"
+
+msgid "Filament:"
+msgstr "Filament:"
+
+msgid "File"
+msgstr "Fil"
+
+msgid "File:"
+msgstr "Fil:"
+
+msgid "Finding ADXL"
+msgstr "Att hitta ADXL"
+
+msgid "Fine Tuning"
+msgstr "Finjustering"
+
+msgid "Finish"
+msgstr "Slutför"
+
+msgid "Firmware Restart"
+msgstr "Firmware Omstart"
+
+msgid "Flow:"
+msgstr "Flöde:"
+
+msgid "Flowrate:"
+msgstr "Flödeshastighet:"
+
+msgid "Font Size"
+msgstr "Textstorlek"
+
+msgid "Full Update"
+msgstr "Fullständig Uppdatering"
+
+msgid "Go Back"
+msgstr "Gå tillbaka"
+
+msgid "Height:"
+msgstr "Höjd:"
+
+msgid "Hidden"
+msgstr "Dold"
+
+msgid "Hide"
+msgstr "Dölj"
+
+msgid "Hide sensors in Temp."
+msgstr "Dölj sensorer i Temp."
+
+msgid "Hide temp."
+msgstr "Dölj temp."
+
+msgid "Home All"
+msgstr "Hem Alla"
+
+msgid "Home X"
+msgstr "Hem X"
+
+msgid "Home XY"
+msgstr "Hem XY"
+
+msgid "Home Y"
+msgstr "Hem Y"
+
+msgid "Home Z"
+msgstr "Hem Z"
+
+msgid "Homing"
+msgstr "Homing"
+
+msgid "Host"
+msgstr "Värd"
+
+msgid "Hostname"
+msgstr "Värdnamn"
+
+msgid "Icon Theme"
+msgstr "Ikon tema"
+
+msgid "Increase"
+msgstr "Öka"
+
+msgid "Initializing printer..."
+msgstr "Initierar skrivaren..."
+
+msgid "Input Shaper"
+msgstr "Ingångsformare"
+
+msgid "Interface"
+msgstr "Gränssnitt"
+
+msgid "Invalid"
+msgstr "Ogiltig"
+
+msgid "Invalid password"
+msgstr "Ogiltigt lösenord"
+
+msgid "Invert X"
+msgstr "Invertera X"
+
+msgid "Invert Y"
+msgstr "Invertera Y"
+
+msgid "Invert Z"
+msgstr "Invertera Z"
+
+msgid "Klipper Restart"
+msgstr "Klipper Omstart"
+
+msgid "Klipper has disconnected"
+msgstr "Klipper har kopplat bort"
+
+msgid "Klipper has encountered an error."
+msgstr "Klipper har stött på ett fel."
+
+msgid "Klipper has shutdown"
+msgstr "Klipper har stängts av"
+
+msgid "Klipper is attempting to start"
+msgstr "Klipper försöker starta"
+
+msgid "Klipper will reboot"
+msgstr "Klipper kommer att starta om"
+
+msgid "KlipperScreen will reboot"
+msgstr "KlipperScreen startar om"
+
+msgid "Language"
+msgstr "Språk"
+
+msgid "Large"
+msgstr "Stor"
+
+msgid "Layer:"
+msgstr "Skikt:"
+
+msgid "Left:"
+msgstr "Återstående:"
+
+msgid "Limits"
+msgstr "Begränsningar"
+
+msgid "Load"
+msgstr "Ladda"
+
+msgid "Lower Nozzle"
+msgstr "Sänk munstycket"
+
+msgid "Macro shortcut on sidebar"
+msgstr "Makro genväg på sidofältet"
+
+msgid "Macros"
+msgstr "Makron"
+
+msgid "Main Menu"
+msgstr "Huvudmeny"
+
+msgid "Max"
+msgstr "Max"
+
+msgid "Max Acceleration"
+msgstr "Max Acceleration"
+
+msgid "Max Acceleration to Deceleration"
+msgstr "Max acceleration till retardation"
+
+msgid "Max Velocity"
+msgstr "Maximal hastighet"
+
+msgid "Maximum"
+msgstr "Maximalt"
+
+msgid "Measure Both"
+msgstr "Mät båda"
+
+msgid "Measure X"
+msgstr "Åtgärd X"
+
+msgid "Measure Y"
+msgstr "Åtgärd Y"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Menu"
+msgstr "Meny"
+
+msgid "Mesh calibrate"
+msgstr "Kalibrering av maskor"
+
+msgid "Modified"
+msgstr "Ändrad"
+
+msgid "Moonraker: connected"
+msgstr "Moonraker: ansluten"
+
+msgid "Move"
+msgstr "Flytta"
+
+msgid "Move Distance (mm)"
+msgstr "Förflyttningsavstånd (mm)"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Network"
+msgstr "Nätverk"
+
+msgid "Never"
+msgstr "Aldrig"
+
+msgid "New"
+msgstr "Ny"
+
+msgid "Not supported for auto-detection, it needs to be configured in klipperscreen.conf"
+msgstr "NyInte stöds för automatisk identifiering, det måste konfigureras i klipperscreen.conf"
+
+msgid "Nothing selected"
+msgstr "Inget valt"
+
+#, python-format
+msgid "Outdated by %d"
+msgstr "Föråldrad med %d"
+
+msgid "PSK for"
+msgstr "PSK för"
+
+msgid "Package will be updated"
+msgid_plural "Packages will be updated"
+msgstr[0] "Paketet kommer att uppdateras"
+msgstr[1] "Paketen kommer att uppdateras"
+
+msgid "Part Fan"
+msgstr "Del Fläkt"
+
+msgid "Password saved"
+msgstr "Lösenordet har sparats"
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Paused"
+msgstr "Pausad"
+
+msgid "Perform a full upgrade?"
+msgstr "Utför en fullständig uppgradering?"
+
+msgid "Pins"
+msgstr "Pins"
+
+msgid "Please recompile and flash the micro-controller."
+msgstr "Vänligen kompilera om och flasha mikrokontrollern."
+
+msgid "Power"
+msgstr "Ström"
+
+msgid "Power On Printer"
+msgstr "Slå på skrivaren"
+
+msgid "Pressure Advance:"
+msgstr "Tryckförhöjning:"
+
+msgid "Print"
+msgstr "Skriv ut"
+
+msgid "Print Control"
+msgstr "Utskriftskontroll"
+
+msgid "Print Time"
+msgstr "Tid för utskrift"
+
+msgid "Printer"
+msgstr "Skrivare"
+
+msgid "Printer Connections"
+msgstr "Skrivaranslutningar"
+
+msgid "Printer Select"
+msgstr "Val av skrivare"
+
+msgid "Printing"
+msgstr "Skriver ut"
+
+msgid "Probe Offset"
+msgstr "Offset för sonden"
+
+msgid "Profile Name:"
+msgstr "Profilens namn:"
+
+msgid "Provide KlipperScreen.log when asking for help.\n"
+msgstr "Ange KlipperScreen.log när du ber om hjälp.\n"
+
+msgid "Quad Gantry Level"
+msgstr "Quad Gantry Level"
+
+msgid "Raise Nozzle"
+msgstr "Höj munstycket"
+
+msgid "Recover"
+msgstr "Återskapa"
+
+msgid "Recover Hard"
+msgstr "Återskapa hårda"
+
+msgid "Recover Soft"
+msgstr "Återskapa Soft"
+
+msgid "Reference"
+msgstr "Referens"
+
+msgid "Refresh"
+msgstr "Uppdatera"
+
+msgid "Restart"
+msgstr "Starta om"
+
+msgid "Resume"
+msgstr "Återuppta"
+
+msgid "Retract"
+msgstr "Dra in"
+
+msgid "Retraction"
+msgstr "Återkallelse"
+
+msgid "Retraction Length"
+msgstr "Längd för indragning"
+
+msgid "Retraction Speed"
+msgstr "Hastighet för indragning"
+
+msgid "Retry"
+msgstr "Försök igen"
+
+msgid "Retrying"
+msgstr "Återförsök"
+
+msgid "Save"
+msgstr "Spara"
+
+msgid "Save Config"
+msgstr "Spara konfiguration"
+
+msgid "Save Z"
+msgstr "Spara Z"
+
+msgid "Save configuration?"
+msgstr "Spara konfigurationen?"
+
+msgid "Saved"
+msgstr "Sparad"
+
+#, python-format
+msgid "Saved offset: %s"
+msgstr "Sparad offset: %s"
+
+msgid "Screen DPMS"
+msgstr "Skärm DPMS"
+
+msgid "Screen Power Off Time"
+msgstr "Avstängningstid för skärmen"
+
+msgid "Screws Adjust"
+msgstr "Skruvar Justera"
+
+msgid "Select"
+msgstr "Välj"
+
+msgid "Send"
+msgstr "Skicka"
+
+#, python-format
+msgid "Sending Power ON signal to: %s"
+msgstr "Skickar ström PÅ-signal till: %s"
+
+msgid "Set Temp"
+msgstr "Ställ in temperatur"
+
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid "Show"
+msgstr "Visa"
+
+msgid "Show Heater Power"
+msgstr "Visa värmareffekt"
+
+msgid "Shutdown"
+msgstr "Avstängning"
+
+msgid "Size"
+msgstr "Storlek"
+
+msgid "Slicer"
+msgstr "Skivare"
+
+msgid "Slicer Time correction (%)"
+msgstr "Skivare Tidskorrigering (%)"
+
+msgid "Slicer:"
+msgstr "Skivare:"
+
+msgid "Small"
+msgstr "Liten"
+
+msgid "Speed (mm/s)"
+msgstr "Hastighet (mm/s)"
+
+msgid "Speed +"
+msgstr "Hastighet +"
+
+msgid "Speed -"
+msgstr "Hastighet -"
+
+msgid "Speed:"
+msgstr "Hastighet:"
+
+msgid "Square Corner Velocity"
+msgstr "Hastighet i det fyrkantiga hörnet"
+
+msgid "Start"
+msgstr "Starta"
+
+msgid "Starting WiFi Association"
+msgstr "Starta en WiFi-förening"
+
+msgid "Starting recovery for"
+msgstr "Påbörja återhämtning för"
+
+msgid "Starting update for"
+msgstr "Startuppdatering för"
+
+msgid "System"
+msgstr "System"
+
+msgid "System Restart"
+msgstr "System Omstart"
+
+msgid "System Shutdown"
+msgstr "System Avstängning"
+
+msgid "Temp (°C)"
+msgstr "Temperatur (°C)"
+
+msgid "Temperature"
+msgstr "Temperatur"
+
+msgid "Total:"
+msgstr "Totalt:"
+
+msgid "Unknown Heater"
+msgstr "Okänt värmeelement"
+
+msgid "Unknown screw position"
+msgstr "Okänd skruvposition"
+
+msgid "Unload"
+msgstr "Lasta av"
+
+msgid "Unretract Extra Length"
+msgstr "Extra längd för att dra ut den"
+
+msgid "Unretract Speed"
+msgstr "Hastighet för utdragning"
+
+msgid "Up To Date"
+msgstr "Aktuellt"
+
+msgid "Update"
+msgstr "Uppdatera"
+
+msgid "Updating"
+msgstr "Uppdaterar"
+
+msgid "Uploaded"
+msgstr "Uppladdad"
+
+msgid "XY Move Speed (mm/s)"
+msgstr "XY rörelsehastighet (mm/s)"
+
+msgid "XY Speed (mm/s)"
+msgstr "XY-hastighet (mm/s)"
+
+msgid "Z Calibrate"
+msgstr "Z Kalibrering"
+
+msgid "Z Move Speed (mm/s)"
+msgstr "Z rörelsehastighet (mm/s)"
+
+msgid "Z Speed (mm/s)"
+msgstr "Z Hastighet (mm/s)"
+
+msgid "Z Tilt"
+msgstr "Z Tilt"
+
+msgid "Z offset:"
+msgstr "Z-förskjutning:"
+
+msgid "commit"
+msgid_plural "commits"
+msgstr[0] "begå"
+msgstr[1] "förbinder sig till"
+
+msgid "dBm"
+msgstr "dBm"
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "timme"
+msgstr[1] "timmar"
+
+msgid "minutes"
+msgstr "minuter"
+
+msgid "mm"
+msgstr "mm"
+
+msgid "mm/s"
+msgstr "mm/s"
+
+msgid "mm/s²"
+msgstr "mm/s²"
+
+msgid "mm³/s"
+msgstr "mm³/s"
+
+msgid "After the machine is connected to the network, devices using the same LAN can control the machine by accessing the IP"
+msgstr "När maskinen är ansluten till nätverket kan enheter som använder samma LAN styra maskinen genom att komma åt IP-adressen"
+
+msgid "Connect"
+msgstr "Anslut"
+
+msgid "Connecting"
+msgstr "Anslutning av"
+
+msgid "Connect Network"
+msgstr "Anslut nätverk"
+
+msgid "Leveling Calibration"
+msgstr "Kalibrering av utjämning"
+
+msgid "Next"
+msgstr "Nästa"
+
+msgid "Please follow the steps below to calibrate the machine, refer to the manual for details"
+msgstr "Följ nedanstående steg för att kalibrera maskinen, se manualen för detaljer"
+
+msgid "1.Operation Z Calibration Setting Offset"
+msgstr "1.Operation Z kalibreringsinställning Offset"
+
+msgid "2.Operate Bed Level to adjust the flatness of the bed"
+msgstr "2.Använd Bed Level för att justera sängens planhet"
+
+msgid "3.Operate Bed Mesh automatic leveling"
+msgstr "3.Operate Bed Mesh automatisk utjämning"
+
+msgid "Your languages"
+msgstr "Dina språk"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Back"
+msgstr "Tillbaka"
+
+msgid "Machine Leveling"
+msgstr "Utjämning av maskiner"
+
+msgid "Led"
+msgstr "Led"
+
+msgid "LED Off"
+msgstr "LED avstängd"
+
+msgid "LED On"
+msgstr "LED på"
+
+msgid "Restore factory"
+msgstr "Återställ fabriken"
+
+msgid "Reboot"
+msgstr "Omstart"
+
+msgid "Click Confirm will factory reset and restart, do you want to factory reset?"
+msgstr "Klicka på Bekräfta kommer att fabriksåterställas och startas om, vill du fabriksåterställa?"
+
+msgid "Bed"
+msgstr "Säng"
+
+msgid "Extruder"
+msgstr "Extrudern"
+
+msgid "Sure"
+msgstr "Visst"
+
+msgid "Software Version"
+msgstr "Programvaruversion"
+
+msgid "No update package detected, make sure the KliPAD.deb file exists!!!"
+msgstr "Inget uppdateringspaket upptäcktes, kontrollera att KliPAD.deb-filen finns!!!"
+
+msgid "Update package version exception, please make sure the update package is the latest version!!!"
+msgstr "Undantag för uppdateringspaketets version, se till att uppdateringspaketet är den senaste versionen!!!!"
+
+msgid "The update package is ready, do you want to update? The system will reboot after the update is complete..."
+msgstr "Uppdateringspaketet är klart, vill du uppdatera? Systemet startar om när uppdateringen är klar..."
+
+msgid "Please wait for a reboot while the update package is installed..."
+msgstr "Vänta på en omstart medan uppdateringspaketet installeras..."
+
+
+msgid "Sound"
+msgstr ""
+
+msgid "Ok"
+msgstr ""
+
+msgid "Abnormal interruption of printing is detected, whether to resume"
+msgstr ""
+
+# 时区
+msgid "UTC"
+msgstr ""
+
+## Africa
+msgid "Africa"
+msgstr ""
+
+msgid "Abidjan"
+msgstr ""
+
+msgid "Accra"
+msgstr ""
+
+msgid "Addis_Ababa"
+msgstr ""
+
+msgid "Algiers"
+msgstr ""
+
+msgid "Asmara" 
+msgstr ""
+
+msgid "Bamako" 
+msgstr ""
+
+msgid "Bangui" 
+msgstr ""
+
+msgid "Banjul" 
+msgstr ""
+
+msgid "Bissau" 
+msgstr ""
+
+msgid "Blantyre" 
+msgstr ""
+
+msgid "Brazzaville" 
+msgstr ""
+
+msgid "Bujumbura" 
+msgstr ""
+
+msgid "Cairo" 
+msgstr ""
+
+msgid "Casablanca" 
+msgstr ""
+
+msgid "Ceuta" 
+msgstr ""
+
+msgid "Conakry" 
+msgstr ""
+
+msgid "Dakar"
+msgstr ""
+
+msgid "Dar_es_Salaam" 
+msgstr ""
+
+msgid "Djibouti" 
+msgstr ""
+
+msgid "Douala"
+msgstr ""
+
+msgid "El_Aaiun" 
+msgstr ""
+
+msgid "Freetown" 
+msgstr ""
+
+msgid "Gaborone" 
+msgstr ""
+
+msgid "Harare" 
+msgstr ""
+
+msgid "Johannesburg" 
+msgstr ""
+
+msgid "Juba" 
+msgstr ""
+
+msgid "Kampala" 
+msgstr ""
+
+msgid "Khartoum" 
+msgstr ""
+
+msgid "Kigali" 
+msgstr ""
+
+msgid "Kinshasa" 
+msgstr ""
+
+msgid "Lagos" 
+msgstr ""
+
+msgid "Libreville" 
+msgstr ""
+
+msgid "Lome" 
+msgstr ""
+
+msgid "Luanda" 
+msgstr ""
+
+msgid "Lubumbashi" 
+msgstr ""
+
+msgid "Lusaka" 
+msgstr ""
+
+msgid "Malabo" 
+msgstr ""
+
+msgid "Maputo" 
+msgstr ""
+
+msgid "Maseru" 
+msgstr ""
+
+msgid "Mbabane" 
+msgstr ""
+
+msgid "Mogadishu"
+msgstr ""
+
+msgid "Monrovia" 
+msgstr ""
+
+msgid "Nairobi" 
+msgstr ""
+
+msgid "Ndjamena" 
+msgstr ""
+
+msgid "Niamey" 
+msgstr ""
+
+msgid "Nouakchott" 
+msgstr ""
+
+msgid "Ouagadougou"
+msgstr ""
+
+msgid "Porto-Novo"
+msgstr ""
+
+msgid "Sao_Tome" 
+msgstr ""
+
+msgid "Tripoli" 
+msgstr ""
+
+msgid "Tunis" 
+msgstr ""
+
+msgid "Windhoek"
+msgstr ""
+
+
+## America
+msgid "America"
+msgstr ""
+
+msgid "Anchorage" 
+msgstr ""
+
+msgid "Dawson" 
+msgstr ""
+
+msgid "Los_Angeles" 
+msgstr ""
+
+msgid "Chicago" 
+msgstr ""
+
+msgid "Mexico_City" 
+msgstr ""
+
+msgid "New_York" 
+msgstr ""
+
+msgid "Toronto" 
+msgstr ""
+
+msgid "Bogota"
+msgstr ""
+
+msgid "Lima" 
+msgstr ""
+
+msgid "Caracas" 
+msgstr ""
+
+msgid "Anguilla" 
+msgstr ""
+
+msgid "Antigua" 
+msgstr ""
+
+msgid "Araguaina" 
+msgstr ""
+
+msgid "Argentina/Buenos_Aires" 
+msgstr ""
+
+msgid "Santiago" 
+msgstr ""
+
+msgid "Sao_Paulo"
+msgstr ""
+
+
+## Antarctica
+msgid "Antarctica"
+msgstr ""
+
+msgid "Casey" 
+msgstr ""
+
+msgid "Davis" 
+msgstr ""
+
+msgid "DumontDUrville" 
+msgstr ""
+
+msgid "Macquarie" 
+msgstr ""
+
+msgid "Mawson" 
+msgstr ""
+
+msgid "McMurdo" 
+msgstr ""
+
+msgid "Palmer" 
+msgstr ""
+
+msgid "Rothera" 
+msgstr ""
+
+msgid "Syowa" 
+msgstr ""
+
+msgid "Troll" 
+msgstr ""
+
+msgid "Vostok" 
+msgstr ""
+
+
+## Arctic
+msgid "Arctic"
+msgstr ""
+
+msgid "Longyearbyen"
+msgstr ""
+
+## Asia
+msgid "Asia"
+msgstr ""
+
+msgid "Aden"
+msgstr ""
+
+msgid "Almaty" 
+msgstr ""
+
+msgid "Amman" 
+msgstr ""
+
+msgid "Anadyr" 
+msgstr ""
+
+msgid "Aqtau" 
+msgstr ""
+
+msgid "Aqtobe" 
+msgstr ""
+
+msgid "Ashgabat" 
+msgstr ""
+
+msgid "Atyrau" 
+msgstr ""
+
+msgid "Baghdad" 
+msgstr ""
+
+msgid "Bahrain" 
+msgstr ""
+
+msgid "Baku" 
+msgstr ""
+
+msgid "Bangkok" 
+msgstr ""
+
+msgid "Barnaul" 
+msgstr ""
+
+msgid "Beirut" 
+msgstr ""
+
+msgid "Bishkek" 
+msgstr ""
+
+msgid "Brunei" 
+msgstr ""
+
+msgid "Chita" 
+msgstr ""
+
+msgid "Colombo" 
+msgstr ""
+
+msgid "Damascus" 
+msgstr ""
+
+msgid "Dhaka" 
+msgstr ""
+
+msgid "Dili" 
+msgstr ""
+
+msgid "Dubai" 
+msgstr ""
+
+msgid "Dushanbe" 
+msgstr ""
+
+msgid "Gaza" 
+msgstr ""
+
+msgid "Hebron"
+msgstr ""
+
+msgid "Hong_Kong" 
+msgstr ""
+
+msgid "Hovd" 
+msgstr ""
+
+msgid "Irkutsk" 
+msgstr ""
+
+msgid "Jerusalem" 
+msgstr ""
+
+msgid "Kabul" 
+msgstr ""
+
+msgid "Karachi" 
+msgstr ""
+
+msgid "Kuching" 
+msgstr ""
+
+msgid "Kuwait" 
+msgstr ""
+
+msgid "Macau" 
+msgstr ""
+
+msgid "Muscat" 
+msgstr ""
+
+msgid "Nicosia" 
+msgstr ""
+
+msgid "Omsk" 
+msgstr ""
+
+msgid "Oral" 
+msgstr ""
+
+msgid "Phnom_Penh" 
+msgstr ""
+
+msgid "Pontianak" 
+msgstr ""
+
+msgid "Qatar" 
+msgstr ""
+
+msgid "Riyadh" 
+msgstr ""
+
+msgid "Sakhalin" 
+msgstr ""
+
+msgid "Seoul" 
+msgstr ""
+
+msgid "Shanghai" 
+msgstr ""
+
+msgid "Singapore" 
+msgstr ""
+
+msgid "Tashkent" 
+msgstr ""
+
+msgid "Tbilisi" 
+msgstr ""
+
+msgid "Tehran" 
+msgstr ""
+
+msgid "Thimphu" 
+msgstr ""
+
+msgid "Tokyo" 
+msgstr ""
+
+msgid "Tomsk"
+msgstr ""
+
+msgid "Ust-Nera" 
+msgstr ""
+
+msgid "Yakutsk" 
+msgstr ""
+
+msgid "Yangon" 
+msgstr ""
+
+## Atlantic
+msgid "Atlantic"
+msgstr ""
+
+msgid "Azores" 
+msgstr ""
+
+msgid "Bermuda" 
+msgstr ""
+
+msgid "Canary"
+msgstr ""
+
+msgid "Cape_Verde" 
+msgstr ""
+
+msgid "Faroe" 
+msgstr ""
+
+msgid "Madeira" 
+msgstr ""
+
+msgid "Reykjavik" 
+msgstr ""
+
+msgid "South_Georgia" 
+msgstr ""
+
+msgid "St_Helena" 
+msgstr ""
+
+msgid "Stanley"
+msgstr ""
+
+
+## Australia
+msgid "Australia"
+msgstr ""
+
+msgid "Adelaide" 
+msgstr ""
+
+msgid "Brisbane" 
+msgstr ""
+
+msgid "Broken_Hill" 
+msgstr ""
+
+msgid "Darwin" 
+msgstr ""
+
+msgid "Eucla" 
+msgstr ""
+
+msgid "Hobart" 
+msgstr ""
+
+msgid "Lindeman" 
+msgstr ""
+
+msgid "Lord_Howe" 
+msgstr ""
+
+msgid "Melbourne" 
+msgstr ""
+
+msgid "Perth" 
+msgstr ""
+
+msgid "Sydney"
+msgstr ""
+
+
+## Europe
+msgid "Europe"
+msgstr ""
+
+msgid "Amsterdam" 
+msgstr ""
+
+msgid "Andorra" 
+msgstr ""
+
+msgid "Astrakhan" 
+msgstr ""
+
+msgid "Athens" 
+msgstr ""
+
+msgid "Belgrade" 
+msgstr ""
+
+msgid "Berlin" 
+msgstr ""
+
+msgid "Bratislava" 
+msgstr ""
+
+msgid "Brussels" 
+msgstr ""
+
+msgid "Bucharest" 
+msgstr ""
+
+msgid "Budapest" 
+msgstr ""
+
+msgid "Busingen" 
+msgstr ""
+
+msgid "Chisinau" 
+msgstr ""
+
+msgid "Copenhagen" 
+msgstr ""
+
+msgid "Dublin" 
+msgstr ""
+
+msgid "Gibraltar" 
+msgstr ""
+
+msgid "Guernsey" 
+msgstr ""
+
+msgid "Helsinki" 
+msgstr ""
+
+msgid "Isle_of_Man" 
+msgstr ""
+
+msgid "Istanbul" 
+msgstr ""
+
+msgid "Jersey" 
+msgstr ""
+
+msgid "Kaliningrad" 
+msgstr ""
+
+msgid "Kiev" 
+msgstr ""
+
+msgid "Kirov" 
+msgstr ""
+
+msgid "Lisbon" 
+msgstr ""
+
+msgid "Ljubljana" 
+msgstr ""
+
+msgid "London" 
+msgstr ""
+
+msgid "Luxembourg" 
+msgstr ""
+
+msgid "Madrid" 
+msgstr ""
+
+msgid "Malta" 
+msgstr ""
+
+msgid "Mariehamn" 
+msgstr ""
+
+msgid "Minsk" 
+msgstr ""
+
+msgid "Monaco" 
+msgstr ""
+
+msgid "Moscow" 
+msgstr ""
+
+msgid "Oslo" 
+msgstr ""
+
+msgid "Paris" 
+msgstr ""
+
+msgid "Podgorica" 
+msgstr ""
+
+msgid "Prague" 
+msgstr ""
+
+msgid "Riga" 
+msgstr ""
+
+msgid "Rome" 
+msgstr ""
+
+msgid "Samara" 
+msgstr ""
+
+msgid "San_Marino" 
+msgstr ""
+
+msgid "Sarajevo" 
+msgstr ""
+
+msgid "Saratov" 
+msgstr ""
+
+msgid "Simferopol" 
+msgstr ""
+
+msgid "Skopje" 
+msgstr ""
+
+msgid "Sofia" 
+msgstr ""
+
+msgid "Stockholm" 
+msgstr ""
+
+msgid "Tallinn" 
+msgstr ""
+
+msgid "Tirane" 
+msgstr ""
+
+msgid "Ulyanovsk" 
+msgstr ""
+
+msgid "Uzhgorod" 
+msgstr ""
+
+msgid "Vaduz" 
+msgstr ""
+
+msgid "Vatican" 
+msgstr ""
+
+msgid "Vienna" 
+msgstr ""
+
+msgid "Vilnius" 
+msgstr ""
+
+msgid "Volgograd" 
+msgstr ""
+
+msgid "Warsaw" 
+msgstr ""
+
+msgid "Zagreb" 
+msgstr ""
+
+msgid "Zaporozhye" 
+msgstr ""
+
+msgid "Zurich"
+msgstr ""
+
+
+## Indian
+msgid "Indian"
+msgstr ""
+
+msgid "Antananarivo" 
+msgstr ""
+
+msgid "Chagos" 
+msgstr ""
+
+msgid "Christmas" 
+msgstr ""
+
+msgid "Cocos" 
+msgstr ""
+
+msgid "Comoro" 
+msgstr ""
+
+msgid "Kerguelen" 
+msgstr ""
+
+msgid "Mahe" 
+msgstr ""
+
+msgid "Maldives" 
+msgstr ""
+
+msgid "Mauritius" 
+msgstr ""
+
+msgid "Mayotte" 
+msgstr ""
+
+msgid "Reunion"
+msgstr ""
+
+
+## Pacific
+msgid "Pacific"
+msgstr ""
+
+msgid "Apia"
+msgstr ""
+
+msgid "Auckland" 
+msgstr ""
+
+msgid "Bougainville" 
+msgstr ""
+
+msgid "Chatham" 
+msgstr ""
+
+msgid "Chuuk" 
+msgstr ""
+
+msgid "Easter" 
+msgstr ""
+
+msgid "Efate" 
+msgstr ""
+
+msgid "Enderbury" 
+msgstr ""
+
+msgid "Fakaofo" 
+msgstr ""
+
+msgid "Fiji" 
+msgstr ""
+
+msgid "Funafuti" 
+msgstr ""
+
+msgid "Galapagos" 
+msgstr ""
+
+msgid "Gambier" 
+msgstr ""
+
+msgid "Guadalcanal" 
+msgstr ""
+
+msgid "Guam" 
+msgstr ""
+
+msgid "Honolulu" 
+msgstr ""
+
+msgid "Kiritimati" 
+msgstr ""
+
+msgid "Kosrae" 
+msgstr ""
+
+msgid "Kwajalein" 
+msgstr ""
+
+msgid "Majuro" 
+msgstr ""
+
+msgid "Marquesas" 
+msgstr ""
+
+msgid "Midway" 
+msgstr ""
+
+msgid "Nauru" 
+msgstr ""
+
+msgid "Niue" 
+msgstr ""
+
+msgid "Norfolk" 
+msgstr ""
+
+msgid "Noumea" 
+msgstr ""
+
+msgid "Pago_Pago" 
+msgstr ""
+
+msgid "Palau" 
+msgstr ""
+
+msgid "Pitcairn" 
+msgstr ""
+
+msgid "Pohnpei" 
+msgstr ""
+
+msgid "Port_Moresby" 
+msgstr ""
+
+msgid "Rarotonga" 
+msgstr ""
+
+msgid "Saipan" 
+msgstr ""
+
+msgid "Tahiti" 
+msgstr ""
+
+msgid "Tarawa" 
+msgstr ""
+
+msgid "Tongatapu" 
+msgstr ""
+
+msgid "Wake" 
+msgstr ""
+
+msgid "Wallis"
+msgstr ""
+
+#~ msgid "Z+"
+#~ msgstr "Z+"
+
+#~ msgid "Z-"
+#~ msgstr "Z-"
+
+#~ msgid "X+"
+#~ msgstr "X+"
+
+#~ msgid "X-"
+#~ msgstr "X-"
+
+#~ msgid "Y+"
+#~ msgstr "Y+"
+
+#~ msgid "Y-"
+#~ msgstr "Y-"
+
+#~ msgid "Add Printer"
+#~ msgstr "Lägg till skrivare"
+
+#~ msgid "Initializing"
+#~ msgstr "Initierar"
+
+#~ msgid "Delete"
+#~ msgstr "Radera"
+
+#~ msgid "Home"
+#~ msgstr "Hem"
+
+#~ msgid "Off"
+#~ msgstr "Avstängd"
+
+#~ msgid "Sort by: "
+#~ msgstr "Sortera efter: "
+
+#~ msgid "Bltouch found applied offset"
+#~ msgstr "Bltouch hittade tillämpad offset"
+
+#~ msgid ""
+#~ "Check /tmp/KlipperScreen.log for more information.\n"
+#~ "Please submit an issue on GitHub for help."
+#~ msgstr ""
+#~ "Kontrollera /tmp/KlipperScreen.log för mer information.\n"
+#~ "Skicka in ett problem på GitHub för hjälp."
+
+#~ msgid "Tool"
+#~ msgstr "Verktyg"
+
+#~ msgid "Displayed Macros"
+#~ msgstr "Makron visas"
+
+#~ msgid "Z Position"
+#~ msgstr "Z Position"

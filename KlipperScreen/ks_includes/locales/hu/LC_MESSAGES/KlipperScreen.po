@@ -1,0 +1,1761 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KlipperScreen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-13 20:39-0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: AntoszHUN\n"
+"Language-Team: \n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#, python-format
+msgid "%s will be updated to version"
+msgstr "%s verzió frissítése"
+
+msgid "(default)"
+msgstr "(alapértelmezett)"
+
+msgid "24 Hour Time"
+msgstr "24 Órás Idő"
+
+msgid "A FIRMWARE_RESTART may fix the issue."
+msgstr "A FIRMWARE_RESTART javíthatja a problémát."
+
+msgid "ADXL Not Configured"
+msgstr "ADXL nincs konfigurálva"
+
+msgid "Abort"
+msgstr "Megszakít"
+
+msgid "Acceleration:"
+msgstr "Gyorsulás:"
+
+msgid "Accept"
+msgstr "Elfogad"
+
+msgid "Actions"
+msgstr "Műveletek"
+
+msgid "Add profile"
+msgstr "Profil hozzáadása"
+
+msgid "Apply"
+msgstr "Alkalmaz"
+
+#, python-format
+msgid "Apply %.2f offset to Endstop?"
+msgstr "Alkalmazod %.2f eltolást az Endstopra?"
+
+#, python-format
+msgid "Apply %s%.2f offset to Probe?"
+msgstr "Alkalmazod %s%.2f eltolást a szondára?"
+
+msgid "Are you sure do you want to exclude the object?"
+msgstr "Biztosan kizárod az objektumot?"
+
+msgid "Are you sure you want to run Emergency Stop?"
+msgstr "Biztosan Vészleállítást szeretnél?"
+
+msgid "Are you sure you wish to cancel this print?"
+msgstr "Biztosan megszakítod ezt a nyomtatást?"
+
+msgid "Are you sure you wish to disable motors?"
+msgstr "Biztosan le szeretnéd tiltani a motorokat?"
+
+msgid "Are you sure you wish to reboot the system?"
+msgstr "Biztos, hogy újra akarod indítani a rendszert?"
+
+msgid "Are you sure you wish to shutdown the system?"
+msgstr "Biztos, hogy le szeretnéd állítani a rendszert?"
+
+msgid "Auto"
+msgstr "Auto"
+
+msgid "Auto-calibrate"
+msgstr "Automatikus kalibrálás"
+
+msgid "Auto-close notifications"
+msgstr "Értesítések automatikus bezárása"
+
+msgid "Auto-scroll"
+msgstr "Automatikus görgetés"
+
+msgid "Bed Level"
+msgstr "Ágyszint"
+
+msgid "Bed Mesh"
+msgstr "Ágyháló"
+
+msgid "Bed screw configuration:"
+msgstr "Az ágycsavar konfigurációja:"
+
+msgid "Calibrate"
+msgstr "Kalibrálás"
+
+msgid "Calibrated"
+msgstr "Kalibrálva"
+
+msgid "Calibrated, save configuration to make it permanent"
+msgstr "Kalibrálva! Mentsd el a konfigurációt, hogy az állandó legyen"
+
+msgid "Calibrating"
+msgstr "Kalibrálás"
+
+msgid "Can't set above the maximum:"
+msgstr "Nem állítható a maximum fölé:"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "Cancel Print"
+msgstr "Nyomtatás megszakítása"
+
+msgid "Cancelled"
+msgstr "Törölve"
+
+msgid "Cancelling"
+msgstr "Törlés"
+
+msgid "Cannot connect to Moonraker"
+msgstr "Nem lehet csatlakozni a Moonrakerhez"
+
+msgid "Channel"
+msgstr "Csatorna"
+
+msgid "Check ADXL Wiring"
+msgstr "Ellenőrizd az ADXL kábelezést"
+
+msgid "Checking for updates, please wait..."
+msgstr "Frissítések keresése, kérjük, várj..."
+
+msgid "Clear"
+msgstr "Tiszta"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Complete"
+msgstr "Befejezve"
+
+msgid "Configuration"
+msgstr "Konfiguráció"
+
+msgid "Confirm Emergency Stop"
+msgstr "Vészleállítás megerősítése"
+
+msgid "Connected"
+msgstr "Csatlakoztatva"
+
+#, python-format
+msgid "Connecting to %s"
+msgstr "Csatlakozás %s"
+
+msgid "Console"
+msgstr "Konzol"
+
+msgid "Continue"
+msgstr "Folytat"
+
+msgid "Cooldown"
+msgstr "Lehűtés"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Decrease"
+msgstr "Csökkent"
+
+msgid "Delete File?"
+msgstr "Fájl törlése?"
+
+msgid "Deselect"
+msgstr "Kijelölés törlése"
+
+msgid "Disable Motors"
+msgstr "Motorok letiltása"
+
+msgid "Disable XY"
+msgstr "XY Letiltása"
+
+msgid "Distance (mm)"
+msgstr "Távolság (mm)"
+
+#, python-format
+msgid "Do you want to recover %s?"
+msgstr "Vissza akarod állítani %s-t?"
+
+msgid "Elapsed:"
+msgstr "Eltelt:"
+
+msgid "Error"
+msgstr "Hiba"
+
+msgid "Estimated Time Method"
+msgstr "Becsült idő módszer"
+
+msgid "Exclude Object"
+msgstr "Objektum kizárása"
+
+msgid "Extra Large"
+msgstr "Extra nagy"
+
+msgid "Extrude"
+msgstr "Száladagolás"
+
+msgid "Extrusion +"
+msgstr "Extrudálás +"
+
+msgid "Extrusion -"
+msgstr "Extrudálás -"
+
+msgid "Failed, adjust position first"
+msgstr "Sikertelen! Előbb állítsd be a pozíciót"
+
+msgid "Fan"
+msgstr "Hűtés"
+
+msgid "Filament Used"
+msgstr "Használt nyomtatószál"
+
+msgid "Filament total:"
+msgstr "Összes nyomtatószál:"
+
+msgid "Filament used:"
+msgstr "Használt nyomtatószál:"
+
+msgid "Filament:"
+msgstr "Nyomtatószál:"
+
+msgid "File"
+msgstr "Fájl"
+
+msgid "File:"
+msgstr "Fájl:"
+
+msgid "Finding ADXL"
+msgstr "ADXL keresése"
+
+msgid "Fine Tuning"
+msgstr "Finomhangolás"
+
+msgid "Finish"
+msgstr "Befejezve"
+
+msgid "Firmware Restart"
+msgstr "Firmware Újraindítása"
+
+msgid "Flow:"
+msgstr "Folyam:"
+
+msgid "Flowrate:"
+msgstr "Áramlás:"
+
+msgid "Font Size"
+msgstr "Betűméret"
+
+msgid "Full Update"
+msgstr "Teljes Frissítés"
+
+msgid "Go Back"
+msgstr "Visszalépés"
+
+msgid "Height:"
+msgstr "Magasság:"
+
+msgid "Hidden"
+msgstr "Rejtett"
+
+msgid "Hide"
+msgstr "Elrejt"
+
+msgid "Hide sensors in Temp."
+msgstr "Hőfok szenzorok elrejtése."
+
+msgid "Hide temp."
+msgstr "Hőfok elrejtése."
+
+msgid "Home All"
+msgstr "X-Y-Z kezdőpont"
+
+msgid "Home X"
+msgstr "X kezdőpont"
+
+msgid "Home XY"
+msgstr "XY kezdőpont"
+
+msgid "Home Y"
+msgstr "Y kezdőpont"
+
+msgid "Home Z"
+msgstr "Z kezdőpont"
+
+msgid "Homing"
+msgstr "Kezdőpont"
+
+msgid "Host"
+msgstr "Gazdagép"
+
+msgid "Hostname"
+msgstr "Gazdanév"
+
+msgid "Icon Theme"
+msgstr "Ikon téma"
+
+msgid "Increase"
+msgstr "Növel"
+
+msgid "Initializing printer..."
+msgstr "Nyomtató inicializálása..."
+
+msgid "Input Shaper"
+msgstr "Bemeneti alakító"
+
+msgid "Interface"
+msgstr "Felület"
+
+msgid "Invalid"
+msgstr "Érvénytelen"
+
+msgid "Invalid password"
+msgstr "Érvénytelen jelszó"
+
+msgid "Invert X"
+msgstr "Fordított X"
+
+msgid "Invert Y"
+msgstr "Fordított Y"
+
+msgid "Invert Z"
+msgstr "Fordított Z"
+
+msgid "Klipper Restart"
+msgstr "Klipper Újraindítása"
+
+msgid "Klipper has disconnected"
+msgstr "Klipper szétkapcsolt"
+
+msgid "Klipper has encountered an error."
+msgstr "A Klipper hibát észlelt."
+
+msgid "Klipper has shutdown"
+msgstr "A Klipper leállt"
+
+msgid "Klipper is attempting to start"
+msgstr "Klipper megpróbálja elindítani"
+
+msgid "Klipper will reboot"
+msgstr "A Klipper újraindul"
+
+msgid "KlipperScreen will reboot"
+msgstr "A KlipperScreen újraindul"
+
+msgid "Language"
+msgstr "Nyelv"
+
+msgid "Large"
+msgstr "Nagy"
+
+msgid "Layer:"
+msgstr "Réteg:"
+
+msgid "Left:"
+msgstr "Bal:"
+
+msgid "Limits"
+msgstr "Korlátok"
+
+msgid "Load"
+msgstr "Betöltés"
+
+msgid "Lower Nozzle"
+msgstr "Fúvóka le"
+
+msgid "Macro shortcut on sidebar"
+msgstr "Makró parancsikon az oldalsávon"
+
+msgid "Macros"
+msgstr "Makrók"
+
+msgid "Main Menu"
+msgstr "Főmenü"
+
+msgid "Max"
+msgstr "Max"
+
+msgid "Max Acceleration"
+msgstr "Max gyorsulás"
+
+msgid "Max Acceleration to Deceleration"
+msgstr "Lassulás max gyorsulása"
+
+msgid "Max Velocity"
+msgstr "Max sebesség"
+
+msgid "Maximum"
+msgstr "Maximum"
+
+msgid "Measure Both"
+msgstr "Mindkettő mérése"
+
+msgid "Measure X"
+msgstr "X mérése"
+
+msgid "Measure Y"
+msgstr "Y mérése"
+
+msgid "Medium"
+msgstr "Közepes"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "Mesh calibrate"
+msgstr "Háló kalibrálása"
+
+msgid "Modified"
+msgstr "Módosított"
+
+msgid "Moonraker: connected"
+msgstr "Moonraker: csatlakoztatva"
+
+msgid "Move"
+msgstr "Mozgatás"
+
+msgid "Move Distance (mm)"
+msgstr "Mozgási távolság (mm)"
+
+msgid "Name"
+msgstr "Név"
+
+msgid "Network"
+msgstr "Hálózat"
+
+msgid "Never"
+msgstr "Soha"
+
+msgid "New"
+msgstr "Új"
+
+msgid "Not supported for auto-detection, it needs to be configured in klipperscreen.conf"
+msgstr "Az automatikus felismerés nem támogatott, a klipperscreenben kell beállítani.conf"
+
+msgid "Nothing selected"
+msgstr "Nincs kiválasztva"
+
+#, python-format
+msgid "Outdated by %d"
+msgstr "%d által elavult"
+
+msgid "PSK for"
+msgstr "PSK-nak"
+
+msgid "Package will be updated"
+msgid_plural "Packages will be updated"
+msgstr[0] "A csomag frissítésre kerül"
+msgstr[1] "Csomag frissül"
+
+msgid "Part Fan"
+msgstr "Tárgyhűtő"
+
+msgid "Password saved"
+msgstr "Jelszó mentve"
+
+msgid "Pause"
+msgstr "Szünet"
+
+msgid "Paused"
+msgstr "Szüneteltetve"
+
+msgid "Perform a full upgrade?"
+msgstr "Teljes frissítést hajtasz végre?"
+
+msgid "Pins"
+msgstr "Kimenetek"
+
+msgid "Please recompile and flash the micro-controller."
+msgstr "Fordítsd újra és frissítsd a mikrovezérlőt."
+
+msgid "Power"
+msgstr "Bekapcsolás"
+
+msgid "Power On Printer"
+msgstr "Nyomtató bekapcsolása"
+
+msgid "Pressure Advance:"
+msgstr "Nyomás előtolás:"
+
+msgid "Print"
+msgstr "Nyomtatás"
+
+msgid "Print Control"
+msgstr "Nyomtatásvezérlés"
+
+msgid "Print Time"
+msgstr "Nyomtatási idő"
+
+msgid "Printer"
+msgstr "Nyomtató"
+
+msgid "Printer Connections"
+msgstr "Nyomtató csatlakozások"
+
+msgid "Printer Select"
+msgstr "Nyomtató kiválasztása"
+
+msgid "Printing"
+msgstr "Nyomtatás"
+
+msgid "Probe Offset"
+msgstr "Szonda eltolás"
+
+msgid "Profile Name:"
+msgstr "Profil név:"
+
+msgid "Provide KlipperScreen.log when asking for help.\n"
+msgstr "Add meg a KlipperScreen.log-ot, amikor segítséget kérsz.\n"
+
+msgid "Quad Gantry Level"
+msgstr "Négy állású szint"
+
+msgid "Raise Nozzle"
+msgstr "Fúvóka fel"
+
+msgid "Recover"
+msgstr "Visszaállítása"
+
+msgid "Recover Hard"
+msgstr "Hárdver visszaállítása"
+
+msgid "Recover Soft"
+msgstr "Program visszaállítása"
+
+msgid "Reference"
+msgstr "Referencia"
+
+msgid "Refresh"
+msgstr "Frissítés"
+
+msgid "Restart"
+msgstr "Újraindítás"
+
+msgid "Resume"
+msgstr "Folytat"
+
+msgid "Retract"
+msgstr "Visszahúz"
+
+msgid "Retraction"
+msgstr "Visszahúzás"
+
+msgid "Retraction Length"
+msgstr "Visszahúzási hossz"
+
+msgid "Retraction Speed"
+msgstr "Visszahúzási sebesség"
+
+msgid "Retry"
+msgstr "Újra"
+
+msgid "Retrying"
+msgstr "Újrapróbálkozás"
+
+msgid "Save"
+msgstr "Mentés"
+
+msgid "Save Config"
+msgstr "Konfiguráció mentése"
+
+msgid "Save Z"
+msgstr "Z mentése"
+
+msgid "Save configuration?"
+msgstr "Mented a konfigurációt?"
+
+msgid "Saved"
+msgstr "Mentve"
+
+#, python-format
+msgid "Saved offset: %s"
+msgstr "Eltolás mentve: %s"
+
+msgid "Screen DPMS"
+msgstr "Képernyő DPMS"
+
+msgid "Screen Power Off Time"
+msgstr "Kijelző kikapcsolási ideje"
+
+msgid "Screws Adjust"
+msgstr "Csavarok beállítása"
+
+msgid "Select"
+msgstr "Kijelölés"
+
+msgid "Send"
+msgstr "Küldés"
+
+#, python-format
+msgid "Sending Power ON signal to: %s"
+msgstr "Bekapcsolási jel küldése ide: %s"
+
+msgid "Set Temp"
+msgstr "Hőfok megadás"
+
+msgid "Settings"
+msgstr "Beállítások"
+
+msgid "Show"
+msgstr "Mutat"
+
+msgid "Show Heater Power"
+msgstr "A fűtésteljesítmény megjelenítése"
+
+msgid "Shutdown"
+msgstr "Leállítás"
+
+msgid "Size"
+msgstr "Méret"
+
+msgid "Slicer"
+msgstr "Szeletelő"
+
+msgid "Slicer Time correction (%)"
+msgstr "Szeletelő idő javítása (%)"
+
+msgid "Slicer:"
+msgstr "Szeletelő:"
+
+msgid "Small"
+msgstr "Kicsi"
+
+msgid "Speed (mm/s)"
+msgstr "Sebesség (mm/s)"
+
+msgid "Speed +"
+msgstr "Sebesség +"
+
+msgid "Speed -"
+msgstr "Sebesség -"
+
+msgid "Speed:"
+msgstr "Sebesség:"
+
+msgid "Square Corner Velocity"
+msgstr "Sebesség a sarkokban"
+
+msgid "Start"
+msgstr "Indítás"
+
+msgid "Starting WiFi Association"
+msgstr "A WiFi Egyesület elindítása"
+
+msgid "Starting recovery for"
+msgstr "Helyreállítás megkezdése"
+
+msgid "Starting update for"
+msgstr "Frissítés indítása"
+
+msgid "System"
+msgstr "Rendszer"
+
+msgid "System Restart"
+msgstr "Rendszer Újraindítása"
+
+msgid "System Shutdown"
+msgstr "Rendszer Leállitás"
+
+msgid "Temp (°C)"
+msgstr "Hőmérséklet (°C)"
+
+msgid "Temperature"
+msgstr "Hőfok"
+
+msgid "Total:"
+msgstr "Teljes:"
+
+msgid "Unknown Heater"
+msgstr "Ismeretlen melegítő"
+
+msgid "Unknown screw position"
+msgstr "Ismeretlen csavarhelyzet"
+
+msgid "Unload"
+msgstr "Kiadás"
+
+msgid "Unretract Extra Length"
+msgstr "Extra hossz visszahúzása"
+
+msgid "Unretract Speed"
+msgstr "Visszahúzási sebesség"
+
+msgid "Up To Date"
+msgstr "Naprakész"
+
+msgid "Update"
+msgstr "Frissít"
+
+msgid "Updating"
+msgstr "Frissítés"
+
+msgid "Uploaded"
+msgstr "Feltöltve"
+
+msgid "XY Move Speed (mm/s)"
+msgstr "XY Mozgási seb. (mm/s)"
+
+msgid "XY Speed (mm/s)"
+msgstr "XY Sebesség (mm/s)"
+
+msgid "Z Calibrate"
+msgstr "Z Kalibrálás"
+
+msgid "Z Move Speed (mm/s)"
+msgstr "Z Mozgási seb. (mm/s)"
+
+msgid "Z Speed (mm/s)"
+msgstr "Z Sebesség (mm/s)"
+
+msgid "Z Tilt"
+msgstr "Z Dőlés"
+
+msgid "Z offset:"
+msgstr "Z eltolás:"
+
+msgid "commit"
+msgid_plural "commits"
+msgstr[0] "ajánlás"
+msgstr[1] "ajánlások"
+
+msgid "dBm"
+msgstr "dBm"
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "óra"
+msgstr[1] "órák"
+
+msgid "minutes"
+msgstr "perc"
+
+msgid "mm"
+msgstr "mm"
+
+msgid "mm/s"
+msgstr "mm/s"
+
+msgid "mm/s²"
+msgstr "mm/s²"
+
+msgid "mm³/s"
+msgstr "mm³/s"
+
+msgid "After the machine is connected to the network, devices using the same LAN can control the machine by accessing the IP"
+msgstr ""
+"Miután a gépet a hálózathoz csatlakoztatták, az azonos LAN-t használó eszközök az IP-címhez való hozzáféréssel "
+"vezérelhetik a gépet"
+
+msgid "Connect"
+msgstr "Csatlakozás"
+
+msgid "Connecting"
+msgstr "A  csatlakoztatása"
+
+msgid "Connect Network"
+msgstr "Hálózat csatlakoztatása"
+
+msgid "Leveling Calibration"
+msgstr "Nivellálási kalibrálás"
+
+msgid "Next"
+msgstr "Következő"
+
+msgid "Please follow the steps below to calibrate the machine, refer to the manual for details"
+msgstr "Kérjük, kövesse az alábbi lépéseket a gép kalibrálásához, a részletekért olvassa el a kézikönyvet"
+
+msgid "1.Operation Z Calibration Setting Offset"
+msgstr "1.Művelet Z kalibrációs beállítási eltolás"
+
+msgid "2.Operate Bed Level to adjust the flatness of the bed"
+msgstr "2.Operate Bed Level az ágy laposságának beállításához"
+
+msgid "3.Operate Bed Mesh automatic leveling"
+msgstr "3.Operate ágy háló automatikus szintezése"
+
+msgid "Your languages"
+msgstr "Az Ön nyelvei"
+
+msgid "IP"
+msgstr "IP"
+
+msgid "Back"
+msgstr "Vissza"
+
+msgid "Machine Leveling"
+msgstr "Gépi szintezés"
+
+msgid "Led"
+msgstr "Led"
+
+msgid "LED Off"
+msgstr "LED ki"
+
+msgid "LED On"
+msgstr "LED bekapcsolva"
+
+msgid "Restore factory"
+msgstr "Gyári beállítások visszaállítása"
+
+msgid "Reboot"
+msgstr "Újraindít"
+
+msgid "Click Confirm will factory reset and restart, do you want to factory reset?"
+msgstr "Kattintson a Confirm will factory reset and reboot (Erősítse meg, hogy visszaállítja a gyári beállításokat) gombra?"
+
+msgid "Bed"
+msgstr "Ágy"
+
+msgid "Extruder"
+msgstr "Extruder"
+
+msgid "Sure"
+msgstr "Biztos"
+
+msgid "Software Version"
+msgstr "Szoftver verzió"
+
+msgid "No update package detected, make sure the KliPAD.deb file exists!!!"
+msgstr "Nem észlelhető frissítési csomag, ellenőrizze, hogy a KliPAD.deb fájl létezik-e!!!"
+
+msgid "Update package version exception, please make sure the update package is the latest version!!!"
+msgstr "Frissítési csomag verziója, győződjön meg arról, hogy a frissítési csomag a legújabb verzió!!!"
+
+msgid "The update package is ready, do you want to update? The system will reboot after the update is complete..."
+msgstr "A frissítőcsomag készen áll, frissíteni szeretné? A rendszer újraindul a frissítés befejezése után..."
+
+msgid "Please wait for a reboot while the update package is installed..."
+msgstr "Kérjük, várja meg az újraindítást, amíg a frissítőcsomag telepítve van..."
+
+
+msgid "Sound"
+msgstr ""
+
+msgid "Ok"
+msgstr ""
+
+msgid "Abnormal interruption of printing is detected, whether to resume"
+msgstr ""
+
+# 时区
+msgid "UTC"
+msgstr ""
+
+## Africa
+msgid "Africa"
+msgstr ""
+
+msgid "Abidjan"
+msgstr ""
+
+msgid "Accra"
+msgstr ""
+
+msgid "Addis_Ababa"
+msgstr ""
+
+msgid "Algiers"
+msgstr ""
+
+msgid "Asmara" 
+msgstr ""
+
+msgid "Bamako" 
+msgstr ""
+
+msgid "Bangui" 
+msgstr ""
+
+msgid "Banjul" 
+msgstr ""
+
+msgid "Bissau" 
+msgstr ""
+
+msgid "Blantyre" 
+msgstr ""
+
+msgid "Brazzaville" 
+msgstr ""
+
+msgid "Bujumbura" 
+msgstr ""
+
+msgid "Cairo" 
+msgstr ""
+
+msgid "Casablanca" 
+msgstr ""
+
+msgid "Ceuta" 
+msgstr ""
+
+msgid "Conakry" 
+msgstr ""
+
+msgid "Dakar"
+msgstr ""
+
+msgid "Dar_es_Salaam" 
+msgstr ""
+
+msgid "Djibouti" 
+msgstr ""
+
+msgid "Douala"
+msgstr ""
+
+msgid "El_Aaiun" 
+msgstr ""
+
+msgid "Freetown" 
+msgstr ""
+
+msgid "Gaborone" 
+msgstr ""
+
+msgid "Harare" 
+msgstr ""
+
+msgid "Johannesburg" 
+msgstr ""
+
+msgid "Juba" 
+msgstr ""
+
+msgid "Kampala" 
+msgstr ""
+
+msgid "Khartoum" 
+msgstr ""
+
+msgid "Kigali" 
+msgstr ""
+
+msgid "Kinshasa" 
+msgstr ""
+
+msgid "Lagos" 
+msgstr ""
+
+msgid "Libreville" 
+msgstr ""
+
+msgid "Lome" 
+msgstr ""
+
+msgid "Luanda" 
+msgstr ""
+
+msgid "Lubumbashi" 
+msgstr ""
+
+msgid "Lusaka" 
+msgstr ""
+
+msgid "Malabo" 
+msgstr ""
+
+msgid "Maputo" 
+msgstr ""
+
+msgid "Maseru" 
+msgstr ""
+
+msgid "Mbabane" 
+msgstr ""
+
+msgid "Mogadishu"
+msgstr ""
+
+msgid "Monrovia" 
+msgstr ""
+
+msgid "Nairobi" 
+msgstr ""
+
+msgid "Ndjamena" 
+msgstr ""
+
+msgid "Niamey" 
+msgstr ""
+
+msgid "Nouakchott" 
+msgstr ""
+
+msgid "Ouagadougou"
+msgstr ""
+
+msgid "Porto-Novo"
+msgstr ""
+
+msgid "Sao_Tome" 
+msgstr ""
+
+msgid "Tripoli" 
+msgstr ""
+
+msgid "Tunis" 
+msgstr ""
+
+msgid "Windhoek"
+msgstr ""
+
+
+## America
+msgid "America"
+msgstr ""
+
+msgid "Anchorage" 
+msgstr ""
+
+msgid "Dawson" 
+msgstr ""
+
+msgid "Los_Angeles" 
+msgstr ""
+
+msgid "Chicago" 
+msgstr ""
+
+msgid "Mexico_City" 
+msgstr ""
+
+msgid "New_York" 
+msgstr ""
+
+msgid "Toronto" 
+msgstr ""
+
+msgid "Bogota"
+msgstr ""
+
+msgid "Lima" 
+msgstr ""
+
+msgid "Caracas" 
+msgstr ""
+
+msgid "Anguilla" 
+msgstr ""
+
+msgid "Antigua" 
+msgstr ""
+
+msgid "Araguaina" 
+msgstr ""
+
+msgid "Argentina/Buenos_Aires" 
+msgstr ""
+
+msgid "Santiago" 
+msgstr ""
+
+msgid "Sao_Paulo"
+msgstr ""
+
+
+## Antarctica
+msgid "Antarctica"
+msgstr ""
+
+msgid "Casey" 
+msgstr ""
+
+msgid "Davis" 
+msgstr ""
+
+msgid "DumontDUrville" 
+msgstr ""
+
+msgid "Macquarie" 
+msgstr ""
+
+msgid "Mawson" 
+msgstr ""
+
+msgid "McMurdo" 
+msgstr ""
+
+msgid "Palmer" 
+msgstr ""
+
+msgid "Rothera" 
+msgstr ""
+
+msgid "Syowa" 
+msgstr ""
+
+msgid "Troll" 
+msgstr ""
+
+msgid "Vostok" 
+msgstr ""
+
+
+## Arctic
+msgid "Arctic"
+msgstr ""
+
+msgid "Longyearbyen"
+msgstr ""
+
+## Asia
+msgid "Asia"
+msgstr ""
+
+msgid "Aden"
+msgstr ""
+
+msgid "Almaty" 
+msgstr ""
+
+msgid "Amman" 
+msgstr ""
+
+msgid "Anadyr" 
+msgstr ""
+
+msgid "Aqtau" 
+msgstr ""
+
+msgid "Aqtobe" 
+msgstr ""
+
+msgid "Ashgabat" 
+msgstr ""
+
+msgid "Atyrau" 
+msgstr ""
+
+msgid "Baghdad" 
+msgstr ""
+
+msgid "Bahrain" 
+msgstr ""
+
+msgid "Baku" 
+msgstr ""
+
+msgid "Bangkok" 
+msgstr ""
+
+msgid "Barnaul" 
+msgstr ""
+
+msgid "Beirut" 
+msgstr ""
+
+msgid "Bishkek" 
+msgstr ""
+
+msgid "Brunei" 
+msgstr ""
+
+msgid "Chita" 
+msgstr ""
+
+msgid "Colombo" 
+msgstr ""
+
+msgid "Damascus" 
+msgstr ""
+
+msgid "Dhaka" 
+msgstr ""
+
+msgid "Dili" 
+msgstr ""
+
+msgid "Dubai" 
+msgstr ""
+
+msgid "Dushanbe" 
+msgstr ""
+
+msgid "Gaza" 
+msgstr ""
+
+msgid "Hebron"
+msgstr ""
+
+msgid "Hong_Kong" 
+msgstr ""
+
+msgid "Hovd" 
+msgstr ""
+
+msgid "Irkutsk" 
+msgstr ""
+
+msgid "Jerusalem" 
+msgstr ""
+
+msgid "Kabul" 
+msgstr ""
+
+msgid "Karachi" 
+msgstr ""
+
+msgid "Kuching" 
+msgstr ""
+
+msgid "Kuwait" 
+msgstr ""
+
+msgid "Macau" 
+msgstr ""
+
+msgid "Muscat" 
+msgstr ""
+
+msgid "Nicosia" 
+msgstr ""
+
+msgid "Omsk" 
+msgstr ""
+
+msgid "Oral" 
+msgstr ""
+
+msgid "Phnom_Penh" 
+msgstr ""
+
+msgid "Pontianak" 
+msgstr ""
+
+msgid "Qatar" 
+msgstr ""
+
+msgid "Riyadh" 
+msgstr ""
+
+msgid "Sakhalin" 
+msgstr ""
+
+msgid "Seoul" 
+msgstr ""
+
+msgid "Shanghai" 
+msgstr ""
+
+msgid "Singapore" 
+msgstr ""
+
+msgid "Tashkent" 
+msgstr ""
+
+msgid "Tbilisi" 
+msgstr ""
+
+msgid "Tehran" 
+msgstr ""
+
+msgid "Thimphu" 
+msgstr ""
+
+msgid "Tokyo" 
+msgstr ""
+
+msgid "Tomsk"
+msgstr ""
+
+msgid "Ust-Nera" 
+msgstr ""
+
+msgid "Yakutsk" 
+msgstr ""
+
+msgid "Yangon" 
+msgstr ""
+
+## Atlantic
+msgid "Atlantic"
+msgstr ""
+
+msgid "Azores" 
+msgstr ""
+
+msgid "Bermuda" 
+msgstr ""
+
+msgid "Canary"
+msgstr ""
+
+msgid "Cape_Verde" 
+msgstr ""
+
+msgid "Faroe" 
+msgstr ""
+
+msgid "Madeira" 
+msgstr ""
+
+msgid "Reykjavik" 
+msgstr ""
+
+msgid "South_Georgia" 
+msgstr ""
+
+msgid "St_Helena" 
+msgstr ""
+
+msgid "Stanley"
+msgstr ""
+
+
+## Australia
+msgid "Australia"
+msgstr ""
+
+msgid "Adelaide" 
+msgstr ""
+
+msgid "Brisbane" 
+msgstr ""
+
+msgid "Broken_Hill" 
+msgstr ""
+
+msgid "Darwin" 
+msgstr ""
+
+msgid "Eucla" 
+msgstr ""
+
+msgid "Hobart" 
+msgstr ""
+
+msgid "Lindeman" 
+msgstr ""
+
+msgid "Lord_Howe" 
+msgstr ""
+
+msgid "Melbourne" 
+msgstr ""
+
+msgid "Perth" 
+msgstr ""
+
+msgid "Sydney"
+msgstr ""
+
+
+## Europe
+msgid "Europe"
+msgstr ""
+
+msgid "Amsterdam" 
+msgstr ""
+
+msgid "Andorra" 
+msgstr ""
+
+msgid "Astrakhan" 
+msgstr ""
+
+msgid "Athens" 
+msgstr ""
+
+msgid "Belgrade" 
+msgstr ""
+
+msgid "Berlin" 
+msgstr ""
+
+msgid "Bratislava" 
+msgstr ""
+
+msgid "Brussels" 
+msgstr ""
+
+msgid "Bucharest" 
+msgstr ""
+
+msgid "Budapest" 
+msgstr ""
+
+msgid "Busingen" 
+msgstr ""
+
+msgid "Chisinau" 
+msgstr ""
+
+msgid "Copenhagen" 
+msgstr ""
+
+msgid "Dublin" 
+msgstr ""
+
+msgid "Gibraltar" 
+msgstr ""
+
+msgid "Guernsey" 
+msgstr ""
+
+msgid "Helsinki" 
+msgstr ""
+
+msgid "Isle_of_Man" 
+msgstr ""
+
+msgid "Istanbul" 
+msgstr ""
+
+msgid "Jersey" 
+msgstr ""
+
+msgid "Kaliningrad" 
+msgstr ""
+
+msgid "Kiev" 
+msgstr ""
+
+msgid "Kirov" 
+msgstr ""
+
+msgid "Lisbon" 
+msgstr ""
+
+msgid "Ljubljana" 
+msgstr ""
+
+msgid "London" 
+msgstr ""
+
+msgid "Luxembourg" 
+msgstr ""
+
+msgid "Madrid" 
+msgstr ""
+
+msgid "Malta" 
+msgstr ""
+
+msgid "Mariehamn" 
+msgstr ""
+
+msgid "Minsk" 
+msgstr ""
+
+msgid "Monaco" 
+msgstr ""
+
+msgid "Moscow" 
+msgstr ""
+
+msgid "Oslo" 
+msgstr ""
+
+msgid "Paris" 
+msgstr ""
+
+msgid "Podgorica" 
+msgstr ""
+
+msgid "Prague" 
+msgstr ""
+
+msgid "Riga" 
+msgstr ""
+
+msgid "Rome" 
+msgstr ""
+
+msgid "Samara" 
+msgstr ""
+
+msgid "San_Marino" 
+msgstr ""
+
+msgid "Sarajevo" 
+msgstr ""
+
+msgid "Saratov" 
+msgstr ""
+
+msgid "Simferopol" 
+msgstr ""
+
+msgid "Skopje" 
+msgstr ""
+
+msgid "Sofia" 
+msgstr ""
+
+msgid "Stockholm" 
+msgstr ""
+
+msgid "Tallinn" 
+msgstr ""
+
+msgid "Tirane" 
+msgstr ""
+
+msgid "Ulyanovsk" 
+msgstr ""
+
+msgid "Uzhgorod" 
+msgstr ""
+
+msgid "Vaduz" 
+msgstr ""
+
+msgid "Vatican" 
+msgstr ""
+
+msgid "Vienna" 
+msgstr ""
+
+msgid "Vilnius" 
+msgstr ""
+
+msgid "Volgograd" 
+msgstr ""
+
+msgid "Warsaw" 
+msgstr ""
+
+msgid "Zagreb" 
+msgstr ""
+
+msgid "Zaporozhye" 
+msgstr ""
+
+msgid "Zurich"
+msgstr ""
+
+
+## Indian
+msgid "Indian"
+msgstr ""
+
+msgid "Antananarivo" 
+msgstr ""
+
+msgid "Chagos" 
+msgstr ""
+
+msgid "Christmas" 
+msgstr ""
+
+msgid "Cocos" 
+msgstr ""
+
+msgid "Comoro" 
+msgstr ""
+
+msgid "Kerguelen" 
+msgstr ""
+
+msgid "Mahe" 
+msgstr ""
+
+msgid "Maldives" 
+msgstr ""
+
+msgid "Mauritius" 
+msgstr ""
+
+msgid "Mayotte" 
+msgstr ""
+
+msgid "Reunion"
+msgstr ""
+
+
+## Pacific
+msgid "Pacific"
+msgstr ""
+
+msgid "Apia"
+msgstr ""
+
+msgid "Auckland" 
+msgstr ""
+
+msgid "Bougainville" 
+msgstr ""
+
+msgid "Chatham" 
+msgstr ""
+
+msgid "Chuuk" 
+msgstr ""
+
+msgid "Easter" 
+msgstr ""
+
+msgid "Efate" 
+msgstr ""
+
+msgid "Enderbury" 
+msgstr ""
+
+msgid "Fakaofo" 
+msgstr ""
+
+msgid "Fiji" 
+msgstr ""
+
+msgid "Funafuti" 
+msgstr ""
+
+msgid "Galapagos" 
+msgstr ""
+
+msgid "Gambier" 
+msgstr ""
+
+msgid "Guadalcanal" 
+msgstr ""
+
+msgid "Guam" 
+msgstr ""
+
+msgid "Honolulu" 
+msgstr ""
+
+msgid "Kiritimati" 
+msgstr ""
+
+msgid "Kosrae" 
+msgstr ""
+
+msgid "Kwajalein" 
+msgstr ""
+
+msgid "Majuro" 
+msgstr ""
+
+msgid "Marquesas" 
+msgstr ""
+
+msgid "Midway" 
+msgstr ""
+
+msgid "Nauru" 
+msgstr ""
+
+msgid "Niue" 
+msgstr ""
+
+msgid "Norfolk" 
+msgstr ""
+
+msgid "Noumea" 
+msgstr ""
+
+msgid "Pago_Pago" 
+msgstr ""
+
+msgid "Palau" 
+msgstr ""
+
+msgid "Pitcairn" 
+msgstr ""
+
+msgid "Pohnpei" 
+msgstr ""
+
+msgid "Port_Moresby" 
+msgstr ""
+
+msgid "Rarotonga" 
+msgstr ""
+
+msgid "Saipan" 
+msgstr ""
+
+msgid "Tahiti" 
+msgstr ""
+
+msgid "Tarawa" 
+msgstr ""
+
+msgid "Tongatapu" 
+msgstr ""
+
+msgid "Wake" 
+msgstr ""
+
+msgid "Wallis"
+msgstr ""
+
+#~ msgid "Sort:"
+#~ msgstr "Fajta:"
+
+#~ msgid "Calibrating..."
+#~ msgstr "Kalibrálás..."
+
+#~ msgid "Z+"
+#~ msgstr "Z+"
+
+#~ msgid "Z-"
+#~ msgstr "Z-"
+
+#~ msgid "X+"
+#~ msgstr "X+"
+
+#~ msgid "X-"
+#~ msgstr "X-"
+
+#~ msgid "Y+"
+#~ msgstr "Y+"
+
+#~ msgid "Y-"
+#~ msgstr "Y-"
+
+#, python-format
+#~ msgid "Retry #%s"
+#~ msgstr "Újra #%s"
+
+#~ msgid "Add Printer"
+#~ msgstr "Nyomtató hozzáadása"
+
+#~ msgid "Initializing"
+#~ msgstr "Inicializálás"
+
+#~ msgid "Delete"
+#~ msgstr "Töröl"
+
+#~ msgid "Home"
+#~ msgstr "Kezdőpontok"
+
+#~ msgid "Off"
+#~ msgstr "Ki"
+
+#~ msgid "View Mesh"
+#~ msgstr "Háló nézet"
+
+#~ msgid "Machine"
+#~ msgstr "Gép"
+
+#~ msgid "Sort by: "
+#~ msgstr "Sorrend: "
+
+#~ msgid "Bltouch found applied offset"
+#~ msgstr "A Bltouch alkalmazott eltolást talált"
+
+#~ msgid ""
+#~ "Check /tmp/KlipperScreen.log for more information.\n"
+#~ "Please submit an issue on GitHub for help."
+#~ msgstr ""
+#~ "Nézd a /tmp/KlipperScreen.log további információért.\n"
+#~ "Segítségért küldj be egy hibajegyet a GitHubon."
+
+#~ msgid "Probe found applied offset"
+#~ msgstr "A szonda alkalmazott eltolást talált"

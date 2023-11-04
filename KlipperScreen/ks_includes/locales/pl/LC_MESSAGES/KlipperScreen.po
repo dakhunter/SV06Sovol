@@ -1,0 +1,1803 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: KlipperScreen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-30 18:17-0300\n"
+"PO-Revision-Date: 2023-06-16 11:46+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.1\n"
+
+#, python-format
+msgid "%s will be updated to version"
+msgstr "%s będzie uaktualnionych do wersji"
+
+msgid "(default)"
+msgstr "(domyślny)"
+
+msgid "24 Hour Time"
+msgstr "Zegar 24-godzinny"
+
+msgid "A FIRMWARE_RESTART may fix the issue."
+msgstr "FIRMWARE_RESTART może rozwiązać problem."
+
+msgid "ADXL Not Configured"
+msgstr "ADXL nieskonfigurowany"
+
+msgid "Abort"
+msgstr "Odwołaj"
+
+msgid "Acceleration:"
+msgstr "Przyśpieszenie:"
+
+msgid "Accept"
+msgstr "Akceptuj"
+
+msgid "Actions"
+msgstr "Akcje"
+
+msgid "Add profile"
+msgstr "Dodaj profil"
+
+msgid "Apply"
+msgstr "Stosować"
+
+#, python-format
+msgid "Apply %.2f offset to Endstop?"
+msgstr "Zastosować przesunięcie %.2f do Endstop?"
+
+#, python-format
+msgid "Apply %s%.2f offset to Probe?"
+msgstr "Zastosować przesunięcie %s%.2f do sondy?"
+
+msgid "Are you sure do you want to exclude the object?"
+msgstr "Czy na pewno chcesz wykluczyć obiekt?"
+
+msgid "Are you sure you want to run Emergency Stop?"
+msgstr "Czy na pewno chcesz Awaryjnie Zatrzymać?"
+
+msgid "Are you sure you wish to cancel this print?"
+msgstr "Czy na pewno chcesz odwołać drukowanie?"
+
+msgid "Are you sure you wish to disable motors?"
+msgstr "Czy na pewno chcesz wyłączyć silniki?"
+
+msgid "Are you sure you wish to reboot the system?"
+msgstr "Czy na pewno chcesz ponownie uruchomić system?"
+
+msgid "Are you sure you wish to shutdown the system?"
+msgstr "Czy na pewno chcesz wyłączyć system?"
+
+msgid "Auto"
+msgstr "Automatyczny"
+
+msgid "Auto-calibrate"
+msgstr "Automatyczna kalibracja"
+
+msgid "Auto-close notifications"
+msgstr "Powiadomienia o automatycznym zamknięciu"
+
+msgid "Auto-scroll"
+msgstr "Auto-scroll"
+
+msgid "After the machine is connected to the network, devices using the same LAN can control the machine by accessing the IP"
+msgstr "Une fois connecté au réseau, vous pouvez opérer l’imprimante via l’adresse IP par un équipement branché au même réseau"
+
+msgid "Bed Level"
+msgstr "Poziom stołu"
+
+msgid "Bed Mesh"
+msgstr "Poziom siatki stołu"
+
+msgid "Bed screw configuration:"
+msgstr "Konfiguracja śrub łóżka:"
+
+msgid "Back"
+msgstr "Wstecz"
+
+msgid "Calibrate"
+msgstr "Kalibracja"
+
+msgid "Calibrated"
+msgstr "Skalibrowany"
+
+msgid "Calibrated, save configuration to make it permanent"
+msgstr "Skalibrowano, zapisz konfigurację aby została na stałe"
+
+msgid "Calibrating"
+msgstr "Kalibracja"
+
+msgid "Can't set above the maximum:"
+msgstr "Nie można ustawić powyżej maksymum:"
+
+msgid "Cancel"
+msgstr "Odwołaj"
+
+msgid "Cancel Print"
+msgstr "Odwołaj drukowanie"
+
+msgid "Cancelled"
+msgstr "Odwołano"
+
+msgid "Cancelling"
+msgstr "Odwoływanie trwa"
+
+msgid "Cannot connect to Moonraker"
+msgstr "Nie można połączyć się z Moonrakerem"
+
+msgid "Channel"
+msgstr "Kanał"
+
+msgid "Check ADXL Wiring"
+msgstr "Sprawdź okablowanie ADXL"
+
+msgid "Checking for updates, please wait..."
+msgstr "Trwa sprawdzanie dostępności aktualizacji, proszę czekać..."
+
+msgid "Clear"
+msgstr "Jasne"
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "Complete"
+msgstr "Kompletna"
+
+msgid "Configuration"
+msgstr "Konfiguracja"
+
+msgid "Confirm Emergency Stop"
+msgstr "Potwierdź Awaryjny Stop"
+
+msgid "Connected"
+msgstr "Połączono"
+
+#, python-format
+msgid "Connecting to %s"
+msgstr "Łączenie do %s"
+
+msgid "Console"
+msgstr "Konsola"
+
+msgid "Continue"
+msgstr "Kontynuacja"
+
+msgid "Cooldown"
+msgstr "Studzenie"
+
+msgid "Connect"
+msgstr "Połącz"
+
+msgid "Connecting"
+msgstr "Łączenie"
+
+msgid "Connect Network"
+msgstr "Podłącz do sieci"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Decrease"
+msgstr "Obniż"
+
+msgid "Delete File?"
+msgstr "Usunąć plik?"
+
+msgid "Deselect"
+msgstr "Odznacz"
+
+msgid "Disable Motors"
+msgstr "Wyłącz Silniki"
+
+msgid "Disable XY"
+msgstr "Odłącz XY"
+
+msgid "Distance (mm)"
+msgstr "Dystans (mm)"
+
+#, python-format
+msgid "Do you want to recover %s?"
+msgstr "Czy chcesz dokończyć %s?"
+
+msgid "Elapsed:"
+msgstr "Czas Trwania:"
+
+msgid "Error"
+msgstr "Błąd"
+
+msgid "Estimated Time Method"
+msgstr "Sposób Oszacowania Czasu"
+
+msgid "Exclude Object"
+msgstr "Wyklucz obiekt"
+
+msgid "Extra Large"
+msgstr "Bardzo duży"
+
+msgid "Extrude"
+msgstr "Extruduj"
+
+msgid "Extrusion +"
+msgstr "Ekstruzja +"
+
+msgid "Extrusion -"
+msgstr "Ekstruzja -"
+
+msgid "Failed, adjust position first"
+msgstr "Nie udało się, najpierw ustaw pozycję"
+
+msgid "Fan"
+msgstr "Wentylator"
+
+msgid "Filament Used"
+msgstr "Filament w Użytku"
+
+msgid "Filament total:"
+msgstr "Całkowita ilość filamentu:"
+
+msgid "Filament used:"
+msgstr "Zastosowane włókno:"
+
+msgid "Filament:"
+msgstr "Włókno:"
+
+msgid "File"
+msgstr "Plik"
+
+msgid "File:"
+msgstr "Plik:"
+
+msgid "Finding ADXL"
+msgstr "Znalezienie ADXL"
+
+msgid "Fine Tuning"
+msgstr "Regulacja Precyzyjna"
+
+msgid "Finish"
+msgstr "Zakończ"
+
+msgid "Firmware Restart"
+msgstr "Restart oprogramowania sprzętowego"
+
+msgid "Flow:"
+msgstr "Pływ:"
+
+msgid "Flowrate:"
+msgstr "Pływ:"
+
+msgid "Font Size"
+msgstr "Rozmiar trzcionki"
+
+msgid "Full Update"
+msgstr "Pełny Aktualizacja"
+
+msgid "Go Back"
+msgstr "Powróć"
+
+msgid "Height:"
+msgstr "Wzrost:"
+
+msgid "Hidden"
+msgstr "Ukryty"
+
+msgid "Hide"
+msgstr "Schowaj"
+
+msgid "Hide sensors in Temp."
+msgstr "Ukryj czujniki w Temp."
+
+msgid "Hide temp."
+msgstr "Ukryj temp."
+
+msgid "Home All"
+msgstr "Baza Wszystkich"
+
+msgid "Home X"
+msgstr "Baza X"
+
+msgid "Home XY"
+msgstr "Baza XY"
+
+msgid "Home Y"
+msgstr "Baza Y"
+
+msgid "Home Z"
+msgstr "Baza Z"
+
+msgid "Homing"
+msgstr "Bazowanie"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Hostname"
+msgstr "Nazwa hosta"
+
+msgid "Icon Theme"
+msgstr "Motyw Ikon"
+
+msgid "Increase"
+msgstr "Zwiększ"
+
+msgid "Initializing printer..."
+msgstr "Drukarka Startuje..."
+
+msgid "Input Shaper"
+msgstr "Input Shaper"
+
+msgid "Interface"
+msgstr "Interfejs"
+
+msgid "Invalid"
+msgstr "Nieprawidłowy"
+
+msgid "Invalid password"
+msgstr "Nieważne hasło"
+
+msgid "Invert X"
+msgstr "Odwróć X"
+
+msgid "Invert Y"
+msgstr "Odwróć Y"
+
+msgid "Invert Z"
+msgstr "Odwróć Z"
+
+msgid "IP:"
+msgstr "Adres IP:"
+
+msgid "Klipper Restart"
+msgstr "Restart Klippera"
+
+msgid "Klipper has disconnected"
+msgstr "Klipper się rozłączył"
+
+msgid "Klipper has encountered an error."
+msgstr "Klipper napotkał błąd."
+
+msgid "Klipper has shutdown"
+msgstr "Klipper się wyłączył"
+
+msgid "Klipper is attempting to start"
+msgstr "Klipper próbuje wystartować"
+
+msgid "Klipper will reboot"
+msgstr "Klipper uruchomi się ponownie"
+
+msgid "KlipperScreen will reboot"
+msgstr "KlipperScreen uruchomi się ponownie"
+
+msgid "Language"
+msgstr "Język"
+
+msgid "Large"
+msgstr "Duży"
+
+msgid "Layer:"
+msgstr "Warstwa:"
+
+msgid "Left:"
+msgstr "Lewo:"
+
+msgid "Limits"
+msgstr "Limity"
+
+msgid "Load"
+msgstr "Ładuj"
+
+msgid "Lower Nozzle"
+msgstr "Obniż  dyszę"
+
+msgid "Leveling Calibration"
+msgstr "Kalibracja"
+
+msgid "Macro shortcut on sidebar"
+msgstr "Skrót do makr na pasku bocznym"
+
+msgid "Macros"
+msgstr "Makro"
+
+msgid "Main Menu"
+msgstr "Główne Menu"
+
+msgid "Max"
+msgstr "Maks"
+
+msgid "Max Acceleration"
+msgstr "Maksymalne przyspieszenie"
+
+msgid "Max Acceleration to Deceleration"
+msgstr "Maks Przyśpieszenie i Opóźnienie"
+
+msgid "Max Velocity"
+msgstr "Maks Prędkość"
+
+msgid "Maximum"
+msgstr "Maksymalny"
+
+msgid "Measure Both"
+msgstr "Zmierz oba"
+
+msgid "Measure X"
+msgstr "Zmierz X"
+
+msgid "Measure Y"
+msgstr "Zmierz Y"
+
+msgid "Medium"
+msgstr "Średni"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Mesh calibrate"
+msgstr "Kalibracja siatki"
+
+msgid "Modified"
+msgstr "Zmodyfikowane"
+
+msgid "Moonraker: connected"
+msgstr "Moonraker: podłączony"
+
+msgid "Move"
+msgstr "Ruch"
+
+msgid "Move Distance (mm)"
+msgstr "Odległość Ruchu (mm)"
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "Network"
+msgstr "Sieć"
+
+msgid "Never"
+msgstr "Nigdy"
+
+msgid "New"
+msgstr "Nowy"
+
+msgid "Not supported for auto-detection, it needs to be configured in klipperscreen.conf"
+msgstr "Nieobsługiwany do automatycznego wykrywania, musi być skonfigurowany w pliku klipperscreen.conf"
+
+msgid "Nothing selected"
+msgstr "Nic nie wybrano"
+
+msgid "Next"
+msgstr "Następny"
+
+#, python-format
+msgid "Outdated by %d"
+msgstr "Nieaktualne przez %d"
+
+msgid "PSK for"
+msgstr "PSK dla"
+
+msgid "Package will be updated"
+msgid_plural "Packages will be updated"
+msgstr[0] "Pakiet zostanie zaktualizowany"
+msgstr[1] "Pakiety zostaną zaktualizowane"
+msgstr[2] "Pakiety zostaną zaktualizowane"
+
+msgid "Part Fan"
+msgstr "Wentylator cz"
+
+msgid "Password saved"
+msgstr "Hasło zostało zapisane"
+
+msgid "Pause"
+msgstr "Pauza"
+
+msgid "Paused"
+msgstr "Zapauzowane"
+
+msgid "Perform a full upgrade?"
+msgstr "Przeprowadzić pełną aktualizację?"
+
+msgid "Pins"
+msgstr "Szpilki"
+
+msgid "Please recompile and flash the micro-controller."
+msgstr "Proszę przekompilować i sflashować mikrokontroler."
+
+msgid "Power"
+msgstr "Zasilanie"
+
+msgid "Power On Printer"
+msgstr "Zasilanie włączone"
+
+msgid "Pressure Advance:"
+msgstr "Postęp ciśnienia:"
+
+msgid "Print"
+msgstr "Drukuj"
+
+msgid "Print Control"
+msgstr "Kontrola Druku"
+
+msgid "Print Time"
+msgstr "Czas Druku"
+
+msgid "Printer"
+msgstr "Drukarka"
+
+msgid "Printer Connections"
+msgstr "Połączenia Drukarki"
+
+msgid "Printer Select"
+msgstr "Wybierz drukarkę"
+
+msgid "Printing"
+msgstr "Drukujemy"
+
+msgid "Probe Offset"
+msgstr "Przesunięcie sondy"
+
+msgid "Profile Name:"
+msgstr "Nazwa Profilu:"
+
+msgid "Provide KlipperScreen.log when asking for help.\n"
+msgstr "Podaj KlipperScreen.log prosząc o pomoc.\n"
+
+msgid "Please follow the steps below to calibrate the machine, refer to the manual for details"
+msgstr "Wykonaj proszę poniższe czynności, aby skalibrować urządzenie. Więcej informacji na ten temat znajdziesz w instrukcji"
+
+msgid "1.Operation Z Calibration Setting Offset"
+msgstr "1.Wykonaj kalibrację ustawień offsetu Z"
+
+msgid "2.Operate Bed Level to adjust the flatness of the bed"
+msgstr "2.Wykonaj poziomowanie stołu roboczego, aby wyregulować jego płaskość"
+
+msgid "3.Operate Bed Mesh automatic leveling"
+msgstr "3.Wykonaj automatyczną korektę poziomowania stołu roboczego za pomocą siatki pomiarów"
+
+msgid "Quad Gantry Level"
+msgstr "Poziom Bramy"
+
+msgid "Raise Nozzle"
+msgstr "Podnieś dyszę"
+
+msgid "Recover"
+msgstr "Odzyskaj"
+
+msgid "Recover Hard"
+msgstr "Odzyskaj Twardo"
+
+msgid "Recover Soft"
+msgstr "Odzyskaj Miękko"
+
+msgid "Reference"
+msgstr "Sprawdzenie"
+
+msgid "Refresh"
+msgstr "Odświeżać"
+
+msgid "Restart"
+msgstr "Restartuj"
+
+msgid "Resume"
+msgstr "Dokończ"
+
+msgid "Retract"
+msgstr "Cofnij"
+
+msgid "Retraction"
+msgstr "Wycofanie"
+
+msgid "Retraction Length"
+msgstr "Długość wycofania"
+
+msgid "Retraction Speed"
+msgstr "Szybkość wycofania"
+
+msgid "Retry"
+msgstr "Spróbować ponownie"
+
+msgid "Retrying"
+msgstr "Ponawianie próby"
+
+msgid "Save"
+msgstr "Zapisz"
+
+msgid "Save Config"
+msgstr "Zapisz Konfigurację"
+
+msgid "Save Z"
+msgstr "Zapisz Z"
+
+msgid "Save configuration?"
+msgstr "Zapisać konfigurację?"
+
+msgid "Saved"
+msgstr "Zapisane"
+
+#, python-format
+msgid "Saved offset: %s"
+msgstr "Zapisane przesunięcie: %s"
+
+msgid "Screen DPMS"
+msgstr "Ekran DPMS"
+
+msgid "Screen Power Off Time"
+msgstr "Czas wygaszania ekranu"
+
+msgid "Screws Adjust"
+msgstr "Popraw śruby"
+
+msgid "Select"
+msgstr "Zaznacz"
+
+msgid "Send"
+msgstr "Wysłać"
+
+#, python-format
+msgid "Sending Power ON signal to: %s"
+msgstr "Wysyłam sygnał włączenia do: %s"
+
+msgid "Set Temp"
+msgstr "Ustaw Temperaturę"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "Show"
+msgstr "Pokaż"
+
+msgid "Show Heater Power"
+msgstr "Pokaż moc grzałki"
+
+msgid "Shutdown"
+msgstr "Zamknąć"
+
+msgid "Size"
+msgstr "Rozmiar"
+
+msgid "Slicer"
+msgstr "Slicer"
+
+msgid "Slicer Time correction (%)"
+msgstr "Korekta czasu krajalnicy (%)"
+
+msgid "Slicer:"
+msgstr "Krajalnica:"
+
+msgid "Small"
+msgstr "Mały"
+
+msgid "Speed (mm/s)"
+msgstr "Prędkość (mm/s)"
+
+msgid "Speed +"
+msgstr "Prędkość +"
+
+msgid "Speed -"
+msgstr "Prędkość -"
+
+msgid "Speed:"
+msgstr "Prędkość:"
+
+msgid "Square Corner Velocity"
+msgstr "Prędkość w narożniku kwadratowym"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Starting WiFi Association"
+msgstr "Rozpoczęcie stowarzyszenia WiFi"
+
+msgid "Starting recovery for"
+msgstr "Rozpoczęcie odzyskiwania dla"
+
+msgid "Starting update for"
+msgstr "Zacznij uaktualnienie dla"
+
+msgid "System"
+msgstr "System"
+
+msgid "System Restart"
+msgstr "Restart Systemu"
+
+msgid "System Shutdown"
+msgstr "Wyłączanie systemu"
+
+msgid "Temp (°C)"
+msgstr "Temp (°C)"
+
+msgid "Temperature"
+msgstr "Temperatura"
+
+msgid "Total:"
+msgstr "Całkowity:"
+
+msgid "Unknown Heater"
+msgstr "Nieznany Podgrzewacz"
+
+msgid "Unknown screw position"
+msgstr "Nieznana pozycja śruby"
+
+msgid "Unload"
+msgstr "Wyładuj"
+
+msgid "Unretract Extra Length"
+msgstr "Rozkładanie na części"
+
+msgid "Unretract Speed"
+msgstr "Prędkość odwijania"
+
+msgid "Up To Date"
+msgstr "Aktualne"
+
+msgid "Update"
+msgstr "Uaktualnienie"
+
+msgid "Updating"
+msgstr "Aktualizacja"
+
+msgid "Uploaded"
+msgstr "Przesłane"
+
+msgid "XY Move Speed (mm/s)"
+msgstr "Prędkość ruchu XY (mm/s)"
+
+msgid "XY Speed (mm/s)"
+msgstr "Prędkość XY (mm/s)"
+
+msgid "Z Calibrate"
+msgstr "Kalibracja Z"
+
+msgid "Z Move Speed (mm/s)"
+msgstr "Prędkość ruchu Z (mm/s)"
+
+msgid "Z Speed (mm/s)"
+msgstr "Prędkość Z (mm/s)"
+
+msgid "Z Tilt"
+msgstr "Przechył Z"
+
+msgid "Z offset:"
+msgstr "Przesunięcie Z:"
+
+msgid "commit"
+msgid_plural "commits"
+msgstr[0] "zmiana"
+msgstr[1] "zmiany"
+msgstr[2] "zmiany"
+
+msgid "dBm"
+msgstr "dBm"
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "godzina"
+msgstr[1] "godziny"
+msgstr[2] "godzin"
+
+msgid "minutes"
+msgstr "minut"
+
+msgid "mm"
+msgstr "mm"
+
+msgid "mm/s"
+msgstr "mm/s²"
+
+msgid "mm/s²"
+msgstr "mm/s²"
+
+msgid "mm³/s"
+msgstr "mm³/s"
+
+msgid "Your languages"
+msgstr "Twoje języki"
+
+msgid "Machine Leveling"
+msgstr "Poziomowanie maszyn"
+
+msgid "Led"
+msgstr "Led"
+
+msgid "LED Off"
+msgstr "LED Wył"
+
+msgid "LED On"
+msgstr "Dioda LED włączona"
+
+msgid "Restore factory"
+msgstr "Przywróć ustawienia fabryczne"
+
+msgid "Reboot"
+msgstr "Ponowny rozruch"
+
+msgid "Click Confirm will factory reset and restart, do you want to factory reset?"
+msgstr "Kliknij Potwierdź przywrócenie ustawień fabrycznych i ponowne uruchomienie, czy chcesz przywrócić ustawienia fabryczne?"
+
+msgid "Bed"
+msgstr "Łóżko"
+
+msgid "Extruder"
+msgstr "Wytłaczarki"
+
+msgid "Sure"
+msgstr "Pewny"
+
+msgid "Software Version"
+msgstr "Wersja oprogramowania"
+
+msgid "No update package detected, make sure the KliPAD.deb file exists!!!"
+msgstr "Nie wykryto pakietu aktualizacji, upewnij się, że plik KliPAD.deb istnieje!!!"
+
+msgid "Update package version exception, please make sure the update package is the latest version!!!"
+msgstr "Wyjątek dotyczący wersji pakietu aktualizacji, upewnij się, że pakiet aktualizacji jest najnowszą wersją!!!"
+
+msgid "The update package is ready, do you want to update? The system will reboot after the update is complete..."
+msgstr "Pakiet aktualizacji jest gotowy, czy chcesz zaktualizować? System uruchomi się ponownie po zakończeniu aktualizacji..."
+
+msgid "Please wait for a reboot while the update package is installed..."
+msgstr "Poczekaj na ponowne uruchomienie komputera, gdy pakiet aktualizacji jest zainstalowany..."
+
+msgid "Sound"
+msgstr "Dźwięk"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Abnormal interruption of printing is detected, whether to resume"
+msgstr "Wykryto nieprawidłowe przerwanie drukowania, czy wznowić"
+
+# 时区
+msgid "UTC"
+msgstr "UTC"
+
+# # Africa
+msgid "Africa"
+msgstr "Afryka"
+
+msgid "Abidjan"
+msgstr "Abidżan"
+
+msgid "Accra"
+msgstr "Akra"
+
+msgid "Addis_Ababa"
+msgstr "Addis_Ababa"
+
+msgid "Algiers"
+msgstr "Algiers"
+
+msgid "Asmara"
+msgstr "Asmara"
+
+msgid "Bamako"
+msgstr "Bamako"
+
+msgid "Bangui"
+msgstr "Bangui"
+
+msgid "Banjul"
+msgstr "Bandżul"
+
+msgid "Bissau"
+msgstr "Bissau"
+
+msgid "Blantyre"
+msgstr "Blantyre"
+
+msgid "Brazzaville"
+msgstr "Brazzaville"
+
+msgid "Bujumbura"
+msgstr "Bujumbura"
+
+msgid "Cairo"
+msgstr "Kair"
+
+msgid "Casablanca"
+msgstr "Casablanca"
+
+msgid "Ceuta"
+msgstr "Ceuta"
+
+msgid "Conakry"
+msgstr "Konakry"
+
+msgid "Dakar"
+msgstr "Dakar"
+
+msgid "Dar_es_Salaam"
+msgstr "Dar_es_Salaam"
+
+msgid "Djibouti"
+msgstr "Dżibuti"
+
+msgid "Douala"
+msgstr "Douala"
+
+msgid "El_Aaiun"
+msgstr "El_Aaiun"
+
+msgid "Freetown"
+msgstr "Freetown"
+
+msgid "Gaborone"
+msgstr "Gaborone"
+
+msgid "Harare"
+msgstr "Harare"
+
+msgid "Johannesburg"
+msgstr "Johannesburg"
+
+msgid "Juba"
+msgstr "Juba"
+
+msgid "Kampala"
+msgstr "Kampala"
+
+msgid "Khartoum"
+msgstr "Chartum"
+
+msgid "Kigali"
+msgstr "Kigali"
+
+msgid "Kinshasa"
+msgstr "Kinszasa"
+
+msgid "Lagos"
+msgstr "Lagos"
+
+msgid "Libreville"
+msgstr "Libreville"
+
+msgid "Lome"
+msgstr "Lome"
+
+msgid "Luanda"
+msgstr "Luanda"
+
+msgid "Lubumbashi"
+msgstr "Lubumbashi"
+
+msgid "Lusaka"
+msgstr "Lusaka"
+
+msgid "Malabo"
+msgstr "Malabo"
+
+msgid "Maputo"
+msgstr "Maputo"
+
+msgid "Maseru"
+msgstr "Maseru"
+
+msgid "Mbabane"
+msgstr "Mbabane"
+
+msgid "Mogadishu"
+msgstr "Mogadiszu"
+
+msgid "Monrovia"
+msgstr "Monrovia"
+
+msgid "Nairobi"
+msgstr "Nairobi"
+
+msgid "Ndjamena"
+msgstr "Ndjamena"
+
+msgid "Niamey"
+msgstr "Niamey"
+
+msgid "Nouakchott"
+msgstr "Nouakchott"
+
+msgid "Ouagadougou"
+msgstr "Wagadugu"
+
+msgid "Porto-Novo"
+msgstr "Porto-Novo"
+
+msgid "Sao_Tome"
+msgstr "Sao_Tome"
+
+msgid "Tripoli"
+msgstr "Trypolis"
+
+msgid "Tunis"
+msgstr "Tunis"
+
+msgid "Windhoek"
+msgstr "Windhoek"
+
+# # America
+msgid "America"
+msgstr "Ameryka"
+
+msgid "Anchorage"
+msgstr "Anchorage"
+
+msgid "Dawson"
+msgstr "Dawson"
+
+msgid "Los_Angeles"
+msgstr "Los_Angeles"
+
+msgid "Chicago"
+msgstr "Chicago"
+
+msgid "Mexico_City"
+msgstr "Mexico_City"
+
+msgid "New_York"
+msgstr "Nowy Jork"
+
+msgid "Toronto"
+msgstr "Toronto"
+
+msgid "Bogota"
+msgstr "Bogota"
+
+msgid "Lima"
+msgstr "Lima"
+
+msgid "Caracas"
+msgstr "Caracas"
+
+msgid "Anguilla"
+msgstr "Anguilla"
+
+msgid "Antigua"
+msgstr "Antigua"
+
+msgid "Araguaina"
+msgstr "Araguaina"
+
+msgid "Argentina/Buenos_Aires"
+msgstr "Argentina/Buenos_Aires"
+
+msgid "Santiago"
+msgstr "Santiago"
+
+msgid "Sao_Paulo"
+msgstr "Sao_Paulo"
+
+# # Antarctica
+msgid "Antarctica"
+msgstr "Antarktyda"
+
+msgid "Casey"
+msgstr "Casey"
+
+msgid "Davis"
+msgstr "Davis"
+
+msgid "DumontDUrville"
+msgstr "Dumont-DUrville"
+
+msgid "Macquarie"
+msgstr "Macquarie"
+
+msgid "Mawson"
+msgstr "Mawson"
+
+msgid "McMurdo"
+msgstr "McMurdo"
+
+msgid "Palmer"
+msgstr "Palmer"
+
+msgid "Rothera"
+msgstr "Rothera"
+
+msgid "Syowa"
+msgstr "Syowa"
+
+msgid "Troll"
+msgstr "Troll"
+
+msgid "Vostok"
+msgstr "Vostok"
+
+# # Arctic
+msgid "Arctic"
+msgstr "Arktyka"
+
+msgid "Longyearbyen"
+msgstr "Longyearbyen"
+
+# # Asia
+msgid "Asia"
+msgstr "Azja"
+
+msgid "Aden"
+msgstr "Aden"
+
+msgid "Almaty"
+msgstr "Ałmaty"
+
+msgid "Amman"
+msgstr "Amman"
+
+msgid "Anadyr"
+msgstr "Anadyr"
+
+msgid "Aqtau"
+msgstr "Aqtau"
+
+msgid "Aqtobe"
+msgstr "Aqtobe"
+
+msgid "Ashgabat"
+msgstr "Aszchabad"
+
+msgid "Atyrau"
+msgstr "Atyrau"
+
+msgid "Baghdad"
+msgstr "Bagdad"
+
+msgid "Bahrain"
+msgstr "Bahrajn"
+
+msgid "Baku"
+msgstr "Baku"
+
+msgid "Bangkok"
+msgstr "Bangkok"
+
+msgid "Barnaul"
+msgstr "Barnauł"
+
+msgid "Beirut"
+msgstr "Bejrut"
+
+msgid "Bishkek"
+msgstr "Biszkek"
+
+msgid "Brunei"
+msgstr "Brunei"
+
+msgid "Chita"
+msgstr "Czita"
+
+msgid "Colombo"
+msgstr "Kolombo"
+
+msgid "Damascus"
+msgstr "Damaszek"
+
+msgid "Dhaka"
+msgstr "Dhaka"
+
+msgid "Dili"
+msgstr "Dili"
+
+msgid "Dubai"
+msgstr ""
+
+msgid "Dushanbe"
+msgstr "Duszanbe"
+
+msgid "Gaza"
+msgstr "Gaza"
+
+msgid "Hebron"
+msgstr "Hebron"
+
+msgid "Hong_Kong"
+msgstr "Hongkong"
+
+msgid "Hovd"
+msgstr "Hovd"
+
+msgid "Irkutsk"
+msgstr "Irkuck"
+
+msgid "Jerusalem"
+msgstr "Jerozolima"
+
+msgid "Kabul"
+msgstr "Kabul"
+
+msgid "Karachi"
+msgstr "Karaczi"
+
+msgid "Kuching"
+msgstr "Kuching"
+
+msgid "Kuwait"
+msgstr "Kuwejt"
+
+msgid "Macau"
+msgstr "Makau"
+
+msgid "Muscat"
+msgstr "Muscat"
+
+msgid "Nicosia"
+msgstr "Nikozja"
+
+msgid "Omsk"
+msgstr "Omsk"
+
+msgid "Oral"
+msgstr "Doustne"
+
+msgid "Phnom_Penh"
+msgstr "Phnom_Penh"
+
+msgid "Pontianak"
+msgstr "Pontianak"
+
+msgid "Qatar"
+msgstr "Katar"
+
+msgid "Riyadh"
+msgstr "Rijad"
+
+msgid "Sakhalin"
+msgstr "Sachalin"
+
+msgid "Seoul"
+msgstr "Seul"
+
+msgid "Shanghai"
+msgstr "Szanghaj"
+
+msgid "Singapore"
+msgstr "Singapur"
+
+msgid "Tashkent"
+msgstr "Taszkent"
+
+msgid "Tbilisi"
+msgstr "Tbilisi"
+
+msgid "Tehran"
+msgstr "Teheran"
+
+msgid "Thimphu"
+msgstr "Thimphu"
+
+msgid "Tokyo"
+msgstr "Tokio"
+
+msgid "Tomsk"
+msgstr "Tomsk"
+
+msgid "Ust-Nera"
+msgstr "Ust-Nera"
+
+msgid "Yakutsk"
+msgstr "Jakuck"
+
+msgid "Yangon"
+msgstr ""
+
+# # Atlantic
+msgid "Atlantic"
+msgstr "Atlantyk"
+
+msgid "Azores"
+msgstr "Azory"
+
+msgid "Bermuda"
+msgstr "Bermudy"
+
+msgid "Canary"
+msgstr "Kanarek"
+
+msgid "Cape_Verde"
+msgstr "Cape_Verde"
+
+msgid "Faroe"
+msgstr "Wyspy Owcze"
+
+msgid "Madeira"
+msgstr "Madera"
+
+msgid "Reykjavik"
+msgstr "Reykjavik"
+
+msgid "South_Georgia"
+msgstr "Południowa Georgia"
+
+msgid "St_Helena"
+msgstr "St_Helena"
+
+msgid "Stanley"
+msgstr "Stanley"
+
+# # Australia
+msgid "Australia"
+msgstr "Australia"
+
+msgid "Adelaide"
+msgstr "Adelajda"
+
+msgid "Brisbane"
+msgstr "Brisbane"
+
+msgid "Broken_Hill"
+msgstr "Broken_Hill"
+
+msgid "Darwin"
+msgstr "Darwin"
+
+msgid "Eucla"
+msgstr "Eucla"
+
+msgid "Hobart"
+msgstr "Hobart"
+
+msgid "Lindeman"
+msgstr "Lindeman"
+
+msgid "Lord_Howe"
+msgstr "Lord_Howe"
+
+msgid "Melbourne"
+msgstr "Melbourne"
+
+msgid "Perth"
+msgstr "Perth"
+
+msgid "Sydney"
+msgstr "Sydney"
+
+# # Europe
+msgid "Europe"
+msgstr "Europe"
+
+msgid "Amsterdam"
+msgstr "Amsterdam"
+
+msgid "Andorra"
+msgstr "Andora"
+
+msgid "Astrakhan"
+msgstr "Astrachań"
+
+msgid "Athens"
+msgstr "Ateny"
+
+msgid "Belgrade"
+msgstr "Belgrad"
+
+msgid "Berlin"
+msgstr "Berlin"
+
+msgid "Bratislava"
+msgstr "Bratysława"
+
+msgid "Brussels"
+msgstr "Bruksela"
+
+msgid "Bucharest"
+msgstr "Bukareszt"
+
+msgid "Budapest"
+msgstr "Budapeszt"
+
+msgid "Busingen"
+msgstr "Busingen"
+
+msgid "Chisinau"
+msgstr "Kiszyniów"
+
+msgid "Copenhagen"
+msgstr "Kopenhaga"
+
+msgid "Dublin"
+msgstr "Dublin"
+
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+msgid "Guernsey"
+msgstr "Guernsey"
+
+msgid "Helsinki"
+msgstr "Helsinki"
+
+msgid "Isle_of_Man"
+msgstr "Wyspa_of_Man"
+
+msgid "Istanbul"
+msgstr "Stambuł"
+
+msgid "Jersey"
+msgstr "Jersey"
+
+msgid "Kaliningrad"
+msgstr "Kaliningrad"
+
+msgid "Kiev"
+msgstr "Kijów"
+
+msgid "Kirov"
+msgstr "Kirow"
+
+msgid "Lisbon"
+msgstr "Lizbona"
+
+msgid "Ljubljana"
+msgstr "Lublana"
+
+msgid "London"
+msgstr "Londyn"
+
+msgid "Luxembourg"
+msgstr "Luksemburg"
+
+msgid "Madrid"
+msgstr "Madryt"
+
+msgid "Malta"
+msgstr "Malta"
+
+msgid "Mariehamn"
+msgstr "Mariehamn"
+
+msgid "Minsk"
+msgstr "Mińsk"
+
+msgid "Monaco"
+msgstr "Monako"
+
+msgid "Moscow"
+msgstr "Moskwa"
+
+msgid "Oslo"
+msgstr "Oslo"
+
+msgid "Paris"
+msgstr "Paryż"
+
+msgid "Podgorica"
+msgstr "Podgorica"
+
+msgid "Prague"
+msgstr "Praga"
+
+msgid "Riga"
+msgstr "Ryga"
+
+msgid "Rome"
+msgstr "Rzym"
+
+msgid "Samara"
+msgstr "Samara"
+
+msgid "San_Marino"
+msgstr "San_Marino"
+
+msgid "Sarajevo"
+msgstr "Sarajewo"
+
+msgid "Saratov"
+msgstr "Saratów"
+
+msgid "Simferopol"
+msgstr "Symferopol"
+
+msgid "Skopje"
+msgstr "Skopje"
+
+msgid "Sofia"
+msgstr "Sofia"
+
+msgid "Stockholm"
+msgstr "Sztokholm"
+
+msgid "Tallinn"
+msgstr "Tallinn"
+
+msgid "Tirane"
+msgstr "Tirane"
+
+msgid "Ulyanovsk"
+msgstr "Uljanowsk"
+
+msgid "Uzhgorod"
+msgstr "Użgorod"
+
+msgid "Vaduz"
+msgstr "Vaduz"
+
+msgid "Vatican"
+msgstr "Watykan"
+
+msgid "Vienna"
+msgstr "Wiedeń"
+
+msgid "Vilnius"
+msgstr "Wilno"
+
+msgid "Volgograd"
+msgstr "Wołgograd"
+
+msgid "Warsaw"
+msgstr "Warszawa"
+
+msgid "Zagreb"
+msgstr "Zagrzeb"
+
+msgid "Zaporozhye"
+msgstr "Zaporoże"
+
+msgid "Zurich"
+msgstr "Zurych"
+
+# # Indian
+msgid "Indian"
+msgstr "Hindus"
+
+msgid "Antananarivo"
+msgstr "Antananarywa"
+
+msgid "Chagos"
+msgstr "Chagos"
+
+msgid "Christmas"
+msgstr "Boże Narodzenie"
+
+msgid "Cocos"
+msgstr "Kokos"
+
+msgid "Comoro"
+msgstr "Comoro"
+
+msgid "Kerguelen"
+msgstr "Kerguelen"
+
+msgid "Mahe"
+msgstr "Mahe"
+
+msgid "Maldives"
+msgstr "Malediwy"
+
+msgid "Mauritius"
+msgstr "Mauritius"
+
+msgid "Mayotte"
+msgstr "Majotta"
+
+msgid "Reunion"
+msgstr "Reunion"
+
+# # Pacific
+msgid "Pacific"
+msgstr "Pacyfik"
+
+msgid "Apia"
+msgstr "Apia"
+
+msgid "Auckland"
+msgstr "Auckland"
+
+msgid "Bougainville"
+msgstr "Bougainville"
+
+msgid "Chatham"
+msgstr "Chatham"
+
+msgid "Chuuk"
+msgstr "Chuuk"
+
+msgid "Easter"
+msgstr "Wielkanoc"
+
+msgid "Efate"
+msgstr "Efate"
+
+msgid "Enderbury"
+msgstr "Enderbury"
+
+msgid "Fakaofo"
+msgstr "Fakaofo"
+
+msgid "Fiji"
+msgstr "Fidżi"
+
+msgid "Funafuti"
+msgstr "Funafuti"
+
+msgid "Galapagos"
+msgstr "Galapagos"
+
+msgid "Gambier"
+msgstr "Gambier"
+
+msgid "Guadalcanal"
+msgstr "Guadalcanal"
+
+msgid "Guam"
+msgstr "Guam"
+
+msgid "Honolulu"
+msgstr "Honolulu"
+
+msgid "Kiritimati"
+msgstr "Kiritimati"
+
+msgid "Kosrae"
+msgstr "Kosrae"
+
+msgid "Kwajalein"
+msgstr "Kwajalein"
+
+msgid "Majuro"
+msgstr "Majuro"
+
+msgid "Marquesas"
+msgstr "Markizy"
+
+msgid "Midway"
+msgstr "Midway"
+
+msgid "Nauru"
+msgstr "Nauru"
+
+msgid "Niue"
+msgstr "Niue"
+
+msgid "Norfolk"
+msgstr "Norfolk"
+
+msgid "Noumea"
+msgstr "Noumea"
+
+msgid "Pago_Pago"
+msgstr "Pago_Pago"
+
+msgid "Palau"
+msgstr "Palau"
+
+msgid "Pitcairn"
+msgstr "Pitcairn"
+
+msgid "Pohnpei"
+msgstr "Pohnpei"
+
+msgid "Port_Moresby"
+msgstr "Port_Moresby"
+
+msgid "Rarotonga"
+msgstr "Rarotonga"
+
+msgid "Saipan"
+msgstr "Saipan"
+
+msgid "Tahiti"
+msgstr "Tahiti"
+
+msgid "Tarawa"
+msgstr "Tarawa"
+
+msgid "Tongatapu"
+msgstr "Tongatapu"
+
+msgid "Wake"
+msgstr "Wake"
+
+msgid "Wallis"
+msgstr "Wallis"
+
+#~ msgid "Sort:"
+#~ msgstr "Sortować:"
+
+#~ msgid "Z+"
+#~ msgstr "Z+"
+
+#~ msgid "Z-"
+#~ msgstr "Z-"
+
+#~ msgid "X+"
+#~ msgstr "X+"
+
+#~ msgid "X-"
+#~ msgstr "X-"
+
+#~ msgid "Y+"
+#~ msgstr "Y+"
+
+#~ msgid "Y-"
+#~ msgstr "Y0"
+
+#, python-format
+#~ msgid "Retry #%s"
+#~ msgstr "Spróbuj ponownie #%s"
+
+#~ msgid "Add Printer"
+#~ msgstr "Dodaj drukarkę"
+
+#~ msgid "Initializing"
+#~ msgstr "Startowanie"
+
+#~ msgid "Delete"
+#~ msgstr "Skasuj"
+
+#~ msgid "Home"
+#~ msgstr "Baza"
+
+#~ msgid "Off"
+#~ msgstr "Wyłącz"
+
+#~ msgid "View Mesh"
+#~ msgstr "Wyświetl siatkę"
+
+#~ msgid "Sort by: "
+#~ msgstr "Sortuj wg: "
+
+#~ msgid "Bltouch found applied offset"
+#~ msgstr "Bltouch znalazł zastosowane przesunięcie"
+
+#~ msgid ""
+#~ "Check /tmp/KlipperScreen.log for more information.\n"
+#~ "Please submit an issue on GitHub for help."
+#~ msgstr ""
+#~ "Sprawdź /tmp/KlipperScreen.log aby uzyskać więcej informacji.\n"
+#~ "Proszę zgłosić usterkę na GitHub by uzyskać pomoc."
+
+#~ msgid "Probe found applied offset"
+#~ msgstr "Probe znalazł zastosowane przesunięcie"
+
+#~ msgid "Tool"
+#~ msgstr "Narzędzie"
+
+#~ msgid "Displayed Macros"
+#~ msgstr "Wyświetlone Makra"
+
+#~ msgid "Z Position"
+#~ msgstr "Pozycja Z"
+
+#~ msgid "IPv4"
+#~ msgstr "IPv4"
+
+#~ msgid "IPv6"
+#~ msgstr "IPv6"
+
+#~ msgid "Disconnect"
+#~ msgstr "Rozłącz"
+
+#~ msgid "Duration Only"
+#~ msgstr "Tylko Przebieg"
+
+#~ msgid "Klipper Version"
+#~ msgstr "Wersja Klippera"
+
+#~ msgid ""
+#~ "Klipper has encountered an error with the micro-controller.\n"
+#~ "Please recompile and flash."
+#~ msgstr ""
+#~ "Klipper napotkał błąd z mikrokontrolerem.\n"
+#~ "Prosimy o ponowną kompilację i flashowanie."
+
+#~ msgid ""
+#~ "Klipper has encountered an error.\n"
+#~ "Issue a FIRMWARE_RESTART to attempt fixing the issue."
+#~ msgstr ""
+#~ "Klipper napotkał błąd.\n"
+#~ "Wykonaj FIRMWARE_RESTART, aby spróbować naprawić problem."
+
+#~ msgid "KlipperScreen Version"
+#~ msgstr "Wersja KlipperScreen"
+
+#~ msgid "Show Only Heaters in Temp."
+#~ msgstr "Pokaż tylko grzejniki w temp."
+
+#~ msgid "Target"
+#~ msgstr "Cel"
+
+#~ msgid "Temp"
+#~ msgstr "Temp"

@@ -1,0 +1,3828 @@
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 3000
+max_z_velocity = 15
+max_z_accel = 100
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 180
+check_gain_time = 120
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 50
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% if printer["filament_switch_sensor my_sensor"].filament_detected == True %}
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+	{% else %}
+	RESPOND TYPE=echo MSG="Please Insert filament in Sensor!"
+	{% endif %}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PD15
+dir_pin = PD14
+enable_pin = !PC7
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = -16
+position_min = -16
+position_max = 225
+homing_speed = 80
+step_pulse_duration = 0.000004
+
+[tmc2209 stepper_x]
+uart_pin = PE3
+run_current = 1.2
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PD10
+
+[stepper_y]
+step_pin = PB7
+dir_pin = PB6
+enable_pin = !PB9
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = -2
+position_min = -2
+position_max = 225
+homing_speed = 60
+step_pulse_duration = 0.000004
+
+[tmc2209 stepper_y]
+uart_pin = PE4
+run_current = 1.2
+uart_address = 3
+interpolate = True
+driver_sgthrs = 105
+stealthchop_threshold = 999999
+diag_pin = ^PE0
+
+[stepper_z]
+step_pin = PB3
+dir_pin = !PD7
+enable_pin = !PB5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = probe:z_virtual_endstop
+position_max = 253
+position_min = -4
+homing_speed = 10
+
+[stepper_z1]
+step_pin = PA7
+dir_pin = !PA6
+enable_pin = !PC5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = probe:z_virtual_endstop
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PD1
+dir_pin = !PD0
+enable_pin = !PD4
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PA4
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+max_extrude_cross_section = 500
+instantaneous_corner_velocity = 10
+max_extrude_only_velocity = 2000
+max_extrude_only_accel = 10000
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PE7
+run_current = 0.6
+uart_address = 3
+interpolate = True
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PA3
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PD13
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[filament_switch_sensor my_sensor]
+switch_pin = PD11
+
+[safe_z_home]
+home_xy_position = 83,130
+speed = 100
+z_hop = 5
+z_hop_speed = 10
+
+[z_tilt]
+z_positions = -16, 130
+	180, 130
+points = -16, 130
+	180, 130
+speed = 200
+horizontal_move_z = 5
+retries = 20
+retry_tolerance = .005
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 11,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 5.0
+mesh_pps = 4,4
+move_check_distance = 3
+
+[screws_tilt_adjust]
+screw1 = -1, 45
+screw1_name = front left screw
+screw2 = 168, 45
+screw2_name = front right screw
+screw3 = 168, 215
+screw3_name = rear right screw
+screw4 = -1, 215
+screw4_name = rear left screw
+horizontal_move_z = 5.
+speed = 200.
+screw_thread = CW-M4
+
+[heater_fan hotend_fan]
+pin = PE11
+
+[multi_pin fan_pins]
+pins = PE9,PE13
+
+[fan]
+pin = multi_pin:fan_pins
+
+[output_pin my_led]
+pin = PC4
+pwm = 1
+value = 1
+cycle_time = 0.010
+
+[controller_fan Fan_Board]
+pin = PD3
+fan_speed = 1.0
+idle_timeout = 120
+heater = heater_bed, extruder
+stepper = stepper_x, stepper_y, stepper_z, stepper_z1
+
+[input_shaper]
+damping_ratio_x = 0.1
+damping_ratio_y = 0.1
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.4
+shaper_type_y = 2hump_ei
+shaper_freq_y = 43.4
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+webhooks client 281473616422280: {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+=============== Log rollover at Wed Sep 27 05:03:08 2023 ===============
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473616422280: Disconnected
+Restarting printer
+Start printer at Wed Sep 27 05:04:05 2023 (1695801845.3 102.4)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 3000
+max_z_velocity = 15
+max_z_accel = 100
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 180
+check_gain_time = 120
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 50
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% if printer["filament_switch_sensor my_sensor"].filament_detected == True %}
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+	{% else %}
+	RESPOND TYPE=echo MSG="Please Insert filament in Sensor!"
+	{% endif %}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PD15
+dir_pin = PD14
+enable_pin = !PC7
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = -16
+position_min = -16
+position_max = 225
+homing_speed = 80
+step_pulse_duration = 0.000004
+
+[tmc2209 stepper_x]
+uart_pin = PE3
+run_current = 1.2
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PD10
+
+[stepper_y]
+step_pin = PB7
+dir_pin = PB6
+enable_pin = !PB9
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = -2
+position_min = -2
+position_max = 225
+homing_speed = 60
+step_pulse_duration = 0.000004
+
+[tmc2209 stepper_y]
+uart_pin = PE4
+run_current = 1.2
+uart_address = 3
+interpolate = True
+driver_sgthrs = 105
+stealthchop_threshold = 999999
+diag_pin = ^PE0
+
+[stepper_z]
+step_pin = PB3
+dir_pin = !PD7
+enable_pin = !PB5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = probe:z_virtual_endstop
+position_max = 253
+position_min = -4
+homing_speed = 10
+
+[stepper_z1]
+step_pin = PA7
+dir_pin = !PA6
+enable_pin = !PC5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = probe:z_virtual_endstop
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PD1
+dir_pin = !PD0
+enable_pin = !PD4
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PA4
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+max_extrude_cross_section = 500
+instantaneous_corner_velocity = 10
+max_extrude_only_velocity = 2000
+max_extrude_only_accel = 10000
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PE7
+run_current = 0.6
+uart_address = 3
+interpolate = True
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PA3
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PD13
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[filament_switch_sensor my_sensor]
+switch_pin = PD11
+
+[safe_z_home]
+home_xy_position = 83,130
+speed = 100
+z_hop = 5
+z_hop_speed = 10
+
+[z_tilt]
+z_positions = -16, 130
+	180, 130
+points = -16, 130
+	180, 130
+speed = 200
+horizontal_move_z = 5
+retries = 20
+retry_tolerance = .005
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 11,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 5.0
+mesh_pps = 4,4
+move_check_distance = 3
+
+[screws_tilt_adjust]
+screw1 = -1, 45
+screw1_name = front left screw
+screw2 = 168, 45
+screw2_name = front right screw
+screw3 = 168, 215
+screw3_name = rear right screw
+screw4 = -1, 215
+screw4_name = rear left screw
+horizontal_move_z = 5.
+speed = 200.
+screw_thread = CW-M4
+
+[heater_fan hotend_fan]
+pin = PE11
+
+[multi_pin fan_pins]
+pins = PE9,PE13
+
+[fan]
+pin = multi_pin:fan_pins
+
+[output_pin my_led]
+pin = PC4
+pwm = 1
+value = 1
+cycle_time = 0.010
+
+[controller_fan Fan_Board]
+pin = PD3
+fan_speed = 1.0
+idle_timeout = 120
+heater = heater_bed, extruder
+stepper = stepper_x, stepper_y, stepper_z, stepper_z1
+
+[input_shaper]
+damping_ratio_x = 0.1
+damping_ratio_y = 0.1
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.4
+shaper_type_y = 2hump_ei
+shaper_freq_y = 43.4
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=207.875844
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473624800336: New connection
+webhooks client 281473624800336: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': got {'oid': 26, 'next_clock': 3676320000, 'value': 17393, '#name': 'analog_in_state', '#sent_time': 118.46655443, '#receive_time': 118.504813222}
+mcu 'mcu': got {'oid': 14, 'next_clock': 3689280000, 'value': 24444, '#name': 'analog_in_state', '#sent_time': 118.63339418000001, '#receive_time': 118.68482901399999}
+mcu 'mcu': got {'oid': 26, 'next_clock': 3697920000, 'value': 17352, '#name': 'analog_in_state', '#sent_time': 118.796775639, '#receive_time': 118.804713056}
+Loaded MCU 'mcu' 105 commands (v0.11.0-122-ge6ef48cd / gcc: (15:7-2018-q2-6) 7.3.1 20180622 (release) [ARM/embedded-7-branch revision 261907] binutils: (2.31.1-12+11) 2.31.1)
+MCU 'mcu' config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi3=PB4,PB5,PB3 CLOCK_FREQ=72000000 MCU=stm32f103xe PWM_MAX=255 RECEIVE_WINDOW=192 RESERVE_PINS_serial=PB11,PB10 SERIAL_BAUD=250000 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
+mcu 'rpi': Starting connect
+mcu 'mcu': got {'oid': 14, 'next_clock': 3710880000, 'value': 24456, '#name': 'analog_in_state', '#sent_time': 118.859425931, '#receive_time': 118.984914639}
+mcu 'mcu': got {'oid': 26, 'next_clock': 3719520000, 'value': 17445, '#name': 'analog_in_state', '#sent_time': 118.859425931, '#receive_time': 119.104743847}
+mcu 'mcu': got {'oid': 14, 'next_clock': 3732480000, 'value': 24371, '#name': 'analog_in_state', '#sent_time': 118.859425931, '#receive_time': 119.284844514}
+mcu 'mcu': got {'oid': 26, 'next_clock': 3741120000, 'value': 17373, '#name': 'analog_in_state', '#sent_time': 118.859425931, '#receive_time': 119.404709597}
+Loaded MCU 'rpi' 111 commands (v0.11.0-121-ga5fb2076 / gcc: (Debian 8.3.0-6) 8.3.0 binutils: (GNU Binutils for Debian) 2.31.1)
+MCU 'rpi' config: ADC_MAX=4095 CLOCK_FREQ=50000000 MCU=linux PCA9685_MAX=4096 PWM_MAX=32768 STATS_SUMSQ_BASE=256
+Configured MCU 'mcu' (1024 moves)
+Sending MCU 'rpi' printer configuration...
+Configured MCU 'rpi' (1024 moves)
+Starting heater checks for extruder
+Starting heater checks for heater_bed
+TMC stepper_x failed to init: Unable to read tmc uart 'stepper_x' register IFCNT
+TMC stepper_y failed to init: Unable to read tmc uart 'stepper_y' register IFCNT
+TMC extruder failed to init: Unable to read tmc uart 'extruder' register IFCNT
+bed_mesh: generated points
+Index |  Tool Adjusted  |   Probe
+  0   | (-16.0, 32.0)   | (11.0, 12.0)
+  1   | (33.8, 32.0)    | (60.8, 12.0)
+  2   | (83.5, 32.0)    | (110.5, 12.0)
+  3   | (133.2, 32.0)   | (160.2, 12.0)
+  4   | (183.0, 32.0)   | (210.0, 12.0)
+  5   | (183.0, 80.2)   | (210.0, 60.2)
+  6   | (133.2, 80.2)   | (160.2, 60.2)
+  7   | (83.5, 80.2)    | (110.5, 60.2)
+  8   | (33.8, 80.2)    | (60.8, 60.2)
+  9   | (-16.0, 80.2)   | (11.0, 60.2)
+  10  | (-16.0, 128.5)  | (11.0, 108.5)
+  11  | (33.8, 128.5)   | (60.8, 108.5)
+  12  | (83.5, 128.5)   | (110.5, 108.5)
+  13  | (133.2, 128.5)  | (160.2, 108.5)
+  14  | (183.0, 128.5)  | (210.0, 108.5)
+  15  | (183.0, 176.8)  | (210.0, 156.8)
+  16  | (133.2, 176.8)  | (160.2, 156.8)
+  17  | (83.5, 176.8)   | (110.5, 156.8)
+  18  | (33.8, 176.8)   | (60.8, 156.8)
+  19  | (-16.0, 176.8)  | (11.0, 156.8)
+  20  | (-16.0, 225.0)  | (11.0, 205.0)
+  21  | (33.8, 225.0)   | (60.8, 205.0)
+  22  | (83.5, 225.0)   | (110.5, 205.0)
+  23  | (133.2, 225.0)  | (160.2, 205.0)
+  24  | (183.0, 225.0)  | (210.0, 205.0)
+Unable to obtain tmc stepper_x phase
+Unable to obtain tmc stepper_y phase
+Unable to obtain tmc extruder phase
+Stats 119.7: gcodein=0  mcu: mcu_awake=0.000 mcu_task_avg=0.000000 mcu_task_stddev=0.000000 bytes_write=1421 bytes_read=4613 bytes_retransmit=9 bytes_invalid=0 send_seq=143 receive_seq=143 retransmit_seq=2 srtt=0.003 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=71997896 rpi: mcu_awake=0.000 mcu_task_avg=0.000000 mcu_task_stddev=0.000000 bytes_write=826 bytes_read=4635 bytes_retransmit=0 bytes_invalid=0 send_seq=112 receive_seq=112 retransmit_seq=0 srtt=0.000 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=49996005 adj=49997732  heater_bed: target=0 temp=0.0 pwm=0.000 sysload=1.23 cputime=4.700 memavail=446808 print_time=0.021 buffer_time=0.000 print_stall=0 extruder: target=0 temp=0.0 pwm=0.000
+webhooks: registering remote method 'shutdown_machine' for connection id: 281473624800336
+webhooks: registering remote method 'reboot_machine' for connection id: 281473624800336
+webhooks: registering remote method 'pause_job_queue' for connection id: 281473624800336
+webhooks: registering remote method 'start_job_queue' for connection id: 281473624800336
+Stats 120.7: gcodein=0  mcu: mcu_awake=0.000 mcu_task_avg=0.000000 mcu_task_stddev=0.000000 bytes_write=1427 bytes_read=4629 bytes_retransmit=9 bytes_invalid=0 send_seq=144 receive_seq=144 retransmit_seq=2 srtt=0.003 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=72002685 rpi: mcu_awake=0.000 mcu_task_avg=0.000000 mcu_task_stddev=0.000000 bytes_write=832 bytes_read=4651 bytes_retransmit=0 bytes_invalid=0 send_seq=113 receive_seq=113 retransmit_seq=0 srtt=0.000 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=49999573 adj=49997421  heater_bed: target=0 temp=0.0 pwm=0.000 sysload=1.14 cputime=4.749 memavail=446808 print_time=0.021 buffer_time=0.000 print_stall=0 extruder: target=0 temp=0.0 pwm=0.000
+Stats 121.7: gcodein=0  mcu: mcu_awake=0.000 mcu_task_avg=0.000000 mcu_task_stddev=0.000000 bytes_write=1441 bytes_read=4750 bytes_retransmit=9 bytes_invalid=0 send_seq=146 receive_seq=146 retransmit_seq=2 srtt=0.003 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=72003385 rpi: mcu_awake=0.004 mcu_task_avg=0.000028 mcu_task_stddev=0.000027 bytes_write=838 bytes_read=4682 bytes_retransmit=0 bytes_invalid=0 send_seq=114 receive_seq=114 retransmit_seq=0 srtt=0.000 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=49999155 adj=49997161  heater_bed: target=0 temp=75.2 pwm=0.000 sysload=1.14 cputime=4.769 memavail=460020 print_time=0.021 buffer_time=0.000 print_stall=0 extruder: target=0 temp=105.5 pwm=0.000
+Stats 122.7: gcodein=0  mcu: mcu_awake=0.000 mcu_task_avg=0.000000 mcu_task_stddev=0.000000 bytes_write=1462 bytes_read=4876 bytes_retransmit=9 bytes_invalid=0 send_seq=148 receive_seq=148 retransmit_seq=2 srtt=0.003 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=72003349 rpi: mcu_awake=0.004 mcu_task_avg=0.000028 mcu_task_stddev=0.000027 bytes_write=844 bytes_read=4698 bytes_retransmit=0 bytes_invalid=0 send_seq=115 receive_seq=115 retransmit_seq=0 srtt=0.000 rttvar=0.000 rto=0.025 ready_bytes=0 stalled_bytes=0 freq=50002822 adj=49995731  heater_bed: target=0 temp=75.8 pwm=0.000 sysload=1.14 cputime=4.787 memavail=446648 print_time=0.021 buffer_time=0.000 print_stall=0 extruder: target=0 temp=105.8 pwm=0.000
+                                                                                                                                                                                                                                            Starting Klippy...
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+Start printer at Mon Sep  4 07:20:18 2023 (1693822818.8 26.0)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 3000
+max_z_velocity = 15
+max_z_accel = 100
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 180
+check_gain_time = 120
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 50
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% if printer["filament_switch_sensor my_sensor"].filament_detected == True %}
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+	{% else %}
+	RESPOND TYPE=echo MSG="Please Insert filament in Sensor!"
+	{% endif %}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PD15
+dir_pin = PD14
+enable_pin = !PC7
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = -16
+position_min = -16
+position_max = 225
+homing_speed = 80
+step_pulse_duration = 0.000004
+
+[tmc2209 stepper_x]
+uart_pin = PE3
+run_current = 1.2
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PD10
+
+[stepper_y]
+step_pin = PB7
+dir_pin = PB6
+enable_pin = !PB9
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = -2
+position_min = -2
+position_max = 225
+homing_speed = 60
+step_pulse_duration = 0.000004
+
+[tmc2209 stepper_y]
+uart_pin = PE4
+run_current = 1.2
+uart_address = 3
+interpolate = True
+driver_sgthrs = 105
+stealthchop_threshold = 999999
+diag_pin = ^PE0
+
+[stepper_z]
+step_pin = PB3
+dir_pin = !PD7
+enable_pin = !PB5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = probe:z_virtual_endstop
+position_max = 253
+position_min = -4
+homing_speed = 10
+
+[stepper_z1]
+step_pin = PA7
+dir_pin = !PA6
+enable_pin = !PC5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = probe:z_virtual_endstop
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PD1
+dir_pin = !PD0
+enable_pin = !PD4
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PA4
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+max_extrude_cross_section = 500
+instantaneous_corner_velocity = 10
+max_extrude_only_velocity = 2000
+max_extrude_only_accel = 10000
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PE7
+run_current = 0.6
+uart_address = 3
+interpolate = True
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PA3
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PD13
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[filament_switch_sensor my_sensor]
+switch_pin = PD11
+
+[safe_z_home]
+home_xy_position = 83,130
+speed = 100
+z_hop = 5
+z_hop_speed = 10
+
+[z_tilt]
+z_positions = -16, 130
+	180, 130
+points = -16, 130
+	180, 130
+speed = 200
+horizontal_move_z = 5
+retries = 20
+retry_tolerance = .005
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 11,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 5.0
+mesh_pps = 4,4
+move_check_distance = 3
+
+[screws_tilt_adjust]
+screw1 = -1, 45
+screw1_name = front left screw
+screw2 = 168, 45
+screw2_name = front right screw
+screw3 = 168, 215
+screw3_name = rear right screw
+screw4 = -1, 215
+screw4_name = rear left screw
+horizontal_move_z = 5.
+speed = 200.
+screw_thread = CW-M4
+
+[heater_fan hotend_fan]
+pin = PE11
+
+[multi_pin fan_pins]
+pins = PE9,PE13
+
+[fan]
+pin = multi_pin:fan_pins
+
+[output_pin my_led]
+pin = PC4
+pwm = 1
+value = 1
+cycle_time = 0.010
+
+[controller_fan Fan_Board]
+pin = PD3
+fan_speed = 1.0
+idle_timeout = 120
+heater = heater_bed, extruder
+stepper = stepper_x, stepper_y, stepper_z, stepper_z1
+
+[input_shaper]
+damping_ratio_x = 0.1
+damping_ratio_y = 0.1
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.4
+shaper_type_y = 2hump_ei
+shaper_freq_y = 43.4
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=207.875844
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281472896800080: New connection
+webhooks client 281472896800080: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+MCU error during connect
+Traceback (most recent call last):
+  File "/home/mks/klipper/klippy/mcu.py", line 798, in _mcu_identify
+    self._serial.connect_uart(self._serialport, self._baud, rts)
+  File "/home/mks/klipper/klippy/serialhdl.py", line 182, in connect_uart
+    self._error("Unable to connect")
+  File "/home/mks/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Unable to connect
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mks/klipper/klippy/klippy.py", line 176, in _connect
+    self.send_event("klippy:mcu_identify")
+  File "/home/mks/klipper/klippy/klippy.py", line 263, in send_event
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/mks/klipper/klippy/klippy.py", line 263, in <listcomp>
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/mks/klipper/klippy/mcu.py", line 803, in _mcu_identify
+    raise error(str(e))
+mcu.error: mcu 'mcu': Unable to connect
+Build file /home/mks/klipper/klippy/../.config(3223): Sun Mar  5 05:11:05 2023
+========= Last MCU build config =========
+CONFIG_LOW_LEVEL_OPTIONS=y
+# CONFIG_MACH_AVR is not set
+# CONFIG_MACH_ATSAM is not set
+# CONFIG_MACH_ATSAMD is not set
+# CONFIG_MACH_LPC176X is not set
+CONFIG_MACH_STM32=y
+# CONFIG_MACH_HC32F460 is not set
+# CONFIG_MACH_RP2040 is not set
+# CONFIG_MACH_PRU is not set
+# CONFIG_MACH_AR100 is not set
+# CONFIG_MACH_LINUX is not set
+# CONFIG_MACH_SIMU is not set
+CONFIG_BOARD_DIRECTORY="stm32"
+CONFIG_MCU="stm32f407xx"
+CONFIG_CLOCK_FREQ=168000000
+CONFIG_USBSERIAL=y
+CONFIG_FLASH_SIZE=0x80000
+CONFIG_FLASH_BOOT_ADDRESS=0x8000000
+CONFIG_RAM_START=0x20000000
+CONFIG_RAM_SIZE=0x20000
+CONFIG_STACK_SIZE=512
+CONFIG_FLASH_APPLICATION_ADDRESS=0x800C000
+CONFIG_STM32_SELECT=y
+# CONFIG_MACH_STM32F103 is not set
+# CONFIG_MACH_STM32F207 is not set
+# CONFIG_MACH_STM32F401 is not set
+# CONFIG_MACH_STM32F405 is not set
+CONFIG_MACH_STM32F407=y
+# CONFIG_MACH_STM32F429 is not set
+# CONFIG_MACH_STM32F446 is not set
+# CONFIG_MACH_STM32F031 is not set
+# CONFIG_MACH_STM32F042 is not set
+# CONFIG_MACH_STM32F070 is not set
+# CONFIG_MACH_STM32F072 is not set
+# CONFIG_MACH_STM32G070 is not set
+# CONFIG_MACH_STM32G071 is not set
+# CONFIG_MACH_STM32G0B0 is not set
+# CONFIG_MACH_STM32G0B1 is not set
+# CONFIG_MACH_STM32G431 is not set
+# CONFIG_MACH_STM32H723 is not set
+# CONFIG_MACH_STM32H743 is not set
+# CONFIG_MACH_STM32H750 is not set
+# CONFIG_MACH_STM32L412 is not set
+CONFIG_MACH_STM32F4=y
+CONFIG_MACH_STM32F4x5=y
+CONFIG_HAVE_STM32_USBOTG=y
+CONFIG_HAVE_STM32_CANBUS=y
+CONFIG_HAVE_STM32_USBCANBUS=y
+CONFIG_STM32_DFU_ROM_ADDRESS=0x1fff0000
+# CONFIG_STM32_FLASH_START_8000 is not set
+# CONFIG_STM32_FLASH_START_20200 is not set
+CONFIG_STM32_FLASH_START_C000=y
+# CONFIG_STM32_FLASH_START_4000 is not set
+# CONFIG_STM32_FLASH_START_0000 is not set
+CONFIG_STM32_CLOCK_REF_8M=y
+# CONFIG_STM32_CLOCK_REF_12M is not set
+# CONFIG_STM32_CLOCK_REF_16M is not set
+# CONFIG_STM32_CLOCK_REF_20M is not set
+# CONFIG_STM32_CLOCK_REF_25M is not set
+# CONFIG_STM32_CLOCK_REF_INTERNAL is not set
+CONFIG_CLOCK_REF_FREQ=8000000
+CONFIG_STM32F0_TRIM=16
+CONFIG_STM32_USB_PA11_PA12=y
+# CONFIG_STM32_SERIAL_USART1 is not set
+# CONFIG_STM32_SERIAL_USART1_ALT_PB7_PB6 is not set
+# CONFIG_STM32_SERIAL_USART2 is not set
+# CONFIG_STM32_SERIAL_USART2_ALT_PD6_PD5 is not set
+# CONFIG_STM32_SERIAL_USART3 is not set
+# CONFIG_STM32_SERIAL_USART3_ALT_PD9_PD8 is not set
+# CONFIG_STM32_CANBUS_PA11_PA12 is not set
+# CONFIG_STM32_CANBUS_PA11_PB9 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB8_PB9 is not set
+# CONFIG_STM32_MMENU_CANBUS_PI9_PH13 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB5_PB6 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB12_PB13 is not set
+# CONFIG_STM32_MMENU_CANBUS_PD0_PD1 is not set
+# CONFIG_STM32_USBCANBUS_PA11_PA12 is not set
+CONFIG_USB=y
+CONFIG_USB_VENDOR_ID=0x1d50
+CONFIG_USB_DEVICE_ID=0x614e
+CONFIG_USB_SERIAL_NUMBER_CHIPID=y
+CONFIG_USB_SERIAL_NUMBER="12345"
+
+#
+# USB ids
+#
+# end of USB ids
+
+CONFIG_CANBUS_FREQUENCY=500000
+CONFIG_INITIAL_PINS=""
+CONFIG_HAVE_GPIO=y
+CONFIG_HAVE_GPIO_ADC=y
+CONFIG_HAVE_GPIO_SPI=y
+CONFIG_HAVE_GPIO_SDIO=y
+CONFIG_HAVE_GPIO_I2C=y
+CONFIG_HAVE_GPIO_HARD_PWM=y
+CONFIG_HAVE_GPIO_BITBANGING=y
+CONFIG_HAVE_STRICT_TIMING=y
+CONFIG_HAVE_CHIPID=y
+CONFIG_HAVE_STEPPER_BOTH_EDGE=y
+CONFIG_HAVE_BOOTLOADER_REQUEST=y
+CONFIG_INLINE_STEPPER_HACK=y
+=======================
+Build file /home/mks/klipper/klippy/../out/klipper.dict(8495): Sun Mar  5 05:11:35 2023
+Last MCU build version: ?-20230305_171135-mkspi
+Last MCU build tools: gcc: (15:7-2018-q2-6) 7.3.1 20180622 (release) [ARM/embedded-7-branch revision 261907] binutils: (2.31.1-12+11) 2.31.1
+Last MCU build config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_i2c2a=PH4,PH5 BUS_PINS_i2c3=PA8,PC9 BUS_PINS_i2c3a=PH7,PH8 BUS_PINS_sdio=PC12,PD2,PC8,PC9,PC10,PC11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi2a=PC2,PC3,PB10 BUS_PINS_spi2b=PI2,PI3,PI1 BUS_PINS_spi3=PB4,PB5,PB3 BUS_PINS_spi3a=PC11,PC12,PC10 CLOCK_FREQ=168000000 MCU=stm32f407xx PWM_MAX=255 RESERVE_PINS_USB=PA11,PA12 RESERVE_PINS_crystal=PH0,PH1 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
+Build file /home/mks/klipper/klippy/../out/klipper.elf(377440): Sun Mar  5 05:11:46 2023
+Starting Klippy...
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+Start printer at Mon Sep  4 07:22:24 2023 (1693822944.7 33.4)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 4500
+max_z_velocity = 15
+max_z_accel = 150
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 90
+check_gain_time = 60
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 100
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PC2
+dir_pin = !PB9
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 225
+homing_speed = 90
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_x]
+uart_pin = PC1
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PA5
+
+[stepper_y]
+step_pin = PB8
+dir_pin = PB7
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 227
+homing_speed = 60
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_y]
+uart_pin = PC0
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 85
+stealthchop_threshold = 999999
+diag_pin = ^PA6
+
+[stepper_z]
+step_pin = PB6
+dir_pin = !PB5
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4
+endstop_pin = probe:z_virtual_endstop
+position_max = 260
+position_min = -3
+homing_speed = 6
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PB4
+dir_pin = !PB3
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC5
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PC14
+run_current = 0.6
+uart_address = 3
+interpolate = True
+stealthchop_threshold = 400
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC4
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PB1
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[safe_z_home]
+home_xy_position = 85,137
+speed = 100
+z_hop = 3
+z_hop_speed = 6
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 27,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 10
+mesh_pps = 4,4
+move_check_distance = 3
+
+[fan]
+pin = PA0
+
+[input_shaper]
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.8
+shaper_type_y = 2hump_ei
+shaper_freq_y = 41.8
+damping_ratio_x = 0.1
+damping_ratio_y = 0.09
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473315044992: New connection
+webhooks client 281473315044992: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+MCU error during connect
+Traceback (most recent call last):
+  File "/home/mks/klipper/klippy/mcu.py", line 798, in _mcu_identify
+    self._serial.connect_uart(self._serialport, self._baud, rts)
+  File "/home/mks/klipper/klippy/serialhdl.py", line 182, in connect_uart
+    self._error("Unable to connect")
+  File "/home/mks/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Unable to connect
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mks/klipper/klippy/klippy.py", line 176, in _connect
+    self.send_event("klippy:mcu_identify")
+  File "/home/mks/klipper/klippy/klippy.py", line 263, in send_event
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/mks/klipper/klippy/klippy.py", line 263, in <listcomp>
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/mks/klipper/klippy/mcu.py", line 803, in _mcu_identify
+    raise error(str(e))
+mcu.error: mcu 'mcu': Unable to connect
+Build file /home/mks/klipper/klippy/../.config(3223): Sun Mar  5 05:11:05 2023
+========= Last MCU build config =========
+CONFIG_LOW_LEVEL_OPTIONS=y
+# CONFIG_MACH_AVR is not set
+# CONFIG_MACH_ATSAM is not set
+# CONFIG_MACH_ATSAMD is not set
+# CONFIG_MACH_LPC176X is not set
+CONFIG_MACH_STM32=y
+# CONFIG_MACH_HC32F460 is not set
+# CONFIG_MACH_RP2040 is not set
+# CONFIG_MACH_PRU is not set
+# CONFIG_MACH_AR100 is not set
+# CONFIG_MACH_LINUX is not set
+# CONFIG_MACH_SIMU is not set
+CONFIG_BOARD_DIRECTORY="stm32"
+CONFIG_MCU="stm32f407xx"
+CONFIG_CLOCK_FREQ=168000000
+CONFIG_USBSERIAL=y
+CONFIG_FLASH_SIZE=0x80000
+CONFIG_FLASH_BOOT_ADDRESS=0x8000000
+CONFIG_RAM_START=0x20000000
+CONFIG_RAM_SIZE=0x20000
+CONFIG_STACK_SIZE=512
+CONFIG_FLASH_APPLICATION_ADDRESS=0x800C000
+CONFIG_STM32_SELECT=y
+# CONFIG_MACH_STM32F103 is not set
+# CONFIG_MACH_STM32F207 is not set
+# CONFIG_MACH_STM32F401 is not set
+# CONFIG_MACH_STM32F405 is not set
+CONFIG_MACH_STM32F407=y
+# CONFIG_MACH_STM32F429 is not set
+# CONFIG_MACH_STM32F446 is not set
+# CONFIG_MACH_STM32F031 is not set
+# CONFIG_MACH_STM32F042 is not set
+# CONFIG_MACH_STM32F070 is not set
+# CONFIG_MACH_STM32F072 is not set
+# CONFIG_MACH_STM32G070 is not set
+# CONFIG_MACH_STM32G071 is not set
+# CONFIG_MACH_STM32G0B0 is not set
+# CONFIG_MACH_STM32G0B1 is not set
+# CONFIG_MACH_STM32G431 is not set
+# CONFIG_MACH_STM32H723 is not set
+# CONFIG_MACH_STM32H743 is not set
+# CONFIG_MACH_STM32H750 is not set
+# CONFIG_MACH_STM32L412 is not set
+CONFIG_MACH_STM32F4=y
+CONFIG_MACH_STM32F4x5=y
+CONFIG_HAVE_STM32_USBOTG=y
+CONFIG_HAVE_STM32_CANBUS=y
+CONFIG_HAVE_STM32_USBCANBUS=y
+CONFIG_STM32_DFU_ROM_ADDRESS=0x1fff0000
+# CONFIG_STM32_FLASH_START_8000 is not set
+# CONFIG_STM32_FLASH_START_20200 is not set
+CONFIG_STM32_FLASH_START_C000=y
+# CONFIG_STM32_FLASH_START_4000 is not set
+# CONFIG_STM32_FLASH_START_0000 is not set
+CONFIG_STM32_CLOCK_REF_8M=y
+# CONFIG_STM32_CLOCK_REF_12M is not set
+# CONFIG_STM32_CLOCK_REF_16M is not set
+# CONFIG_STM32_CLOCK_REF_20M is not set
+# CONFIG_STM32_CLOCK_REF_25M is not set
+# CONFIG_STM32_CLOCK_REF_INTERNAL is not set
+CONFIG_CLOCK_REF_FREQ=8000000
+CONFIG_STM32F0_TRIM=16
+CONFIG_STM32_USB_PA11_PA12=y
+# CONFIG_STM32_SERIAL_USART1 is not set
+# CONFIG_STM32_SERIAL_USART1_ALT_PB7_PB6 is not set
+# CONFIG_STM32_SERIAL_USART2 is not set
+# CONFIG_STM32_SERIAL_USART2_ALT_PD6_PD5 is not set
+# CONFIG_STM32_SERIAL_USART3 is not set
+# CONFIG_STM32_SERIAL_USART3_ALT_PD9_PD8 is not set
+# CONFIG_STM32_CANBUS_PA11_PA12 is not set
+# CONFIG_STM32_CANBUS_PA11_PB9 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB8_PB9 is not set
+# CONFIG_STM32_MMENU_CANBUS_PI9_PH13 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB5_PB6 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB12_PB13 is not set
+# CONFIG_STM32_MMENU_CANBUS_PD0_PD1 is not set
+# CONFIG_STM32_USBCANBUS_PA11_PA12 is not set
+CONFIG_USB=y
+CONFIG_USB_VENDOR_ID=0x1d50
+CONFIG_USB_DEVICE_ID=0x614e
+CONFIG_USB_SERIAL_NUMBER_CHIPID=y
+CONFIG_USB_SERIAL_NUMBER="12345"
+
+#
+# USB ids
+#
+# end of USB ids
+
+CONFIG_CANBUS_FREQUENCY=500000
+CONFIG_INITIAL_PINS=""
+CONFIG_HAVE_GPIO=y
+CONFIG_HAVE_GPIO_ADC=y
+CONFIG_HAVE_GPIO_SPI=y
+CONFIG_HAVE_GPIO_SDIO=y
+CONFIG_HAVE_GPIO_I2C=y
+CONFIG_HAVE_GPIO_HARD_PWM=y
+CONFIG_HAVE_GPIO_BITBANGING=y
+CONFIG_HAVE_STRICT_TIMING=y
+CONFIG_HAVE_CHIPID=y
+CONFIG_HAVE_STEPPER_BOTH_EDGE=y
+CONFIG_HAVE_BOOTLOADER_REQUEST=y
+CONFIG_INLINE_STEPPER_HACK=y
+=======================
+Build file /home/mks/klipper/klippy/../out/klipper.dict(8495): Sun Mar  5 05:11:35 2023
+Last MCU build version: ?-20230305_171135-mkspi
+Last MCU build tools: gcc: (15:7-2018-q2-6) 7.3.1 20180622 (release) [ARM/embedded-7-branch revision 261907] binutils: (2.31.1-12+11) 2.31.1
+Last MCU build config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_i2c2a=PH4,PH5 BUS_PINS_i2c3=PA8,PC9 BUS_PINS_i2c3a=PH7,PH8 BUS_PINS_sdio=PC12,PD2,PC8,PC9,PC10,PC11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi2a=PC2,PC3,PB10 BUS_PINS_spi2b=PI2,PI3,PI1 BUS_PINS_spi3=PB4,PB5,PB3 BUS_PINS_spi3a=PC11,PC12,PC10 CLOCK_FREQ=168000000 MCU=stm32f407xx PWM_MAX=255 RESERVE_PINS_USB=PA11,PA12 RESERVE_PINS_crystal=PH0,PH1 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
+Build file /home/mks/klipper/klippy/../out/klipper.elf(377440): Sun Mar  5 05:11:46 2023
+Starting Klippy...
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+Start printer at Mon Sep  4 07:22:16 2023 (1693822936.1 24.9)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 4500
+max_z_velocity = 15
+max_z_accel = 150
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 90
+check_gain_time = 60
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 100
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PC2
+dir_pin = !PB9
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 225
+homing_speed = 90
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_x]
+uart_pin = PC1
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PA5
+
+[stepper_y]
+step_pin = PB8
+dir_pin = PB7
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 227
+homing_speed = 60
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_y]
+uart_pin = PC0
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 85
+stealthchop_threshold = 999999
+diag_pin = ^PA6
+
+[stepper_z]
+step_pin = PB6
+dir_pin = !PB5
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4
+endstop_pin = probe:z_virtual_endstop
+position_max = 260
+position_min = -3
+homing_speed = 6
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PB4
+dir_pin = !PB3
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC5
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PC14
+run_current = 0.6
+uart_address = 3
+interpolate = True
+stealthchop_threshold = 400
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC4
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PB1
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[safe_z_home]
+home_xy_position = 85,137
+speed = 100
+z_hop = 3
+z_hop_speed = 6
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 27,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 10
+mesh_pps = 4,4
+move_check_distance = 3
+
+[fan]
+pin = PA0
+
+[input_shaper]
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.8
+shaper_type_y = 2hump_ei
+shaper_freq_y = 41.8
+damping_ratio_x = 0.1
+damping_ratio_y = 0.09
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473095127392: New connection
+webhooks client 281473095127392: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+Starting Klippy...
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+Start printer at Mon Sep  4 07:22:16 2023 (1693822936.1 24.9)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 4500
+max_z_velocity = 15
+max_z_accel = 150
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 90
+check_gain_time = 60
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 100
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PC2
+dir_pin = !PB9
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 225
+homing_speed = 90
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_x]
+uart_pin = PC1
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PA5
+
+[stepper_y]
+step_pin = PB8
+dir_pin = PB7
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 227
+homing_speed = 60
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_y]
+uart_pin = PC0
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 85
+stealthchop_threshold = 999999
+diag_pin = ^PA6
+
+[stepper_z]
+step_pin = PB6
+dir_pin = !PB5
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4
+endstop_pin = probe:z_virtual_endstop
+position_max = 260
+position_min = -3
+homing_speed = 6
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PB4
+dir_pin = !PB3
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC5
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PC14
+run_current = 0.6
+uart_address = 3
+interpolate = True
+stealthchop_threshold = 400
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC4
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PB1
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[safe_z_home]
+home_xy_position = 85,137
+speed = 100
+z_hop = 3
+z_hop_speed = 6
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 27,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 10
+mesh_pps = 4,4
+move_check_distance = 3
+
+[fan]
+pin = PA0
+
+[input_shaper]
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.8
+shaper_type_y = 2hump_ei
+shaper_freq_y = 41.8
+damping_ratio_x = 0.1
+damping_ratio_y = 0.09
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473687433624: New connection
+webhooks client 281473687433624: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+Starting Klippy...
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+Start printer at Mon Sep  4 07:22:16 2023 (1693822936.3 25.4)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 4500
+max_z_velocity = 15
+max_z_accel = 150
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 90
+check_gain_time = 60
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 100
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PC2
+dir_pin = !PB9
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 225
+homing_speed = 90
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_x]
+uart_pin = PC1
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PA5
+
+[stepper_y]
+step_pin = PB8
+dir_pin = PB7
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 227
+homing_speed = 60
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_y]
+uart_pin = PC0
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 85
+stealthchop_threshold = 999999
+diag_pin = ^PA6
+
+[stepper_z]
+step_pin = PB6
+dir_pin = !PB5
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4
+endstop_pin = probe:z_virtual_endstop
+position_max = 260
+position_min = -3
+homing_speed = 6
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PB4
+dir_pin = !PB3
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC5
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PC14
+run_current = 0.6
+uart_address = 3
+interpolate = True
+stealthchop_threshold = 400
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC4
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PB1
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[safe_z_home]
+home_xy_position = 85,137
+speed = 100
+z_hop = 3
+z_hop_speed = 6
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 27,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 10
+mesh_pps = 4,4
+move_check_distance = 3
+
+[fan]
+pin = PA0
+
+[input_shaper]
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.8
+shaper_type_y = 2hump_ei
+shaper_freq_y = 41.8
+damping_ratio_x = 0.1
+damping_ratio_y = 0.09
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473076891600: New connection
+webhooks client 281473076891600: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+Starting Klippy...
+Args: ['/home/mks/klipper/klippy/klippy.py', '/home/mks/printer_data/config/printer.cfg', '-I', '/home/mks/printer_data/comms/klippy.serial', '-l', '/home/mks/printer_data/logs/klippy.log', '-a', '/home/mks/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-122-ge6ef48cd'
+CPU: 4 core ?
+Python: '3.7.3 (default, Oct 31 2022, 14:04:00) \n[GCC 8.3.0]'
+Start printer at Mon Sep  4 07:22:16 2023 (1693822936.6 25.5)
+===== Config file =====
+[force_move]
+enable_force_move = True
+
+[respond]
+default_type = echo
+
+[gcode_macro G31]
+gcode = 
+	RUN_SHELL_COMMAND CMD=clear_plr
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+
+[gcode_shell_command clear_plr]
+command = sh /home/mks/clear_plr.sh
+timeout = 5.
+
+[gcode_macro save_last_file]
+gcode = 
+	
+	{% set svv = printer.save_variables.variables %}
+	
+	{% set filepath=printer.virtual_sdcard.file_path %}
+	
+	{% set filename=filepath.split('/')%}
+	
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename[-1] }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ printer.virtual_sdcard.file_path }"'
+
+[gcode_macro clear_last_file]
+gcode = 
+	{% set filename='' %}
+	{% set filepath='' %}
+	SAVE_VARIABLE VARIABLE=last_file VALUE='"{ filename }"'
+	SAVE_VARIABLE VARIABLE=filepath VALUE='"{ filepath }"'
+
+[gcode_shell_command POWER_LOSS_RESUME]
+command = /home/mks/plr.sh
+timeout = 420.
+
+[gcode_macro RESUME_INTERRUPTED]
+gcode = 
+	SET_KINEMATIC_POSITION X=0
+	SET_KINEMATIC_POSITION Y=0
+	SET_KINEMATIC_POSITION Z=0
+	{% set z_height = params.Z_HEIGHT|default(printer.save_variables.variables.power_resume_z)|float %}
+	{% set last_file = params.GCODE_FILE|default(printer.save_variables.variables.last_file)|string %}
+	m118 {last_file}
+	
+	RUN_SHELL_COMMAND CMD=POWER_LOSS_RESUME PARAMS="{z_height} \"{last_file}\""
+	SDCARD_PRINT_FILE FILENAME=plr/"{last_file}"
+
+[gcode_macro LOG_Z]
+gcode = 
+	{% set z_pos = printer.gcode_move.gcode_position.z %}
+	RESPOND MSG="Current Z is {z_pos}"
+	SAVE_VARIABLE VARIABLE=power_resume_z VALUE={z_pos}
+
+[save_variables]
+filename = /home/mks/printer_data/config/saved_variables.cfg
+
+[mcu]
+serial = /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+restart_method = command
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 8000
+max_accel_to_decel = 4500
+max_z_velocity = 15
+max_z_accel = 150
+square_corner_velocity = 3.0
+
+[virtual_sdcard]
+path = /home/mks/printer_data/gcodes
+
+[pause_resume]
+
+[display_status]
+
+[idle_timeout]
+gcode = 
+	RESPOND TYPE=echo MSG="No operations in 10min!"
+timeout = 600
+
+[mcu rpi]
+serial = /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin = rpi:None
+spi_bus = spidev0.0
+
+[verify_heater extruder]
+max_error = 60
+check_gain_time = 20
+hysteresis = 5
+heating_gain = 2
+
+[verify_heater heater_bed]
+max_error = 90
+check_gain_time = 60
+hysteresis = 5
+heating_gain = 2
+
+[resonance_tester]
+accel_chip = adxl345
+probe_points = 
+	115, 115, 20
+accel_per_hz = 50
+min_freq = 1
+max_freq = 100
+max_smoothing = 0.2
+hz_per_sec = 0.5
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+	G31
+	TURN_OFF_HEATERS
+	CANCEL_PRINT_BASE
+	RESPOND TYPE=echo MSG="Cancel Print Success!"
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210 F6000
+	M84 X Y E
+
+[gcode_macro START_PRINT]
+gcode = 
+	M84 E
+	G90
+	G92 E0
+	G1 E-1
+	G92 E0
+	G28
+	BED_MESH_PROFILE LOAD=default
+	
+	G92 E0
+	G1 Z1.0 F3000
+	G1 X0.1 Y20 Z0.3 F5000.0
+	G1 X0.1 Y100.0 Z0.3 F500.0 E15
+	G1 X0.4 Y100.0 Z0.3 F5000.0
+	G1 X0.4 Y20 Z0.3 F500.0 E30
+	G92 E0
+	G1 Z1.0 F3000
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="Pause Print!"
+	
+	{% set x = params.X|default(10) %}
+	{% set y = params.Y|default(210) %}
+	{% set z = params.Z|default(10)|float %}
+	{% set e = params.E|default(1) %}
+	
+	{% set max_z = printer.toolhead.axis_maximum.z|float %}
+	{% set act_z = printer.toolhead.position.z|float %}
+	{% set lift_z = z|abs %}
+	{% if act_z < (max_z - lift_z) %}
+	{% set z_safe = lift_z %}
+	{% else %}
+	{% set z_safe = max_z - act_z %}
+	{% endif %}
+	
+	PAUSE_BASE
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E-{e} F500
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G1 Z{z_safe}
+	G90
+	G1 X{x} Y{y} F6000
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+gcode = 
+	RESPOND TYPE=echo MSG="RESUME Print!"
+	
+	{% set e = params.E|default(1) %}
+	
+	{% if 'VELOCITY' in params|upper %}
+	{% set get_params = ('VELOCITY=' + params.VELOCITY) %}
+	{%else %}
+	{% set get_params = "" %}
+	{% endif %}
+	
+	G91
+	{% if printer.extruder.can_extrude|lower == 'true' %}
+	G1 E{e} F400
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+	RESUME_BASE {get_params}
+
+[gcode_macro END_PRINT]
+gcode = 
+	G91
+	G1 E-2 F500
+	G1 E-2 Z0.2 F200
+	G1 X5 Y5 F3000
+	G1 Z1
+	M106 S0
+	M104 S0
+	M140 S0
+	G90
+	G1 X10 Y210
+	
+	M84 X Y E
+	RESPOND TYPE=echo MSG="Finish Print!"
+
+[gcode_macro LOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E30 F300
+	G1 E10 F150
+	G90
+
+[gcode_macro UNLOAD_FILAMENT]
+gcode = 
+	G91
+	G1 E-30 F300
+	G90
+
+[gcode_macro LED_ON]
+gcode = 
+	SET_PIN PIN=my_led VALUE=1
+
+[gcode_macro LED_OFF]
+gcode = 
+	SET_PIN PIN=my_led VALUE=0
+
+[gcode_macro M205]
+gcode = 
+	M105
+
+[stepper_x]
+step_pin = PC2
+dir_pin = !PB9
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_x: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 225
+homing_speed = 90
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_x]
+uart_pin = PC1
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 115
+stealthchop_threshold = 999999
+diag_pin = ^PA5
+
+[stepper_y]
+step_pin = PB8
+dir_pin = PB7
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 40
+endstop_pin = tmc2209_stepper_y: virtual_endstop
+homing_retract_dist = 0
+position_endstop = 0
+position_min = 0
+position_max = 227
+homing_speed = 60
+step_pulse_duration = 0.000002
+
+[tmc2209 stepper_y]
+uart_pin = PC0
+run_current = 1.1
+uart_address = 3
+interpolate = True
+driver_sgthrs = 85
+stealthchop_threshold = 999999
+diag_pin = ^PA6
+
+[stepper_z]
+step_pin = PB6
+dir_pin = !PB5
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4
+endstop_pin = probe:z_virtual_endstop
+position_max = 260
+position_min = -3
+homing_speed = 6
+
+[extruder]
+max_extrude_only_distance = 100.0
+step_pin = PB4
+dir_pin = !PB3
+enable_pin = !PC3
+microsteps = 16
+rotation_distance = 4.59
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = PA1
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC5
+control = pid
+pressure_advance = 0.02
+pressure_advance_smooth_time = 0.035
+pid_kp = 24.522
+pid_ki = 1.397
+pid_kd = 107.590
+min_temp = 0
+max_temp = 305
+min_extrude_temp = 150
+
+[tmc2209 extruder]
+uart_pin = PC14
+run_current = 0.6
+uart_address = 3
+interpolate = True
+stealthchop_threshold = 400
+
+[heater_bed]
+heater_pin = PA2
+sensor_type = EPCOS 100K B57560G104F
+sensor_pin = PC4
+control = pid
+pid_kp = 54.027
+pid_ki = 0.770
+pid_kd = 948.182
+min_temp = 0
+max_temp = 105
+
+[probe]
+pin = PB1
+x_offset = 27
+y_offset = -20
+z_offset = 0.5
+
+[safe_z_home]
+home_xy_position = 85,137
+speed = 100
+z_hop = 3
+z_hop_speed = 6
+
+[bed_mesh]
+speed = 200
+horizontal_move_z = 5
+mesh_min = 27,12
+mesh_max = 210,205
+probe_count = 5,5
+algorithm = bicubic
+bicubic_tension = 0.3
+fade_start = 0.2
+fade_end = 10
+mesh_pps = 4,4
+move_check_distance = 3
+
+[fan]
+pin = PA0
+
+[input_shaper]
+shaper_type_x = 2hump_ei
+shaper_freq_x = 43.8
+shaper_type_y = 2hump_ei
+shaper_freq_y = 41.8
+damping_ratio_x = 0.1
+damping_ratio_y = 0.09
+
+[gcode_macro PRINT_START]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=True
+
+[gcode_macro PRINT_END]
+gcode = 
+	SAVE_VARIABLE VARIABLE=was_interrupted VALUE=False
+	RUN_SHELL_COMMAND CMD=clear_plr
+	clear_last_file
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting serial connect
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+webhooks client 281473176576464: New connection
+webhooks client 281473176576464: Client info {'program': 'Moonraker', 'version': 'v0.8.0-23-g18f5ff4-dirty'}
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+mcu 'mcu': Unable to open serial port: [Errno 2] could not open port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0: [Errno 2] No such file or directory: '/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
